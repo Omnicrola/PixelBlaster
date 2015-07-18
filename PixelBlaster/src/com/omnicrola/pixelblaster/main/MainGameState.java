@@ -20,13 +20,15 @@ public class MainGameState implements IGameState {
 
 	public void addSubsystem(IGameSubsystem subsystem) {
 		this.subsystems.add(subsystem);
+		subsystem.load(this.interlink);
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		final SlickGameContext gameContext = new SlickGameContext(this.interlink, container);
 		if (!this.isInitialized) {
 			for (final IGameSubsystem subsystem : this.subsystems) {
-				subsystem.init(container, this.interlink);
+				subsystem.init(gameContext);
 			}
 			this.isInitialized = true;
 		}
@@ -41,8 +43,9 @@ public class MainGameState implements IGameState {
 
 	@Override
 	public void update(GameContainer container, float delta) throws SlickException {
+		final SlickGameContext gameContext = new SlickGameContext(this.interlink, container);
 		for (final IGameSubsystem subsystem : this.subsystems) {
-			subsystem.update(new SlickGameContext(this.interlink, container), delta);
+			subsystem.update(gameContext, delta);
 		}
 	}
 }

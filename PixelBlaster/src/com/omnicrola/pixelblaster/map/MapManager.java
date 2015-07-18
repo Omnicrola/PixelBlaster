@@ -1,7 +1,6 @@
 package com.omnicrola.pixelblaster.map;
 
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
@@ -14,8 +13,12 @@ public class MapManager implements IGameSubsystem, IMapManager {
 	private static final float FLOOR = 500f;
 
 	@Override
-	public void init(GameContainer container, GameSubsystemInterlink interlink) {
+	public void load(GameSubsystemInterlink interlink) {
 		interlink.setSubsystem(IMapManager.class, this);
+	}
+
+	@Override
+	public void init(IGameContext context) {
 	}
 
 	@Override

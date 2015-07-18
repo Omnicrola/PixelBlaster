@@ -2,7 +2,6 @@ package com.omnicrola.pixelblaster.collision;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
@@ -20,8 +19,13 @@ public class CollisionManager implements IGameSubsystem, ICollisionManager {
 	}
 
 	@Override
-	public void init(GameContainer container, GameSubsystemInterlink interlink) {
+	public void load(GameSubsystemInterlink interlink) {
 		interlink.setSubsystem(ICollisionManager.class, this);
+	}
+
+	@Override
+	public void init(IGameContext context) {
+		this.collidables.clear();
 	}
 
 	@Override
@@ -34,8 +38,8 @@ public class CollisionManager implements IGameSubsystem, ICollisionManager {
 		for (final ICollidable entity : this.collidables) {
 			final Vector2f position = entity.getPosition();
 			final float elevation = mapManager.getFloorFrom(position);
-			if (position.y > elevation) {
-				position.y -= this.GRAVITY * delta;
+			if (position.y < elevation) {
+				position.y += this.GRAVITY * delta;
 				entity.setPosition(position);
 			}
 		}

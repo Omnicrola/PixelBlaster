@@ -1,12 +1,13 @@
 package com.omnicrola.pixelblaster.main;
 
-import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 
 public interface IGameSubsystem {
+	public void load(GameSubsystemInterlink interlink);
 
-	public void init(GameContainer container, GameSubsystemInterlink interlink);
+	public void init(IGameContext context) throws SlickException;
 
 	public void update(IGameContext gameContext, float delta);
 

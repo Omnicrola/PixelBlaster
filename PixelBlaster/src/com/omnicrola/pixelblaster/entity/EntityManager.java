@@ -2,8 +2,6 @@ package com.omnicrola.pixelblaster.entity;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.GameContainer;
-
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
@@ -24,8 +22,14 @@ public class EntityManager implements IGameSubsystem, IEntityManager {
 	}
 
 	@Override
-	public void init(GameContainer container, GameSubsystemInterlink interlink) {
+	public void load(GameSubsystemInterlink interlink) {
 		interlink.setSubsystem(IEntityManager.class, this);
+	}
+
+	@Override
+	public void init(IGameContext context) {
+		this.entities.clear();
+		this.entityCopies.clear();
 	}
 
 	@Override
