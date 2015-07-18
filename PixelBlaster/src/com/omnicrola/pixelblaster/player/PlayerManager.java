@@ -40,6 +40,7 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 	@Override
 	public void update(IGameContext gameContext, float delta) {
 		this.keyListener.update(delta);
+		gameContext.getCamera().focusOn(this.player);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.omnicrola.pixelblaster.graphics;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Image;
 
 import com.omnicrola.pixelblaster.entity.IEntityShape;
 
@@ -11,5 +12,7 @@ public interface IGraphicsWrapper {
 	void setColor(Color color);
 
 	void drawShape(IEntityShape shape);
+
+	void drawImage(Image image, float x, float y);
 
 }

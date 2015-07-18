@@ -14,4 +14,6 @@ public interface IGameEntity {
 
 	void setVelocity(Vector2f newVelocity);
 
+	Vector2f getPosition();
+
 }

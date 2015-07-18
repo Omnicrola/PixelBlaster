@@ -1,6 +1,7 @@
 package com.omnicrola.pixelblaster.entity;
 
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public class EntityShape implements IEntityShape {
@@ -30,6 +31,11 @@ public class EntityShape implements IEntityShape {
 	public EntityShape setPosition(Vector2f position) {
 		this.position.set(position);
 		return this;
+	}
+
+	@Override
+	public Rectangle getBounds() {
+		return new Rectangle(getX(), getY(), this.image.getWidth(), this.image.getHeight());
 	}
 
 }
