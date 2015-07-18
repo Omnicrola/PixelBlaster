@@ -12,14 +12,17 @@ public class EntityShape implements IEntityShape {
 		this.position = new Vector2f();
 	}
 
+	@Override
 	public float getY() {
-		return this.position.x;
-	}
-
-	public float getX() {
 		return this.position.y;
 	}
 
+	@Override
+	public float getX() {
+		return this.position.x;
+	}
+
+	@Override
 	public Image getImage() {
 		return this.image;
 	}

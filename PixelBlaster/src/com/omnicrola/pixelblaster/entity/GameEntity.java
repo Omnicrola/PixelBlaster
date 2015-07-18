@@ -23,6 +23,16 @@ public class GameEntity implements IGameEntity, ICollidable {
 	}
 
 	@Override
+	public Vector2f getVelocity() {
+		return this.velocity.copy();
+	}
+
+	@Override
+	public void setVelocity(Vector2f newVelocity) {
+		this.velocity.set(newVelocity);
+	}
+
+	@Override
 	public void setPosition(Vector2f position) {
 		this.position.set(position);
 	}

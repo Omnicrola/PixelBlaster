@@ -1,5 +1,5 @@
 package com.omnicrola.pixelblaster.player;
 
-public interface IPlayerHandler {
+public interface IPlayerManager {
 
 }

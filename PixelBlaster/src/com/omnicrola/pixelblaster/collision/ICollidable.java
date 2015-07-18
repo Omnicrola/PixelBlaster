@@ -8,4 +8,8 @@ public interface ICollidable {
 
 	void setPosition(Vector2f position);
 
+	Vector2f getVelocity();
+
+	void setVelocity(Vector2f velocity);
+
 }

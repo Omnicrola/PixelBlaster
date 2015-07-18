@@ -2,6 +2,7 @@ package com.omnicrola.pixelblaster.graphics;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 import com.omnicrola.pixelblaster.entity.IEntityShape;
 
@@ -25,7 +26,9 @@ public class SlickGraphicsWrapper implements IGraphicsWrapper {
 
 	@Override
 	public void drawShape(IEntityShape shape) {
-		this.graphics.drawImage(shape.getImage(), shape.getX(), shape.getY());
+		final Image image = shape.getImage();
+		final float y = shape.getY() - image.getHeight();
+		this.graphics.drawImage(image, shape.getX(), y);
 	}
 
 }
