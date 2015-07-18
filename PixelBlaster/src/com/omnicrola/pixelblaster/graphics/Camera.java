@@ -6,6 +6,8 @@ import com.omnicrola.pixelblaster.entity.IGameEntity;
 
 public class Camera {
 
+	private static final float VERTICAL_GUTTER = 100;
+	private static final float HORIZONTAL_GUTTER = 100;
 	private float xOffset;
 	private float yOffset;
 	private final int viewportWidth;
@@ -19,7 +21,7 @@ public class Camera {
 	}
 
 	public float getXOffset() {
-		return frameLeft();
+		return this.xOffset;
 	}
 
 	public void setXOffset(float xOffset) {
@@ -31,38 +33,38 @@ public class Camera {
 	}
 
 	public float getYOffset() {
-		return frameTop();
+		return this.yOffset;
 	}
 
 	public void focusOn(IGameEntity entity) {
 		final Rectangle bounds = entity.getShape().getBounds();
 		if (bounds.getMinX() < frameLeft()) {
-			this.xOffset = bounds.getMinX();
+			this.xOffset = bounds.getMinX() - HORIZONTAL_GUTTER;
 		}
 		if (bounds.getMaxX() > frameRight()) {
-			this.xOffset = bounds.getMaxX() - this.viewportWidth;
+			this.xOffset = bounds.getMaxX() - this.viewportWidth + HORIZONTAL_GUTTER;
 		}
 		if (bounds.getMaxY() < frameTop()) {
-			this.yOffset = bounds.getMaxY();
+			this.yOffset = bounds.getMaxY() - VERTICAL_GUTTER;
 		}
 		if (bounds.getMinY() > frameBottom()) {
-			this.yOffset = bounds.getMinY() - this.viewportHeight;
+			this.yOffset = bounds.getMinY() - this.viewportHeight + VERTICAL_GUTTER;
 		}
 	}
 
 	private float frameTop() {
-		return this.yOffset;
+		return this.yOffset + VERTICAL_GUTTER;
 	}
 
 	private float frameBottom() {
-		return frameTop() + this.viewportHeight;
+		return this.yOffset + this.viewportHeight + VERTICAL_GUTTER;
 	}
 
 	private float frameLeft() {
-		return this.xOffset;
+		return this.xOffset + HORIZONTAL_GUTTER;
 	}
 
 	private float frameRight() {
-		return frameLeft() + this.viewportWidth;
+		return this.xOffset + this.viewportWidth - HORIZONTAL_GUTTER;
 	}
 }
