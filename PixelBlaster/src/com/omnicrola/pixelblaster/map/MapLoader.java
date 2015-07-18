@@ -1,5 +1,7 @@
 package com.omnicrola.pixelblaster.map;
 
+import java.util.Random;
+
 import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class MapLoader {
@@ -16,10 +18,11 @@ public class MapLoader {
 	}
 
 	private short[][] createTileData() {
+		final Random random = new Random(159);
 		final short[][] data = new short[12][12];
 		for (int x = 0; x < data.length; x++) {
 			data[x][5] = 1;
-			data[x][4] = (short) ((Math.random() < 0.5) ? 0 : 1);
+			data[x][4] = (short) ((random.nextFloat() < 0.5) ? 0 : 1);
 		}
 		return data;
 	}

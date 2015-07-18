@@ -29,8 +29,8 @@ public class LevelMap implements ILevelMap {
 
 	@Override
 	public float getFloorAt(Vector2f position) {
-		final int x = (int) Math.floor(position.x / this.tileSize);
-		int y = (int) Math.floor(position.y / this.tileSize);
+		final int x = (int) position.x / this.tileSize;
+		int y = (int) position.y / this.tileSize;
 		if (y < 0) {
 			y = 0;
 		}

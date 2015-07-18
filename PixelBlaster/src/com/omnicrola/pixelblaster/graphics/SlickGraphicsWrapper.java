@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import com.omnicrola.pixelblaster.entity.IEntityShape;
+import com.omnicrola.pixelblaster.main.GameSettings;
 
 public class SlickGraphicsWrapper implements IGraphicsWrapper {
 
@@ -42,10 +43,15 @@ public class SlickGraphicsWrapper implements IGraphicsWrapper {
 
 	@Override
 	public void drawImage(Image image, float x, float y) {
-		x = x - this.camera.getXOffset();
-		y = y - this.camera.getYOffset();
-		this.graphics.drawImage(image, x, y);
-		this.graphics.setColor(Color.green);
-		this.graphics.drawRect(x, y, image.getWidth(), image.getHeight());
+		x = this.camera.translateX(x);
+		y = this.camera.translateY(y);
+		final float scaledWidth = this.camera.scale(image.getWidth());
+		final float scaledHeight = this.camera.scale(image.getHeight());
+		this.graphics.drawImage(image, x, y, x + scaledWidth, y + scaledHeight, 0, 0, image.getWidth(),
+				image.getHeight());
+		if (GameSettings.DEBUG) {
+			this.graphics.setColor(Color.green);
+			this.graphics.drawRect(x, y, scaledWidth, scaledHeight);
+		}
 	}
 }

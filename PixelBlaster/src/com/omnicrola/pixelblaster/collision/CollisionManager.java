@@ -2,6 +2,7 @@ package com.omnicrola.pixelblaster.collision;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
@@ -36,10 +37,14 @@ public class CollisionManager implements IGameSubsystem, ICollisionManager {
 
 	private void collideWithFloor(float delta, final IMapManager mapManager) {
 		for (final ICollidable entity : this.collidables) {
-			final Vector2f position = entity.getPosition();
-			final float elevation = mapManager.getFloorFrom(position);
+			final Rectangle bounds = entity.getShape().getBounds();
+			final Vector2f leftFoot = new Vector2f(bounds.getMinX(), bounds.getMaxY());
+			final Vector2f rightFoot = new Vector2f(bounds.getMaxX(), bounds.getMaxY());
+			final float leftFootFloor = mapManager.getFloorFrom(leftFoot);
+			final float rightFootFloor = mapManager.getFloorFrom(rightFoot);
+			final float elevation = Math.min(leftFootFloor, rightFootFloor);
 			final Vector2f velocity = entity.getVelocity();
-			if (position.y < elevation) {
+			if (bounds.getMaxY() < elevation) {
 				velocity.y += GameSettings.GRAVITY_ACCELLERATION * delta;
 			} else if (velocity.y > 0) {
 				velocity.y = 0;

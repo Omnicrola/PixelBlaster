@@ -35,7 +35,8 @@ public class EntityShape implements IEntityShape {
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(getX(), getY(), this.image.getWidth(), this.image.getHeight());
+		final int height = this.image.getHeight();
+		return new Rectangle(getX(), getY() - height, this.image.getWidth(), height);
 	}
 
 }

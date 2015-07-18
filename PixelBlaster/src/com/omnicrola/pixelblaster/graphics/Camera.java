@@ -12,8 +12,10 @@ public class Camera {
 	private float yOffset;
 	private final int viewportWidth;
 	private final int viewportHeight;
+	private final float scale;
 
-	public Camera(int viewportWidth, int viewportHeight) {
+	public Camera(float scale, int viewportWidth, int viewportHeight) {
+		this.scale = scale;
 		this.viewportWidth = viewportWidth;
 		this.viewportHeight = viewportHeight;
 		this.xOffset = 0;
@@ -24,31 +26,28 @@ public class Camera {
 		return this.xOffset;
 	}
 
-	public void setXOffset(float xOffset) {
-		this.xOffset = xOffset;
-	}
-
-	public void setYOffset(float yOffset) {
-		this.yOffset = yOffset;
-	}
-
 	public float getYOffset() {
 		return this.yOffset;
 	}
 
 	public void focusOn(IGameEntity entity) {
 		final Rectangle bounds = entity.getShape().getBounds();
-		if (bounds.getMinX() < frameLeft()) {
-			this.xOffset = bounds.getMinX() - HORIZONTAL_GUTTER;
+		final float minX = scale(bounds.getMinX());
+		final float maxX = scale(bounds.getMaxX());
+		final float minY = scale(bounds.getMinY());
+		final float maxY = scale(bounds.getMaxY());
+
+		if (minX < frameLeft()) {
+			this.xOffset = minX - HORIZONTAL_GUTTER;
 		}
-		if (bounds.getMaxX() > frameRight()) {
-			this.xOffset = bounds.getMaxX() - this.viewportWidth + HORIZONTAL_GUTTER;
+		if (maxX > frameRight()) {
+			this.xOffset = maxX - this.viewportWidth + HORIZONTAL_GUTTER;
 		}
-		if (bounds.getMinY() < frameTop()) {
-			this.yOffset = bounds.getMinY() - VERTICAL_GUTTER;
+		if (minY < frameTop()) {
+			this.yOffset = minY - VERTICAL_GUTTER;
 		}
-		if (bounds.getMaxY() > frameBottom()) {
-			this.yOffset = bounds.getMaxY() - this.viewportHeight + VERTICAL_GUTTER;
+		if (maxY > frameBottom()) {
+			this.yOffset = maxY - this.viewportHeight + VERTICAL_GUTTER;
 		}
 	}
 
@@ -66,5 +65,17 @@ public class Camera {
 
 	private float frameRight() {
 		return this.xOffset + this.viewportWidth - HORIZONTAL_GUTTER;
+	}
+
+	public float scale(float value) {
+		return value * this.scale;
+	}
+
+	public float translateX(float x) {
+		return (x * this.scale) - this.xOffset;
+	}
+
+	public float translateY(float y) {
+		return (y * this.scale) - this.yOffset;
 	}
 }
