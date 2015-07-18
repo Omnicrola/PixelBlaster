@@ -28,13 +28,26 @@ public class LevelMap implements ILevelMap {
 	}
 
 	@Override
+	public boolean isWallAt(float x, float y) {
+		final short tile = getTile(alignToGrid(x), alignToGrid(y));
+		if (tile <= 0) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
 	public float getFloorAt(Vector2f position) {
-		final int x = (int) position.x / this.tileSize;
-		int y = (int) position.y / this.tileSize;
+		final int x = alignToGrid(position.x);
+		int y = alignToGrid(position.y);
 		if (y < 0) {
 			y = 0;
 		}
 		return findSolidTile(x, y);
+	}
+
+	private int alignToGrid(float x2) {
+		return (int) x2 / this.tileSize;
 	}
 
 	private float findSolidTile(int x, int y) {

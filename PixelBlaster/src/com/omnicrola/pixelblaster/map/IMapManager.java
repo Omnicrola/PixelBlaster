@@ -6,4 +6,6 @@ public interface IMapManager {
 
 	float getFloorFrom(Vector2f position);
 
+	boolean isWallAt(float x, float y);
+
 }

@@ -47,4 +47,9 @@ public class MapManager implements IGameSubsystem, IMapManager {
 		return this.currentMap.getFloorAt(position);
 	}
 
+	@Override
+	public boolean isWallAt(float x, float y) {
+		return this.currentMap.isWallAt(x, y);
+	}
+
 }

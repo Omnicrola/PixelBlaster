@@ -32,25 +32,40 @@ public class CollisionManager implements IGameSubsystem, ICollisionManager {
 	@Override
 	public void update(IGameContext gameContext, float delta) {
 		final IMapManager mapManager = gameContext.getSubsystem(IMapManager.class);
-		collideWithFloor(delta, mapManager);
+		for (final ICollidable entity : this.collidables) {
+			collideWithFloor(delta, mapManager, entity);
+			collideWithWalls(delta, mapManager, entity);
+		}
 	}
 
-	private void collideWithFloor(float delta, final IMapManager mapManager) {
-		for (final ICollidable entity : this.collidables) {
-			final Rectangle bounds = entity.getShape().getBounds();
-			final Vector2f leftFoot = new Vector2f(bounds.getMinX(), bounds.getMaxY());
-			final Vector2f rightFoot = new Vector2f(bounds.getMaxX(), bounds.getMaxY());
-			final float leftFootFloor = mapManager.getFloorFrom(leftFoot);
-			final float rightFootFloor = mapManager.getFloorFrom(rightFoot);
-			final float elevation = Math.min(leftFootFloor, rightFootFloor);
-			final Vector2f velocity = entity.getVelocity();
-			if (bounds.getMaxY() < elevation) {
-				velocity.y += GameSettings.GRAVITY_ACCELLERATION * delta;
-			} else if (velocity.y > 0) {
-				velocity.y = 0;
-			}
-			entity.setVelocity(velocity);
+	private void collideWithWalls(float delta, IMapManager mapManager, ICollidable entity) {
+		final Rectangle bounds = entity.getShape().getBounds();
+		final boolean hitLeftWall = mapManager.isWallAt(bounds.getMinX(), bounds.getMaxY() - 5);
+		final boolean hitRightWall = mapManager.isWallAt(bounds.getMaxX(), bounds.getMaxY() - 5);
+		final Vector2f velocity = entity.getVelocity();
+		if (hitLeftWall && velocity.x < 0) {
+			velocity.x = 0;
 		}
+		if (hitRightWall && velocity.x > 0) {
+			velocity.x = 0;
+		}
+		entity.setVelocity(velocity);
+	}
+
+	private void collideWithFloor(float delta, final IMapManager mapManager, final ICollidable entity) {
+		final Rectangle bounds = entity.getShape().getBounds();
+		final Vector2f leftFoot = new Vector2f(bounds.getMinX(), bounds.getMaxY());
+		final Vector2f rightFoot = new Vector2f(bounds.getMaxX(), bounds.getMaxY());
+		final float leftFootFloor = mapManager.getFloorFrom(leftFoot);
+		final float rightFootFloor = mapManager.getFloorFrom(rightFoot);
+		final float elevation = Math.min(leftFootFloor, rightFootFloor);
+		final Vector2f velocity = entity.getVelocity();
+		if (bounds.getMaxY() <= elevation) {
+			velocity.y += GameSettings.GRAVITY_ACCELLERATION * delta;
+		} else if (velocity.y > 0) {
+			velocity.y = 0;
+		}
+		entity.setVelocity(velocity);
 	}
 
 	@Override
