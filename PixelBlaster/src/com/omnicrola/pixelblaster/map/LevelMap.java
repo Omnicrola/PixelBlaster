@@ -5,6 +5,7 @@ import org.newdawn.slick.geom.Vector2f;
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 
 public class LevelMap implements ILevelMap {
+	private static final float WORLD_BOTTOM = 5000;
 	private final short[][] tileData;
 	private final IMapTile[] mapTiles;
 	private final int tileSize;
@@ -28,7 +29,32 @@ public class LevelMap implements ILevelMap {
 
 	@Override
 	public float getFloorAt(Vector2f position) {
-		return 500;
+		final int x = (int) Math.floor(position.x / this.tileSize);
+		int y = (int) Math.floor(position.y / this.tileSize);
+		if (y < 0) {
+			y = 0;
+		}
+		return findSolidTile(x, y);
+	}
+
+	private float findSolidTile(int x, int y) {
+		final short tileId = getTile(x, y);
+		if (tileId == -1) {
+			return WORLD_BOTTOM;
+		} else if (tileId == 0) {
+			return findSolidTile(x, y + 1);
+		} else {
+			return y * this.tileSize;
+		}
+	}
+
+	private short getTile(int x, int y) {
+		if (x >= 0 && x < this.tileData.length) {
+			if (y >= 0 && y < this.tileData[x].length) {
+				return this.tileData[x][y];
+			}
+		}
+		return -1;
 	}
 
 }

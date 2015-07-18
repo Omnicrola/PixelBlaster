@@ -44,11 +44,11 @@ public class Camera {
 		if (bounds.getMaxX() > frameRight()) {
 			this.xOffset = bounds.getMaxX() - this.viewportWidth + HORIZONTAL_GUTTER;
 		}
-		if (bounds.getMaxY() < frameTop()) {
-			this.yOffset = bounds.getMaxY() - VERTICAL_GUTTER;
+		if (bounds.getMinY() < frameTop()) {
+			this.yOffset = bounds.getMinY() - VERTICAL_GUTTER;
 		}
-		if (bounds.getMinY() > frameBottom()) {
-			this.yOffset = bounds.getMinY() - this.viewportHeight + VERTICAL_GUTTER;
+		if (bounds.getMaxY() > frameBottom()) {
+			this.yOffset = bounds.getMaxY() - this.viewportHeight + VERTICAL_GUTTER;
 		}
 	}
 
