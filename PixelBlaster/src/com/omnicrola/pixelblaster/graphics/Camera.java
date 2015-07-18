@@ -7,7 +7,8 @@ import com.omnicrola.pixelblaster.entity.IGameEntity;
 public class Camera {
 
 	private static final float VERTICAL_GUTTER = 100;
-	private static final float HORIZONTAL_GUTTER = 100;
+	private static final float LEFT_HORIZONTAL_GUTTER = 100;
+	private static final float RIGHT_HORIZONTAL_GUTTER = 300;
 	private float xOffset;
 	private float yOffset;
 	private final int viewportWidth;
@@ -38,10 +39,10 @@ public class Camera {
 		final float maxY = scale(bounds.getMaxY());
 
 		if (minX < frameLeft()) {
-			this.xOffset = minX - HORIZONTAL_GUTTER;
+			this.xOffset = minX - LEFT_HORIZONTAL_GUTTER;
 		}
 		if (maxX > frameRight()) {
-			this.xOffset = maxX - this.viewportWidth + HORIZONTAL_GUTTER;
+			this.xOffset = maxX - this.viewportWidth + RIGHT_HORIZONTAL_GUTTER;
 		}
 		if (minY < frameTop()) {
 			this.yOffset = minY - VERTICAL_GUTTER;
@@ -60,11 +61,11 @@ public class Camera {
 	}
 
 	private float frameLeft() {
-		return this.xOffset + HORIZONTAL_GUTTER;
+		return this.xOffset + LEFT_HORIZONTAL_GUTTER;
 	}
 
 	private float frameRight() {
-		return this.xOffset + this.viewportWidth - HORIZONTAL_GUTTER;
+		return this.xOffset + this.viewportWidth - RIGHT_HORIZONTAL_GUTTER;
 	}
 
 	public float scale(float value) {

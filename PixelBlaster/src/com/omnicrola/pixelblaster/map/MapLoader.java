@@ -19,7 +19,7 @@ public class MapLoader {
 
 	private short[][] createTileData() {
 		final Random random = new Random(159);
-		final short[][] data = new short[12][12];
+		final short[][] data = new short[64][12];
 		for (int x = 0; x < data.length; x++) {
 			data[x][5] = 1;
 			data[x][4] = (short) ((random.nextFloat() < 0.5) ? 0 : 1);
