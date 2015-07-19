@@ -4,6 +4,6 @@ import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 
 public interface IMapTile {
 
-	void render(int x, int y, IGraphicsWrapper graphics);
+	void render(float x, float y, IGraphicsWrapper graphics);
 
 }

@@ -34,7 +34,7 @@ public class MainGameState extends BasicGameState {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		if (!this.isInitialized) {
 			this.assetManager = new AssetManager();
-			this.camera = new Camera(0.5f, container.getWidth(), container.getHeight());
+			this.camera = new Camera(GameSettings.PIXEL_TO_METER_RATIO, container.getWidth(), container.getHeight());
 			this.gameContext = new SlickGameContext(this.interlink, container, this.assetManager, this.camera);
 			for (final IGameSubsystem subsystem : this.subsystems) {
 				subsystem.init(this.gameContext);

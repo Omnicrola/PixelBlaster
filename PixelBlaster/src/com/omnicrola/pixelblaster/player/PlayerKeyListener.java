@@ -3,15 +3,16 @@ package com.omnicrola.pixelblaster.player;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.KeyListener;
-import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.main.GameSettings;
+import com.omnicrola.pixelblaster.physics.EntityPhysics;
 
 public class PlayerKeyListener implements KeyListener {
 
-	private static final float DAMPENING_THRESHOLD = 0.001f;
 	boolean moveLeft;
 	boolean moveRight;
+	boolean moveUp;
+	boolean moveDown;
 	boolean isJumping;
 	private final Player player;
 
@@ -37,34 +38,22 @@ public class PlayerKeyListener implements KeyListener {
 	}
 
 	public void update(float delta) {
-		final Vector2f velocity = this.player.getVelocity();
-		boolean noAction = true;
+		final EntityPhysics physics = this.player.getPhysics();
 		if (this.moveRight) {
-			accellerateRight(velocity, delta);
-			noAction = false;
+			physics.moveRight(GameSettings.PLAYER_ACCELERATION);
 		}
 		if (this.moveLeft) {
-			accellerateLeft(velocity, delta);
-			noAction = false;
+			physics.moveLeft(GameSettings.PLAYER_ACCELERATION);
 		}
-		if (this.isJumping) {
-			jump(velocity, delta);
-			noAction = false;
+		if (this.moveUp) {
+			physics.moveUp(GameSettings.PLAYER_ACCELERATION);
 		}
-		if (noAction) {
-			decellerate(velocity);
+		if (this.moveDown) {
+			physics.moveDown(GameSettings.PLAYER_ACCELERATION);
 		}
-		dampening(velocity);
-		this.player.setVelocity(velocity);
-	}
-
-	private void dampening(Vector2f velocity) {
-		if (Math.abs(velocity.x) < DAMPENING_THRESHOLD) {
-			velocity.x = 0;
-		}
-		if (Math.abs(velocity.y) < DAMPENING_THRESHOLD) {
-			velocity.y = 0;
-		}
+		// if (this.isJumping) {
+		// physics.jump(GameSettings.PLAYER_JUMP_SPEED);
+		// }
 	}
 
 	@Override
@@ -73,8 +62,12 @@ public class PlayerKeyListener implements KeyListener {
 			this.moveRight = true;
 		} else if (key == Keyboard.KEY_LEFT) {
 			this.moveLeft = true;
-		} else if (key == Keyboard.KEY_SPACE) {
-			this.isJumping = true;
+		} else if (key == Keyboard.KEY_UP) {
+			this.moveUp = true;
+		} else if (key == Keyboard.KEY_DOWN) {
+			this.moveDown = true;
+			// } else if (key == Keyboard.KEY_SPACE) {
+			// this.isJumping = true;
 		}
 	}
 
@@ -84,33 +77,12 @@ public class PlayerKeyListener implements KeyListener {
 			this.moveRight = false;
 		} else if (key == Keyboard.KEY_LEFT) {
 			this.moveLeft = false;
-		} else if (key == Keyboard.KEY_SPACE) {
-			this.isJumping = false;
-		}
-	}
-
-	private void jump(Vector2f velocity, float delta) {
-		if (velocity.y == 0) {
-			velocity.y = GameSettings.PLAYER_JUMP_SPEED * -1;
-			this.isJumping = false;
-		}
-	}
-
-	private void decellerate(Vector2f velocity) {
-		if (velocity.length() > 0) {
-			velocity.x *= GameSettings.PLAYER_DECELLERATION_SCALE;
-		}
-	}
-
-	private void accellerateRight(Vector2f velocity, float delta) {
-		if (velocity.length() < GameSettings.MAX_PLAYER_SPEED) {
-			velocity.x += GameSettings.PLAYER_ACCELERATION * delta;
-		}
-	}
-
-	private void accellerateLeft(Vector2f velocity, float delta) {
-		if (velocity.length() < GameSettings.MAX_PLAYER_SPEED) {
-			velocity.x -= GameSettings.PLAYER_ACCELERATION * delta;
+		} else if (key == Keyboard.KEY_UP) {
+			this.moveUp = false;
+		} else if (key == Keyboard.KEY_DOWN) {
+			this.moveDown = false;
+			// } else if (key == Keyboard.KEY_SPACE) {
+			// this.isJumping = true;
 		}
 	}
 

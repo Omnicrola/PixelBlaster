@@ -5,24 +5,21 @@ import java.util.List;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.collision.ICollidable;
-import com.omnicrola.pixelblaster.physics.EntityPhysicsDefinition;
+import com.omnicrola.pixelblaster.physics.EntityPhysics;
 
-public class GameEntity implements IGameEntity, ICollidable {
+public class GameEntity implements IGameEntity {
 	private final Vector2f position;
-	private final Vector2f velocity;
 	private final boolean isAlive;
 	private final EntitySprite sprite;
 	private float rotation;
 	private final List<IUpdateBehavior> updateBehaviors;
-	private final EntityPhysicsDefinition physicsDefinition;
+	private final EntityPhysics physics;
 
-	public GameEntity(EntitySprite sprite, EntityPhysicsDefinition physicsDefinition) {
+	public GameEntity(EntitySprite sprite, EntityPhysics physics) {
 		this.sprite = sprite;
-		this.physicsDefinition = physicsDefinition;
+		this.physics = physics;
 		this.updateBehaviors = new ArrayList<>();
 		this.position = new Vector2f();
-		this.velocity = new Vector2f();
 		this.rotation = 0f;
 		this.isAlive = true;
 	}
@@ -30,16 +27,6 @@ public class GameEntity implements IGameEntity, ICollidable {
 	@Override
 	public Vector2f getPosition() {
 		return this.position.copy();
-	}
-
-	@Override
-	public Vector2f getVelocity() {
-		return this.velocity.copy();
-	}
-
-	@Override
-	public void setVelocity(Vector2f newVelocity) {
-		this.velocity.set(newVelocity);
 	}
 
 	@Override
@@ -54,9 +41,7 @@ public class GameEntity implements IGameEntity, ICollidable {
 
 	@Override
 	public void update(float delta) {
-		for (final IUpdateBehavior updateBehavior : this.updateBehaviors) {
-			updateBehavior.update(this, delta);
-		}
+		this.physics.update(this, delta);
 	}
 
 	@Override
@@ -65,8 +50,8 @@ public class GameEntity implements IGameEntity, ICollidable {
 	}
 
 	@Override
-	public EntityPhysicsDefinition getPhysicsDefinition() {
-		return this.physicsDefinition;
+	public EntityPhysics getPhysics() {
+		return this.physics;
 	}
 
 	@Override

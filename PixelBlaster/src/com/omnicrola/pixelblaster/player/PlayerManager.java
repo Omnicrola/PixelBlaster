@@ -2,6 +2,7 @@ package com.omnicrola.pixelblaster.player;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.entity.EntitySprite;
@@ -26,8 +27,9 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 
 	@Override
 	public void init(IGameContext context) throws SlickException {
-		this.player = new Player(new EntitySprite(new Image("sprites/alienGreen_stand.png")));
-		this.player.setPosition(new Vector2f(100, 100));
+		this.player = new Player(new EntitySprite(new Image("sprites/alienGreen_stand.png"), new Rectangle(0, 0, 0.5f,
+				1f)));
+		this.player.setPosition(new Vector2f(1, 1));
 		this.keyListener = new PlayerKeyListener(this.player);
 		context.getSubsystem(IEntityManager.class).addEntity(this.player);
 		context.getInput().addKeyListener(this.keyListener);

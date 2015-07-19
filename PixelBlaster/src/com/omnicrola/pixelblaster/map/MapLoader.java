@@ -2,6 +2,7 @@ package com.omnicrola.pixelblaster.map;
 
 import java.util.Random;
 
+import com.omnicrola.pixelblaster.main.GameSettings;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class MapLoader {
@@ -14,7 +15,7 @@ public class MapLoader {
 	public ILevelMap load(int currentLevel) {
 		final short[][] tileData = createTileData();
 		final IMapTile[] mapTiles = createTiles();
-		return new LevelMap(128, mapTiles, tileData);
+		return new LevelMap(GameSettings.MAP_TILE_SIZE_IN_METERS, mapTiles, tileData);
 	}
 
 	private short[][] createTileData() {

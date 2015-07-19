@@ -1,7 +1,5 @@
 package com.omnicrola.pixelblaster.map;
 
-import org.newdawn.slick.geom.Vector2f;
-
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
@@ -40,16 +38,6 @@ public class MapManager implements IGameSubsystem, IMapManager {
 	@Override
 	public void render(IGraphicsWrapper graphics) {
 		this.currentMap.render(graphics);
-	}
-
-	@Override
-	public float getFloorFrom(Vector2f position) {
-		return this.currentMap.getFloorAt(position);
-	}
-
-	@Override
-	public boolean isWallAt(float x, float y) {
-		return this.currentMap.isWallAt(x, y);
 	}
 
 }

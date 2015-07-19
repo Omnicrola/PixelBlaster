@@ -5,24 +5,24 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public class EntitySprite implements IEntitySprite {
-	private final Vector2f position;
 	private final Image image;
 	private float rotation;
+	private final Rectangle bounds;
 
-	public EntitySprite(Image image) {
+	public EntitySprite(Image image, Rectangle bounds) {
 		this.image = image;
-		this.position = new Vector2f();
+		this.bounds = bounds;
 		this.rotation = 0f;
 	}
 
 	@Override
 	public float getY() {
-		return this.position.y;
+		return this.bounds.getY();
 	}
 
 	@Override
 	public float getX() {
-		return this.position.x;
+		return this.bounds.getX();
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class EntitySprite implements IEntitySprite {
 	}
 
 	public EntitySprite setPosition(Vector2f position) {
-		this.position.set(position);
+		this.bounds.setLocation(position);
 		return this;
 	}
 
@@ -47,8 +47,6 @@ public class EntitySprite implements IEntitySprite {
 
 	@Override
 	public Rectangle getBounds() {
-		final int height = this.image.getHeight();
-		return new Rectangle(getX(), getY() - height, this.image.getWidth(), height);
+		return new Rectangle(this.bounds.getX(), this.bounds.getY(), this.bounds.getWidth(), this.bounds.getHeight());
 	}
-
 }
