@@ -3,21 +3,13 @@ package com.omnicrola.pixelblaster.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.omnicrola.pixelblaster.main.MainGameState;
-import com.omnicrola.pixelblaster.main.PixelBlasterGame;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class MainMenuBuilder {
-	private final MainGameState mainState;
-	private final PixelBlasterGame game;
 
-	public MainMenuBuilder(PixelBlasterGame game, MainGameState mainState) {
-		this.game = game;
-		this.mainState = mainState;
-	}
-
-	public MainMenu build() {
+	public MainMenu build(StateBasedGame game) {
 		final List<ButtonElement> options = new ArrayList<>();
-		options.add(createPlayElement());
+		options.add(createPlayElement(game));
 		options.add(createQuitElement());
 		final MainMenu mainMenu = new MainMenu(options);
 		mainMenu.setPosition(100, 100);
@@ -32,10 +24,10 @@ public class MainMenuBuilder {
 		return buttonElement;
 	}
 
-	private ButtonElement createPlayElement() {
+	private ButtonElement createPlayElement(StateBasedGame game) {
 		final ButtonElement buttonElement = new ButtonElement("Play");
 		buttonElement.setDimensions(200, 30);
-		buttonElement.addEventListener(new StartGameListener(this.game, this.mainState));
+		buttonElement.addEventListener(new StartGameListener(game));
 		return buttonElement;
 	}
 

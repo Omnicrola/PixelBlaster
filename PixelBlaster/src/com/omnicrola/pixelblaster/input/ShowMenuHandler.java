@@ -1,25 +1,26 @@
 package com.omnicrola.pixelblaster.input;
 
 import org.lwjgl.input.Keyboard;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
+import com.omnicrola.pixelblaster.main.GameStates;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
-import com.omnicrola.pixelblaster.main.MenuState;
-import com.omnicrola.pixelblaster.main.PixelBlasterGame;
 
 public class ShowMenuHandler implements IGameSubsystem, KeyListener {
 
-	private final PixelBlasterGame game;
-	private final MenuState menuState;
+	private final StateBasedGame game;
 
-	public ShowMenuHandler(PixelBlasterGame game, MenuState menuState) {
+	public ShowMenuHandler(StateBasedGame game) {
 		this.game = game;
-		this.menuState = menuState;
 	}
 
 	@Override
@@ -63,7 +64,9 @@ public class ShowMenuHandler implements IGameSubsystem, KeyListener {
 	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Keyboard.KEY_ESCAPE) {
-			this.game.setState(this.menuState);
+			final FadeOutTransition leave = new FadeOutTransition(Color.black, 250);
+			final FadeInTransition enter = new FadeInTransition(Color.black, 250);
+			this.game.enterState(GameStates.MAIN_MENU.ordinal(), leave, enter);
 		}
 	}
 

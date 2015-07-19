@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 import com.omnicrola.pixelblaster.graphics.Camera;
 import com.omnicrola.pixelblaster.graphics.SlickGraphicsWrapper;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
-public class MainGameState implements IGameState {
+public class MainGameState extends BasicGameState {
 	private final ArrayList<IGameSubsystem> subsystems;
 	private boolean isInitialized = false;
 	private final GameSubsystemInterlink interlink;
@@ -29,7 +31,7 @@ public class MainGameState implements IGameState {
 	}
 
 	@Override
-	public void init(GameContainer container) throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		if (!this.isInitialized) {
 			this.assetManager = new AssetManager();
 			this.camera = new Camera(0.5f, container.getWidth(), container.getHeight());
@@ -42,16 +44,21 @@ public class MainGameState implements IGameState {
 	}
 
 	@Override
-	public void render(GameContainer container, Graphics graphics) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException {
 		for (final IGameSubsystem gameSubsystem : this.subsystems) {
 			gameSubsystem.render(new SlickGraphicsWrapper(this.camera, graphics));
 		}
 	}
 
 	@Override
-	public void update(GameContainer container, float delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		for (final IGameSubsystem subsystem : this.subsystems) {
 			subsystem.update(this.gameContext, delta);
 		}
+	}
+
+	@Override
+	public int getID() {
+		return GameStates.PLAY.ordinal();
 	}
 }

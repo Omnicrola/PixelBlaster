@@ -8,5 +8,6 @@
 		</accessrules>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick2d"/>
+	<classpathentry kind="lib" path="lib/jbox2d-library-2.1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

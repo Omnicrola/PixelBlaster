@@ -1,21 +1,25 @@
 package com.omnicrola.pixelblaster.gui;
 
-import com.omnicrola.pixelblaster.main.MainGameState;
-import com.omnicrola.pixelblaster.main.PixelBlasterGame;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+
+import com.omnicrola.pixelblaster.main.GameStates;
 
 public class StartGameListener implements IEventListener {
 
-	private final PixelBlasterGame game;
-	private final MainGameState mainState;
+	private final StateBasedGame game;
 
-	public StartGameListener(PixelBlasterGame game, MainGameState mainState) {
+	public StartGameListener(StateBasedGame game) {
 		this.game = game;
-		this.mainState = mainState;
 	}
 
 	@Override
 	public void trigger() {
-		this.game.setState(this.mainState);
+		final FadeOutTransition leave = new FadeOutTransition(Color.black, 250);
+		final FadeInTransition enter = new FadeInTransition(Color.black, 250);
+		this.game.enterState(GameStates.PLAY.ordinal(), leave, enter);
 	}
 
 }
