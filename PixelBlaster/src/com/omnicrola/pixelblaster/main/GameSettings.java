@@ -12,6 +12,8 @@ public class GameSettings {
 	public static final float CAMERA_SCROLL_SPEED = 0.1f;
 
 	public static final float PIXEL_TO_METER_RATIO = 50.0f;
-	public static final float MAP_TILE_SIZE_IN_METERS = 3.0f;
+	public static final float MAP_TILE_SIZE_IN_METERS = 2.0f;
+
+	public static final float FRICTION_GROUND = 0.3f;
 
 }

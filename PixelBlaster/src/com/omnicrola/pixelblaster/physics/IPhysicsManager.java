@@ -2,8 +2,8 @@ package com.omnicrola.pixelblaster.physics;
 
 public interface IPhysicsManager {
 
-	void addEntity(EntityPhysics entityPhysics);
+	void loadPhysics(IEntityPhysics entityPhysics);
 
-	void destroyEntity(EntityPhysics physics);
+	void destroyPhysics(IEntityPhysics physics);
 
 }

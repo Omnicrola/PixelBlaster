@@ -21,7 +21,7 @@ public class EntityManager implements IGameSubsystem, IEntityManager {
 	@Override
 	public void addEntity(IGameEntity entity) {
 		this.entities.add(entity);
-		this.physicsManager.addEntity(entity.getPhysics());
+		this.physicsManager.loadPhysics(entity.getPhysics());
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class EntityManager implements IGameSubsystem, IEntityManager {
 		for (final IGameEntity gameEntity : this.entityCopies) {
 			if (!gameEntity.isAlive()) {
 				this.entities.remove(gameEntity);
-				this.physicsManager.destroyEntity(gameEntity.getPhysics());
+				this.physicsManager.destroyPhysics(gameEntity.getPhysics());
 			}
 		}
 	}

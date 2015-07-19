@@ -4,6 +4,7 @@ import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
+import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 
 public class MapManager implements IGameSubsystem, IMapManager {
 
@@ -26,9 +27,15 @@ public class MapManager implements IGameSubsystem, IMapManager {
 	public void init(IGameContext context) {
 		if (!this.initialized) {
 			this.mapLoader = new MapLoader(context.getAssetManager());
-			this.currentMap = this.mapLoader.load(this.currentLevel);
+			loadMapForCurrentLevel(context.getSubsystem(IPhysicsManager.class));
 			this.initialized = true;
 		}
+	}
+
+	private void loadMapForCurrentLevel(IPhysicsManager physicsManager) {
+		this.currentMap = this.mapLoader.load(this.currentLevel);
+		physicsManager.loadPhysics(this.currentMap);
+
 	}
 
 	@Override

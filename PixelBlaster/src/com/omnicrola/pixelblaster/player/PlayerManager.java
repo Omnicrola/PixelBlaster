@@ -27,13 +27,18 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 
 	@Override
 	public void init(IGameContext context) throws SlickException {
-		this.player = new Player(new EntitySprite(new Image("sprites/alienGreen_stand.png"), new Rectangle(0, 0, 0.5f,
-				1f)));
-		this.player.setPosition(new Vector2f(1, 1));
+		buildPlayer();
 		this.keyListener = new PlayerKeyListener(this.player);
 		context.getSubsystem(IEntityManager.class).addEntity(this.player);
 		context.getInput().addKeyListener(this.keyListener);
 
+	}
+
+	private void buildPlayer() throws SlickException {
+		final Image image = new Image("sprites/alienGreen_stand.png");
+		final EntitySprite baseShape = new EntitySprite(image, new Rectangle(0, 0, 1f, 2f));
+		this.player = new Player(baseShape);
+		this.player.setPosition(new Vector2f(1, 1));
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package com.omnicrola.pixelblaster.entity;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.physics.EntityPhysics;
+import com.omnicrola.pixelblaster.physics.IEntityPhysics;
 
 public interface IGameEntity {
 
@@ -16,7 +16,7 @@ public interface IGameEntity {
 
 	void setPosition(Vector2f vector2f);
 
-	EntityPhysics getPhysics();
+	IEntityPhysics getPhysics();
 
 	void setRotation(float angle);
 
