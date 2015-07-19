@@ -13,6 +13,8 @@ import com.omnicrola.pixelblaster.main.IGameSubsystem;
 import com.omnicrola.pixelblaster.map.IMapManager;
 
 public class CollisionManager implements IGameSubsystem, ICollisionManager {
+	private static final int MARGIN_OF_ERROR = 5;
+	private static final float MAX_FALL_SPEED = 1.5f;
 	private final ArrayList<ICollidable> collidables;
 
 	public CollisionManager() {
@@ -40,8 +42,8 @@ public class CollisionManager implements IGameSubsystem, ICollisionManager {
 
 	private void collideWithWalls(float delta, IMapManager mapManager, ICollidable entity) {
 		final Rectangle bounds = entity.getShape().getBounds();
-		final boolean hitLeftWall = mapManager.isWallAt(bounds.getMinX(), bounds.getMaxY() - 5);
-		final boolean hitRightWall = mapManager.isWallAt(bounds.getMaxX(), bounds.getMaxY() - 5);
+		final boolean hitLeftWall = mapManager.isWallAt(bounds.getMinX(), bounds.getMaxY() - MARGIN_OF_ERROR);
+		final boolean hitRightWall = mapManager.isWallAt(bounds.getMaxX(), bounds.getMaxY() - MARGIN_OF_ERROR);
 		final Vector2f velocity = entity.getVelocity();
 		if (hitLeftWall && velocity.x < 0) {
 			velocity.x = 0;
@@ -54,14 +56,17 @@ public class CollisionManager implements IGameSubsystem, ICollisionManager {
 
 	private void collideWithFloor(float delta, final IMapManager mapManager, final ICollidable entity) {
 		final Rectangle bounds = entity.getShape().getBounds();
-		final Vector2f leftFoot = new Vector2f(bounds.getMinX(), bounds.getMaxY());
-		final Vector2f rightFoot = new Vector2f(bounds.getMaxX(), bounds.getMaxY());
+		final Vector2f leftFoot = new Vector2f(bounds.getMinX() + MARGIN_OF_ERROR, bounds.getMaxY());
+		final Vector2f rightFoot = new Vector2f(bounds.getMaxX() - MARGIN_OF_ERROR, bounds.getMaxY());
 		final float leftFootFloor = mapManager.getFloorFrom(leftFoot);
 		final float rightFootFloor = mapManager.getFloorFrom(rightFoot);
 		final float elevation = Math.min(leftFootFloor, rightFootFloor);
 		final Vector2f velocity = entity.getVelocity();
 		if (bounds.getMaxY() <= elevation) {
 			velocity.y += GameSettings.GRAVITY_ACCELLERATION * delta;
+			if (velocity.y > MAX_FALL_SPEED) {
+				velocity.y = MAX_FALL_SPEED;
+			}
 		} else if (velocity.y > 0) {
 			velocity.y = 0;
 		}

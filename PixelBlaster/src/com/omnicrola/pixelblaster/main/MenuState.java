@@ -4,21 +4,23 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import com.omnicrola.pixelblaster.gui.MainMenu;
+import com.omnicrola.pixelblaster.gui.MainMenuBuilder;
 import com.omnicrola.pixelblaster.input.MainMenuKeyHandler;
 
 public class MenuState implements IGameState {
 
-	private final MainGameState mainGameState;
-	private final PixelBlasterGame game;
+	private MainMenu menu;
+	private final MainMenuBuilder menuBuilder;
 
-	public MenuState(PixelBlasterGame game, MainGameState mainGameState) {
-		this.game = game;
-		this.mainGameState = mainGameState;
+	public MenuState(MainMenuBuilder menuBuilder) {
+		this.menuBuilder = menuBuilder;
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		final MainMenuKeyHandler keyHandler = new MainMenuKeyHandler(this.game, this.mainGameState);
+		this.menu = this.menuBuilder.build();
+		final MainMenuKeyHandler keyHandler = new MainMenuKeyHandler(this.menu);
 		container.getInput().addKeyListener(keyHandler);
 	}
 
@@ -28,7 +30,7 @@ public class MenuState implements IGameState {
 
 	@Override
 	public void render(GameContainer container, Graphics graphics) throws SlickException {
-		graphics.drawString("Main Menu", 100, 100);
+		this.menu.render(graphics, 0, 0);
 	}
 
 }

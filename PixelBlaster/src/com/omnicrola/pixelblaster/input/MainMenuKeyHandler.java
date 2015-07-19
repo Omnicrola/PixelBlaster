@@ -4,17 +4,14 @@ import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.KeyListener;
 
-import com.omnicrola.pixelblaster.main.MainGameState;
-import com.omnicrola.pixelblaster.main.PixelBlasterGame;
+import com.omnicrola.pixelblaster.gui.MainMenu;
 
 public class MainMenuKeyHandler implements KeyListener {
 
-	private final PixelBlasterGame game;
-	private final MainGameState mainGameState;
+	private final MainMenu menu;
 
-	public MainMenuKeyHandler(PixelBlasterGame game, MainGameState mainGameState) {
-		this.game = game;
-		this.mainGameState = mainGameState;
+	public MainMenuKeyHandler(MainMenu menu) {
+		this.menu = menu;
 	}
 
 	@Override
@@ -37,7 +34,11 @@ public class MainMenuKeyHandler implements KeyListener {
 	@Override
 	public void keyPressed(int key, char c) {
 		if (key == Keyboard.KEY_RETURN) {
-			this.game.setState(this.mainGameState);
+			this.menu.selectCurrent();
+		} else if (key == Keyboard.KEY_UP) {
+			this.menu.moveUp();
+		} else if (key == Keyboard.KEY_DOWN) {
+			this.menu.moveDown();
 		}
 	}
 

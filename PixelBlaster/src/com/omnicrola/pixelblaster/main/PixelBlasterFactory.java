@@ -2,6 +2,7 @@ package com.omnicrola.pixelblaster.main;
 
 import com.omnicrola.pixelblaster.collision.CollisionManager;
 import com.omnicrola.pixelblaster.entity.EntityManager;
+import com.omnicrola.pixelblaster.gui.MainMenuBuilder;
 import com.omnicrola.pixelblaster.input.ShowMenuHandler;
 import com.omnicrola.pixelblaster.map.MapManager;
 import com.omnicrola.pixelblaster.particles.ParticleManager;
@@ -12,7 +13,7 @@ public class PixelBlasterFactory {
 	public PixelBlasterGame build() {
 		final PixelBlasterGame pixelBlaster = new PixelBlasterGame();
 		final MainGameState mainGameState = createMainGameState();
-		final MenuState menuState = new MenuState(pixelBlaster, mainGameState);
+		final MenuState menuState = new MenuState(new MainMenuBuilder(pixelBlaster, mainGameState));
 		mainGameState.addSubsystem(new ShowMenuHandler(pixelBlaster, menuState));
 		pixelBlaster.setState(menuState);
 

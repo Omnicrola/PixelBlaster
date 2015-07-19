@@ -24,6 +24,8 @@ public class MapLoader {
 			data[x][5] = 1;
 			data[x][4] = (short) ((random.nextFloat() < 0.5) ? 0 : 1);
 		}
+		data[10][3] = 1;
+		data[10][2] = 1;
 		return data;
 	}
 
