@@ -41,7 +41,7 @@ public class CollisionManager implements IGameSubsystem, ICollisionManager {
 	}
 
 	private void collideWithWalls(float delta, IMapManager mapManager, ICollidable entity) {
-		final Rectangle bounds = entity.getShape().getBounds();
+		final Rectangle bounds = entity.getSprite().getBounds();
 		final boolean hitLeftWall = mapManager.isWallAt(bounds.getMinX(), bounds.getMaxY() - MARGIN_OF_ERROR);
 		final boolean hitRightWall = mapManager.isWallAt(bounds.getMaxX(), bounds.getMaxY() - MARGIN_OF_ERROR);
 		final Vector2f velocity = entity.getVelocity();
@@ -55,7 +55,7 @@ public class CollisionManager implements IGameSubsystem, ICollisionManager {
 	}
 
 	private void collideWithFloor(float delta, final IMapManager mapManager, final ICollidable entity) {
-		final Rectangle bounds = entity.getShape().getBounds();
+		final Rectangle bounds = entity.getSprite().getBounds();
 		final Vector2f leftFoot = new Vector2f(bounds.getMinX() + MARGIN_OF_ERROR, bounds.getMaxY());
 		final Vector2f rightFoot = new Vector2f(bounds.getMaxX() - MARGIN_OF_ERROR, bounds.getMaxY());
 		final float leftFootFloor = mapManager.getFloorFrom(leftFoot);

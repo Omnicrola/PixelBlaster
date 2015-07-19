@@ -3,7 +3,7 @@ package com.omnicrola.pixelblaster.entity;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
-public interface IEntityShape {
+public interface IEntitySprite {
 
 	Image getImage();
 
@@ -12,5 +12,7 @@ public interface IEntityShape {
 	float getY();
 
 	Rectangle getBounds();
+
+	public abstract float getRotation();
 
 }

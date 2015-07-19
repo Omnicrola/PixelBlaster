@@ -32,7 +32,7 @@ public class Camera {
 	}
 
 	public void focusOn(IGameEntity entity) {
-		final Rectangle bounds = entity.getShape().getBounds();
+		final Rectangle bounds = entity.getSprite().getBounds();
 		final float minX = scale(bounds.getMinX());
 		final float maxX = scale(bounds.getMaxX());
 		final float minY = scale(bounds.getMinY());

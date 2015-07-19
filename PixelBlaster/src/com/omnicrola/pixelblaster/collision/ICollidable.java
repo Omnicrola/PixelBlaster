@@ -2,7 +2,7 @@ package com.omnicrola.pixelblaster.collision;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.entity.IEntityShape;
+import com.omnicrola.pixelblaster.entity.IEntitySprite;
 
 public interface ICollidable {
 
@@ -14,6 +14,6 @@ public interface ICollidable {
 
 	void setVelocity(Vector2f velocity);
 
-	IEntityShape getShape();
+	IEntitySprite getSprite();
 
 }

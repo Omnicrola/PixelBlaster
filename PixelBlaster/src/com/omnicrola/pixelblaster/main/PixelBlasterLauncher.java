@@ -20,6 +20,7 @@ public class PixelBlasterLauncher {
 			final PixelBlasterGame game = this.factory.build();
 			final AppGameContainer appGameContainer = new AppGameContainer(game);
 			appGameContainer.setDisplayMode(800, 600, false);
+			appGameContainer.setTargetFrameRate(60);
 			appGameContainer.start();
 		} catch (final SlickException e) {
 			e.printStackTrace();

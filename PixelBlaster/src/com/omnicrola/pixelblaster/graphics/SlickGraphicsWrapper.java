@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-import com.omnicrola.pixelblaster.entity.IEntityShape;
+import com.omnicrola.pixelblaster.entity.IEntitySprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
 
 public class SlickGraphicsWrapper implements IGraphicsWrapper {
@@ -34,7 +34,7 @@ public class SlickGraphicsWrapper implements IGraphicsWrapper {
 	}
 
 	@Override
-	public void drawShape(IEntityShape shape) {
+	public void drawShape(IEntitySprite shape) {
 		final Image image = shape.getImage();
 		final float y = shape.getY() - image.getHeight();
 		final float x = shape.getX();
