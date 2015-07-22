@@ -52,8 +52,9 @@ public class MainGameState extends BasicGameState {
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		final float fractionOfSixtyFps = delta / (1000f / 60f);
 		for (final IGameSubsystem subsystem : this.subsystems) {
-			subsystem.update(this.gameContext, delta);
+			subsystem.update(this.gameContext, fractionOfSixtyFps);
 		}
 	}
 

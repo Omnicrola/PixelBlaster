@@ -28,6 +28,7 @@ public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 		final BodyDef def = new BodyDef();
 		def.position = physicsDefinition.getPosition();
 		def.fixedRotation = physicsDefinition.allowRotation();
+		def.allowSleep = physicsDefinition.allowRotation();
 		def.type = translateType(physicsDefinition);
 		final Body body = this.world.createBody(def);
 

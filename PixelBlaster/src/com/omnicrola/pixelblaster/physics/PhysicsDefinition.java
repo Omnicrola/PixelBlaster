@@ -9,13 +9,25 @@ public class PhysicsDefinition {
 	private final Shape shape;
 	private boolean allowRotation;
 	private final float friction;
+	private boolean allowSleep;
+	private float maxVelocity;
 
 	public PhysicsDefinition(Shape shape) {
 		this.shape = shape;
 		this.position = new Vec2();
 		this.type = PhysicsType.DYNAMIC;
 		this.allowRotation = true;
+		this.allowSleep = true;
+		this.maxVelocity = 10f;
 		this.friction = 0.2f;
+	}
+
+	public float getMaxVelocity() {
+		return this.maxVelocity;
+	}
+
+	public void setMaxVelocity(float maxVelocity) {
+		this.maxVelocity = maxVelocity;
 	}
 
 	public void setPosition(float pX, float pY) {
@@ -30,12 +42,20 @@ public class PhysicsDefinition {
 		this.allowRotation = allowRotation;
 	}
 
-	public Vec2 getPosition() {
-		return this.position;
-	}
-
 	public boolean allowRotation() {
 		return this.allowRotation;
+	}
+
+	public void allowSleep(boolean allowSleep) {
+		this.allowSleep = allowSleep;
+	}
+
+	public boolean allowSleep() {
+		return this.allowSleep;
+	}
+
+	public Vec2 getPosition() {
+		return this.position;
 	}
 
 	public PhysicsType getType() {

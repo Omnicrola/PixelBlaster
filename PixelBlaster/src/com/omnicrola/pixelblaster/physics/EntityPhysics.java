@@ -8,16 +8,37 @@ public class EntityPhysics implements IEntityPhysics {
 
 	private final PhysicsDefinition physicsDefinition;
 	protected IPhysicsBody physicsBody;
+	private final Vector2f forceVector;
 
 	public EntityPhysics(PhysicsDefinition physicsDefinition) {
 		this.physicsDefinition = physicsDefinition;
+		this.forceVector = new Vector2f();
 	}
 
 	public void update(IGameEntity gameEntity, float delta) {
-		final Vector2f position = this.physicsBody.getPosition();
+		limitLinearVelocity();
+		updatePosition(gameEntity);
+		updateAngle(gameEntity);
+	}
+
+	private void limitLinearVelocity() {
+		final Vector2f velocity = this.physicsBody.getLinearVelocity();
+		final float maximumVelocity = this.physicsDefinition.getMaxVelocity();
+		final float actualSpeed = velocity.length();
+		if (actualSpeed > maximumVelocity) {
+			velocity.scale(maximumVelocity / actualSpeed);
+			this.physicsBody.setLinearVelocity(velocity);
+		}
+	}
+
+	private void updateAngle(IGameEntity gameEntity) {
 		final float angle = this.physicsBody.getAngle();
-		gameEntity.setPosition(new Vector2f(position.x, position.y));
 		gameEntity.setRotation(angle);
+	}
+
+	private void updatePosition(IGameEntity gameEntity) {
+		final Vector2f position = this.physicsBody.getPosition();
+		gameEntity.setPosition(new Vector2f(position.x, position.y));
 	}
 
 	@Override
@@ -32,22 +53,33 @@ public class EntityPhysics implements IEntityPhysics {
 	}
 
 	public void moveLeft(float force) {
-		this.physicsBody.applyForceAtCenter(new Vector2f(-force, 0));
+		applyForce(-force, 0);
 	}
 
 	public void moveRight(float force) {
-		this.physicsBody.applyForceAtCenter(new Vector2f(force, 0));
-	}
-
-	public void jump(float force) {
+		applyForce(force, 0);
 	}
 
 	public void moveUp(float force) {
-		this.physicsBody.applyForceAtCenter(new Vector2f(0, -force));
+		applyForce(0, -force);
 	}
 
 	public void moveDown(float force) {
-		this.physicsBody.applyForceAtCenter(new Vector2f(0, force));
+		applyForce(0, force);
+	}
+
+	public void jump(float force) {
+		applyImpulse(0, -force);
+	}
+
+	private void applyImpulse(float forceX, float forceY) {
+		this.forceVector.set(forceX, forceY);
+		this.physicsBody.applyImpulseAtCenter(this.forceVector);
+	}
+
+	private void applyForce(float forceX, float forceY) {
+		this.forceVector.set(forceX, forceY);
+		this.physicsBody.applyForceAtCenter(this.forceVector);
 	}
 
 }

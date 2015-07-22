@@ -8,4 +8,10 @@ public interface IPhysicsBody {
 	public Vector2f getPosition();
 
 	public float getAngle();
+
+	public void applyImpulseAtCenter(Vector2f forceVector);
+
+	public Vector2f getLinearVelocity();
+
+	public void setLinearVelocity(Vector2f velocity);
 }

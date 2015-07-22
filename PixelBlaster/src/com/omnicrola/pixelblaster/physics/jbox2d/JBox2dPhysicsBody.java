@@ -9,14 +9,35 @@ import com.omnicrola.pixelblaster.physics.IPhysicsBody;
 public class JBox2dPhysicsBody implements IPhysicsBody {
 
 	private final Body body;
+	private final Vec2 forceVector;
 
 	public JBox2dPhysicsBody(Body body) {
 		this.body = body;
+		this.forceVector = new Vec2();
 	}
 
 	@Override
 	public void applyForceAtCenter(Vector2f force) {
-		this.body.applyForce(new Vec2(force.x, force.y), this.body.getWorldCenter());
+		this.forceVector.set(force.x, force.y);
+		this.body.applyForce(this.forceVector, this.body.getWorldCenter());
+	}
+
+	@Override
+	public void applyImpulseAtCenter(Vector2f force) {
+		this.forceVector.set(force.x, force.y);
+		this.body.applyLinearImpulse(this.forceVector, this.body.getWorldCenter());
+	}
+
+	@Override
+	public Vector2f getLinearVelocity() {
+		final Vec2 vel = this.body.getLinearVelocity();
+		return new Vector2f(vel.x, vel.y);
+	}
+
+	@Override
+	public void setLinearVelocity(Vector2f velocity) {
+		this.forceVector.set(velocity.x, velocity.y);
+		this.body.setLinearVelocity(this.forceVector);
 	}
 
 	@Override

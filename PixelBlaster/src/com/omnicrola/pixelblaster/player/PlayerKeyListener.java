@@ -9,11 +9,11 @@ import com.omnicrola.pixelblaster.physics.EntityPhysics;
 
 public class PlayerKeyListener implements KeyListener {
 
-	boolean moveLeft;
-	boolean moveRight;
-	boolean moveUp;
-	boolean moveDown;
-	boolean isJumping;
+	private boolean moveLeft;
+	private boolean moveRight;
+	private boolean moveUp;
+	private boolean moveDown;
+	private boolean isJumping;
 	private final Player player;
 
 	public PlayerKeyListener(Player player) {
@@ -51,9 +51,10 @@ public class PlayerKeyListener implements KeyListener {
 		if (this.moveDown) {
 			physics.moveDown(GameSettings.PLAYER_ACCELERATION);
 		}
-		// if (this.isJumping) {
-		// physics.jump(GameSettings.PLAYER_JUMP_SPEED);
-		// }
+		if (this.isJumping) {
+			physics.jump(GameSettings.PLAYER_JUMP_SPEED);
+			this.isJumping = false;
+		}
 	}
 
 	@Override
@@ -66,8 +67,8 @@ public class PlayerKeyListener implements KeyListener {
 			this.moveUp = true;
 		} else if (key == Keyboard.KEY_DOWN) {
 			this.moveDown = true;
-			// } else if (key == Keyboard.KEY_SPACE) {
-			// this.isJumping = true;
+		} else if (key == Keyboard.KEY_SPACE) {
+			this.isJumping = true;
 		}
 	}
 
@@ -81,8 +82,8 @@ public class PlayerKeyListener implements KeyListener {
 			this.moveUp = false;
 		} else if (key == Keyboard.KEY_DOWN) {
 			this.moveDown = false;
-			// } else if (key == Keyboard.KEY_SPACE) {
-			// this.isJumping = true;
+		} else if (key == Keyboard.KEY_SPACE) {
+			this.isJumping = false;
 		}
 	}
 
