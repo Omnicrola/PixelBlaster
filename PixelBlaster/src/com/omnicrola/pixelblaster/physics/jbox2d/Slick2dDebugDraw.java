@@ -47,7 +47,7 @@ public class Slick2dDebugDraw extends DebugDraw {
 
 		this.sp1.x -= argRadiusOnScreen;
 		this.sp1.y -= argRadiusOnScreen;
-		this.graphics.fillOval((int) this.sp1.x, (int) this.sp1.y, (int) argRadiusOnScreen * 2,
+		this.graphics.drawOval((int) this.sp1.x, (int) this.sp1.y, (int) argRadiusOnScreen * 2,
 				(int) argRadiusOnScreen * 2);
 		this.graphics.setColor(Color.white);
 	}
@@ -97,7 +97,7 @@ public class Slick2dDebugDraw extends DebugDraw {
 		}
 
 		this.graphics.setColor(new Color(color.x, color.y, color.z));
-		this.graphics.fill(p); // Draws shape filled with colour
+		this.graphics.draw(p); // Draws shape filled with colour
 		this.graphics.setColor(Color.white);
 		// drawPolygon(vertices, vertexCount, color);
 	}

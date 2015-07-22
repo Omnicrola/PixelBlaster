@@ -40,9 +40,17 @@ public class SlickGraphicsWrapper implements IGraphicsWrapper {
 				image.getHeight());
 		// DEBUG
 		if (GameSettings.DEBUG) {
-			this.graphics.setColor(Color.green);
+			this.graphics.setColor(Color.yellow);
 			this.graphics.drawRect(x, y, scaledWidth, scaledHeight);
 		}
 	}
 
+	@Override
+	public void drawImageFullScreen(Image image) {
+		final float imageWidth = image.getWidth();
+		final float imageHeight = image.getHeight();
+		final float width = this.camera.getViewportWidth();
+		final float height = this.camera.getViewportHeight();
+		this.graphics.drawImage(image, 0, 0, width, height, 0, 0, imageWidth, imageHeight);
+	}
 }

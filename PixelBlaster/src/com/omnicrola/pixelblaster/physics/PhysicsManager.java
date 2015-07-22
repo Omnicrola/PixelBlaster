@@ -35,17 +35,17 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 	@Override
 	public void load(GameSubsystemInterlink interlink) {
 		interlink.setSubsystem(IPhysicsManager.class, this);
+		this.world = new World(new Vec2(0, GameSettings.GRAVITY_ACCELLERATION), true);
+		this.physicsWrapper = new JBox2dPhysicsWrapper(this.world);
 	}
 
 	@Override
 	public void init(IGameContext context) throws SlickException {
 		this.camera = context.getCamera();
-		this.world = new World(new Vec2(0, GameSettings.GRAVITY_ACCELLERATION), true);
 		final GameContainer container = context.getGameContainer();
 		this.slick2dDebugDraw = new Slick2dDebugDraw(container.getGraphics());
 		this.slick2dDebugDraw.setFlags(DebugDraw.e_shapeBit);
 		this.world.setDebugDraw(this.slick2dDebugDraw);
-		this.physicsWrapper = new JBox2dPhysicsWrapper(this.world);
 	}
 
 	@Override

@@ -79,4 +79,12 @@ public class Camera {
 		final float y = this.yOffset / this.scale;
 		viewportTranform.setCamera(x + 7.5f, y + 4.99f, this.scale);
 	}
+
+	public float getViewportWidth() {
+		return this.viewportWidth;
+	}
+
+	public float getViewportHeight() {
+		return this.viewportHeight;
+	}
 }

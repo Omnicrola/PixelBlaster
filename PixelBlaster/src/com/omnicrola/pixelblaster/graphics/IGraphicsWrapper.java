@@ -14,4 +14,6 @@ public interface IGraphicsWrapper {
 
 	void drawImage(Image image, Rectangle bounds);
 
+	void drawImageFullScreen(Image image);
+
 }

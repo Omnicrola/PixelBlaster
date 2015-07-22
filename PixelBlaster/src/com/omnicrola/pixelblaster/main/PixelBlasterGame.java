@@ -32,12 +32,12 @@ public class PixelBlasterGame extends StateBasedGame {
 
 	private void createMainGameState() {
 		final MainGameState mainGameState = new MainGameState();
-		mainGameState.addSubsystem(new PhysicsManager());
 		mainGameState.addSubsystem(new MapManager());
 		mainGameState.addSubsystem(new EntityManager());
 		mainGameState.addSubsystem(new ParticleManager());
 		mainGameState.addSubsystem(new PlayerManager());
 		mainGameState.addSubsystem(new ShowMenuHandler(this));
+		mainGameState.addSubsystem(new PhysicsManager());
 		addState(mainGameState);
 	}
 
