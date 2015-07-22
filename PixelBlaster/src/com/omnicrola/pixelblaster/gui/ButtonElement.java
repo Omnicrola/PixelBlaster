@@ -34,6 +34,7 @@ public class ButtonElement extends ScreenElement {
 		} else {
 			graphics.setColor(this.backgroundColor);
 		}
+
 		graphics.fillRect(this.x + offX, this.y + offY, this.width, this.height);
 		graphics.setColor(Color.white);
 		graphics.drawString(this.text, this.x + offX + PADDING, this.y + offY + PADDING);

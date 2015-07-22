@@ -1,12 +1,13 @@
 package com.omnicrola.pixelblaster.graphics;
 
+import org.jbox2d.common.IViewportTransform;
 import org.newdawn.slick.geom.Rectangle;
 
 import com.omnicrola.pixelblaster.entity.IGameEntity;
 
 public class Camera {
 
-	private static final float VERTICAL_GUTTER = 100;
+	private static final float VERTICAL_GUTTER = 200;
 	private static final float LEFT_HORIZONTAL_GUTTER = 100;
 	private static final float RIGHT_HORIZONTAL_GUTTER = 300;
 	private float xOffset;
@@ -21,14 +22,6 @@ public class Camera {
 		this.viewportHeight = viewportHeight;
 		this.xOffset = 0;
 		this.yOffset = 0;
-	}
-
-	public float getXOffset() {
-		return this.xOffset;
-	}
-
-	public float getYOffset() {
-		return this.yOffset;
 	}
 
 	public void focusOn(IGameEntity entity) {
@@ -48,7 +41,7 @@ public class Camera {
 			this.yOffset = minY - VERTICAL_GUTTER;
 		}
 		if (maxY > frameBottom()) {
-			this.yOffset = maxY - this.viewportHeight + VERTICAL_GUTTER;
+			this.yOffset = maxY + this.viewportHeight - VERTICAL_GUTTER;
 		}
 	}
 
@@ -57,7 +50,7 @@ public class Camera {
 	}
 
 	private float frameBottom() {
-		return this.yOffset + this.viewportHeight + VERTICAL_GUTTER;
+		return this.yOffset + this.viewportHeight - VERTICAL_GUTTER;
 	}
 
 	private float frameLeft() {
@@ -78,5 +71,12 @@ public class Camera {
 
 	public float translateY(float y) {
 		return (y * this.scale) - this.yOffset;
+	}
+
+	public void applyTo(IViewportTransform viewportTranform) {
+		viewportTranform.setExtents(this.viewportWidth / 2f, this.viewportHeight / 2f);
+		final float x = this.xOffset / this.scale;
+		final float y = this.yOffset / this.scale;
+		viewportTranform.setCamera(x + 7.5f, y + 4.99f, this.scale);
 	}
 }

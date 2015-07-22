@@ -23,7 +23,7 @@ public class MapLoader {
 		final short[][] data = new short[128][12];
 		for (int x = 0; x < data.length; x++) {
 			data[x][5] = 17;
-			data[x][4] = (short) (random.nextInt(18));
+			data[x][4] = (short) (random.nextInt(100) < 50 ? 0 : 1);
 		}
 		return data;
 	}

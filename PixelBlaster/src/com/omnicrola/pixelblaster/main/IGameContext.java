@@ -1,5 +1,6 @@
 package com.omnicrola.pixelblaster.main;
 
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 
 import com.omnicrola.pixelblaster.graphics.Camera;
@@ -14,5 +15,7 @@ public interface IGameContext {
 	AssetManager getAssetManager();
 
 	Camera getCamera();
+
+	GameContainer getGameContainer();
 
 }

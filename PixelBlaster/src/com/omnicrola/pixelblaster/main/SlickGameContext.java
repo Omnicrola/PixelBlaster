@@ -22,6 +22,11 @@ public class SlickGameContext implements IGameContext {
 	}
 
 	@Override
+	public GameContainer getGameContainer() {
+		return this.container;
+	}
+
+	@Override
 	public <T> T getSubsystem(Class<T> key) {
 		return this.interlink.getSubsystem(key);
 	}
