@@ -8,7 +8,7 @@ import com.omnicrola.xml.XmlSerializationService;
 public class XmlMapSerializer {
 	public static XmlSerializationService loadInstance() {
 		try {
-			return new XmlSerializationService(JAXBContext.newInstance(MapData.class, MapTileData.class));
+			return new XmlSerializationService(JAXBContext.newInstance(XmlMapData.class, XmlMapTileData.class));
 		} catch (final JAXBException e) {
 		}
 		return null;

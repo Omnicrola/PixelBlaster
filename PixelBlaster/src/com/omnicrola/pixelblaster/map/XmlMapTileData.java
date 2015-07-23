@@ -5,11 +5,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MapTileData {
-	public MapTileData() {
+public class XmlMapTileData {
+	public XmlMapTileData() {
 	}
 
-	public MapTileData(int x, int y, int tileIndex) {
+	public XmlMapTileData(int x, int y, int tileIndex) {
 		this.x = x;
 		this.y = y;
 		this.tileIndex = tileIndex;

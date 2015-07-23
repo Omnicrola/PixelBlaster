@@ -5,7 +5,7 @@ import org.newdawn.slick.SlickException;
 
 import com.omnicrola.pixelblaster.io.XmlMapLoader;
 import com.omnicrola.pixelblaster.main.GameSettings;
-import com.omnicrola.pixelblaster.map.MapData;
+import com.omnicrola.pixelblaster.map.XmlMapData;
 
 public class AssetManager {
 	private final XmlMapLoader xmlMapLoader;
@@ -24,7 +24,7 @@ public class AssetManager {
 		return null;
 	}
 
-	public MapData getMapData(int currentLevel) {
+	public XmlMapData getMapData(int currentLevel) {
 		final String filename = GameSettings.MAP_FILE_PATH + "level" + currentLevel + ".map";
 		return this.xmlMapLoader.load(filename);
 	}

@@ -9,9 +9,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.omnicrola.pixelblaster.util.Coordinate;
+
 @XmlRootElement(name = "Map")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MapData {
+public class XmlMapData {
 
 	@XmlElement(name = "TilesetName")
 	String tilesetName = "Planet";
@@ -21,6 +23,15 @@ public class MapData {
 
 	@XmlElementWrapper
 	@XmlElement(name = "MapTile")
-	List<MapTileData> mapTiles = new ArrayList<>();
+	List<XmlMapTileData> mapTiles = new ArrayList<>();
+
+	int mapWidth = 1;
+	int mapHeight = 1;
+
+	@XmlElement(name = "MapBounds")
+	MapBounds mapBounds = new MapBounds(0, 0, 1, 1);
+
+	@XmlElement(name = "playerSpawn")
+	public Coordinate playerSpawn;
 
 }

@@ -1,5 +1,7 @@
 package com.omnicrola.pixelblaster.map;
 
+import org.newdawn.slick.geom.Vector2f;
+
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
@@ -26,7 +28,7 @@ public class MapManager implements IGameSubsystem, IMapManager {
 	@Override
 	public void init(IGameContext context) {
 		if (!this.initialized) {
-			this.mapLoader = new MapLoader(context.getAssetManager(), new MapTileLoader());
+			this.mapLoader = new MapLoader(context.getAssetManager(), new MapTileLoader(context.getAssetManager()));
 			loadMapForCurrentLevel(context.getSubsystem(IPhysicsManager.class));
 			this.initialized = true;
 		}
@@ -35,7 +37,11 @@ public class MapManager implements IGameSubsystem, IMapManager {
 	private void loadMapForCurrentLevel(IPhysicsManager physicsManager) {
 		this.currentMap = this.mapLoader.load(this.currentLevel);
 		physicsManager.loadPhysics(this.currentMap);
+	}
 
+	@Override
+	public Vector2f getPlayerSpawn() {
+		return this.currentMap.getPlayerSpawn();
 	}
 
 	@Override

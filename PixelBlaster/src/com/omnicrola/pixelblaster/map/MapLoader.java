@@ -1,6 +1,7 @@
 package com.omnicrola.pixelblaster.map;
 
-import org.jbox2d.collision.shapes.Shape;
+import java.io.File;
+
 import org.newdawn.slick.Image;
 
 import com.omnicrola.pixelblaster.graphics.GameBackground;
@@ -9,64 +10,24 @@ import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class MapLoader {
 	private final AssetManager assetManager;
+	private final MapTileLoader mapTileLoader;
 
 	public MapLoader(AssetManager assetManager, MapTileLoader mapTileLoader) {
 		this.assetManager = assetManager;
+		this.mapTileLoader = mapTileLoader;
 	}
 
 	public ILevelMap load(int currentLevel) {
-		final MapData mapData = this.assetManager.getMapData(currentLevel);
-		final short[][] tileData = createTileData();
-		final IMapTile[] mapTiles = createTiles();
-		return new LevelMap(GameSettings.MAP_TILE_SIZE_IN_METERS, mapTiles, tileData, createBackground());
+		final XmlMapData mapData = this.assetManager.getMapData(currentLevel);
+		final MapTileDataSet tileData = this.mapTileLoader.loadData(mapData);
+		final GameBackground background = createBackground(mapData);
+		return new LevelMap(GameSettings.MAP_TILE_SIZE_IN_METERS, tileData, background, mapData);
 	}
 
-	private GameBackground createBackground() {
-		final Image image = this.assetManager.getImage("Backgrounds/blue_land.png");
+	private GameBackground createBackground(XmlMapData mapData) {
+		final String background = "Backgrounds" + File.separator + mapData.background;
+		final Image image = this.assetManager.getImage(background);
 		return new GameBackground(image);
 	}
 
-	private short[][] createTileData() {
-		int t = 0;
-		final short[][] data = new short[128][12];
-		for (int x = 0; x < data.length; x++) {
-			data[x][5] = 17;
-			data[x][4] = (short) t++;
-			if (t > 17) {
-				t = 0;
-			}
-		}
-		return data;
-	}
-
-	private IMapTile[] createTiles() {
-		final String base = "Ground/Planet/planet";
-		final IMapTile[] mapTiles = new IMapTile[19];
-		mapTiles[0] = MapTile.AIR;
-		mapTiles[1] = tile(base, TerrainShapes.BASE);
-		mapTiles[2] = tile(base + "Center", TerrainShapes.CENTER);
-		mapTiles[3] = tile(base + "Center_rounded", TerrainShapes.ROUNDED);
-		mapTiles[4] = tile(base + "Cliff_left", TerrainShapes.CLIFF_LEFT);
-		mapTiles[5] = tile(base + "Cliff_right", TerrainShapes.CLIFF_RIGHT);
-		mapTiles[6] = tile(base + "CliffAlt_left", TerrainShapes.CLIFF_ALT_LEFT);
-		mapTiles[7] = tile(base + "CliffAlt_right", TerrainShapes.CLIFF_ALT_RIGHT);
-		mapTiles[8] = tile(base + "Corner_left", TerrainShapes.CORNER_LEFT);
-		mapTiles[9] = tile(base + "Corner_right", TerrainShapes.CORNER_RIGHT);
-		mapTiles[10] = tile(base + "Half", TerrainShapes.HALF);
-		mapTiles[11] = tile(base + "Half_left", TerrainShapes.HALF_LEFT);
-		mapTiles[12] = tile(base + "Half_mid", TerrainShapes.HALF_MID);
-		mapTiles[13] = tile(base + "Half_right", TerrainShapes.HALF_RIGHT);
-		mapTiles[14] = tile(base + "Hill_left", TerrainShapes.HILL_LEFT);
-		mapTiles[15] = tile(base + "Hill_right", TerrainShapes.HILL_RIGHT);
-		mapTiles[16] = tile(base + "Left", TerrainShapes.LEFT);
-		mapTiles[17] = tile(base + "Mid", TerrainShapes.MID);
-		mapTiles[18] = tile(base + "Right", TerrainShapes.RIGHT);
-		return mapTiles;
-	}
-
-	private IMapTile tile(String filename, Shape shape) {
-		filename = filename + ".png";
-		final Image image = this.assetManager.getImage(filename);
-		return new MapTile(image, shape);
-	}
 }

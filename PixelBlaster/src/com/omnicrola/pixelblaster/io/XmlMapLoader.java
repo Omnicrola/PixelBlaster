@@ -1,6 +1,6 @@
 package com.omnicrola.pixelblaster.io;
 
-import com.omnicrola.pixelblaster.map.MapData;
+import com.omnicrola.pixelblaster.map.XmlMapData;
 import com.omnicrola.pixelblaster.map.XmlMapSerializer;
 import com.omnicrola.xml.XmlSerializationService;
 
@@ -12,10 +12,10 @@ public class XmlMapLoader {
 		this.xmlSerializer = XmlMapSerializer.loadInstance();
 	}
 
-	public MapData load(String filename) {
-		final MapData mapData = this.xmlSerializer.unmarshal(MapData.class, filename);
+	public XmlMapData load(String filename) {
+		final XmlMapData mapData = this.xmlSerializer.unmarshal(XmlMapData.class, filename);
 		if (mapData == null) {
-			return new MapData();
+			return new XmlMapData();
 		}
 		return mapData;
 	}

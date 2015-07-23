@@ -10,7 +10,7 @@ public class XmlMapWriter {
 		this.serializer = XmlMapSerializer.loadInstance();
 	}
 
-	public void write(String filename, MapData mapData) {
+	public void write(String filename, XmlMapData mapData) {
 		this.serializer.write(filename, mapData);
 	}
 

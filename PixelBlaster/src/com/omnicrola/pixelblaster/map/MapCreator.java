@@ -1,8 +1,11 @@
 package com.omnicrola.pixelblaster.map;
 
+import com.omnicrola.pixelblaster.util.Coordinate;
+
+@SuppressWarnings("unused")
 public class MapCreator {
 	private final XmlMapWriter xmlMapWriter;
-	private final MapData mapData;
+	private final XmlMapData mapData;
 
 	public static void main(String[] args) {
 		System.out.println("Map Creator starting");
@@ -10,13 +13,13 @@ public class MapCreator {
 		System.out.println("generating...");
 		mapCreator.generate();
 		System.out.println("saving...");
-		mapCreator.save("GeneratedMap.map");
+		mapCreator.save("assets/Levels/level1.map");
 		System.out.println("Done.");
 	}
 
 	public MapCreator() {
 		this.xmlMapWriter = new XmlMapWriter();
-		this.mapData = new MapData();
+		this.mapData = new XmlMapData();
 	}
 
 	private void save(String filename) {
@@ -24,7 +27,13 @@ public class MapCreator {
 	}
 
 	private void generate() {
-		fillArea(0, 10, 128, 15, CENTER);
+		this.mapData.mapHeight = 11;
+		this.mapData.mapWidth = 128;
+		this.mapData.mapBounds = new MapBounds(5, 0, 11, 128);
+		this.mapData.playerSpawn = new Coordinate(6, 4);
+		fillArea(0, 5, 127, 10, CENTER);
+		fillArea(0, 5, 127, 5, FULL_MID);
+
 	}
 
 	private void fillArea(int x1, int y1, int x2, int y2, int tileIndex) {
@@ -37,7 +46,7 @@ public class MapCreator {
 	}
 
 	private void addTile(int x, int y, int tileIndex) {
-		this.mapData.mapTiles.add(new MapTileData(x, y, tileIndex));
+		this.mapData.mapTiles.add(new XmlMapTileData(x, y, tileIndex));
 	}
 
 	private static final int AIR = 0;
