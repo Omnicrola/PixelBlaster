@@ -1,9 +1,12 @@
 package com.omnicrola.pixelblaster.physics.jbox2d;
 
+import java.util.ArrayList;
+
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
@@ -33,19 +36,22 @@ public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 		def.type = translateType(physicsDefinition);
 		final Body body = this.world.createBody(def);
 
-		createFixtures(physicsDefinition, body);
+		final ArrayList<Fixture> fixtures = createFixtures(physicsDefinition, body);
 
-		return new JBox2dPhysicsBody(body);
+		return new JBox2dPhysicsBody(body, fixtures);
 	}
 
-	private void createFixtures(PhysicsDefinition physicsDefinition, final Body body) {
-		final Shape[] shapes = physicsDefinition.getShape();
+	private ArrayList<Fixture> createFixtures(PhysicsDefinition physicsDefinition, final Body body) {
+		final Shape[] shapes = physicsDefinition.getShapes();
+		final ArrayList<Fixture> fixtures = new ArrayList<>();
+
 		for (final Shape shape : shapes) {
 			final FixtureDef fixtureDefinition = new FixtureDef();
 			fixtureDefinition.friction = physicsDefinition.getFriction();
 			fixtureDefinition.shape = shape;
-			body.createFixture(fixtureDefinition);
+			fixtures.add(body.createFixture(fixtureDefinition));
 		}
+		return fixtures;
 	}
 
 	private BodyType translateType(PhysicsDefinition physicsDefinition) {

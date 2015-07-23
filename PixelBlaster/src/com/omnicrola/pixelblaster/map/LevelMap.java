@@ -54,6 +54,7 @@ public class LevelMap implements ILevelMap {
 	private void createPhysics(IPhysicsWrapper physics, Shape shape, float pX, float pY) {
 		final PhysicsDefinition physicsDefinition = new PhysicsDefinition(shape);
 		physicsDefinition.setPosition(pX + HORIZ_PHYSICS_OFFSET, pY);
+		physicsDefinition.setFriction(0.9f);
 		physicsDefinition.setType(PhysicsType.STATIC);
 		physics.createBody(physicsDefinition);
 

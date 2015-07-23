@@ -1,7 +1,10 @@
 package com.omnicrola.pixelblaster.physics.jbox2d;
 
+import java.util.List;
+
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.Fixture;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.physics.IPhysicsBody;
@@ -10,9 +13,11 @@ public class JBox2dPhysicsBody implements IPhysicsBody {
 
 	private final Body body;
 	private final Vec2 forceVector;
+	private final List<Fixture> fixtures;
 
-	public JBox2dPhysicsBody(Body body) {
+	public JBox2dPhysicsBody(Body body, List<Fixture> fixtures) {
 		this.body = body;
+		this.fixtures = fixtures;
 		this.forceVector = new Vec2();
 	}
 

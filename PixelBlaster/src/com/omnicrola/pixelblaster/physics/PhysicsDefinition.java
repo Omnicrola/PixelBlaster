@@ -8,7 +8,7 @@ public class PhysicsDefinition {
 	private PhysicsType type;
 	private final Shape[] shapes;
 	private boolean allowRotation;
-	private final float friction;
+	private float friction;
 	private boolean allowSleep;
 	private float maxVelocity;
 
@@ -66,7 +66,11 @@ public class PhysicsDefinition {
 		return this.friction;
 	}
 
-	public Shape[] getShape() {
+	public void setFriction(float friction) {
+		this.friction = friction;
+	}
+
+	public Shape[] getShapes() {
 		return this.shapes;
 	}
 

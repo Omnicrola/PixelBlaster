@@ -1,6 +1,8 @@
 package com.omnicrola.pixelblaster.player;
 
+import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.Vec2;
 
 import com.omnicrola.pixelblaster.entity.EntitySprite;
 import com.omnicrola.pixelblaster.entity.GameEntity;
@@ -11,19 +13,41 @@ import com.omnicrola.pixelblaster.physics.PhysicsType;
 
 public class Player extends GameEntity {
 
+	private static final float CHARACTER_HEIGHT = 0.7f;
+	private static final float CHARACTER_WIDTH = 0.3f;
+
 	public Player(EntitySprite baseShape) {
 		super(baseShape, createPlayerPhysics());
 	}
 
 	private static EntityPhysics createPlayerPhysics() {
-		final PolygonShape shape = new PolygonShape();
-		shape.setAsBox(0.5f, 1f);
-		final PhysicsDefinition physicsDefinition = new PhysicsDefinition(shape);
+
+		final PhysicsDefinition physicsDefinition = createCapsuleShape();
 		physicsDefinition.setType(PhysicsType.DYNAMIC);
 		physicsDefinition.allowRotation(false);
 		physicsDefinition.allowSleep(false);
 		physicsDefinition.setMaxVelocity(GameSettings.PLAYER_MAXIMUM_VELOCITY);
 		return new EntityPhysics(physicsDefinition);
+	}
+
+	private static PhysicsDefinition createCapsuleShape() {
+		final CircleShape topCircle = new CircleShape();
+		topCircle.m_radius = CHARACTER_WIDTH;
+
+		final CircleShape bottomCircle = new CircleShape();
+		bottomCircle.m_radius = CHARACTER_WIDTH;
+		bottomCircle.m_p.y = CHARACTER_HEIGHT;
+
+		final PolygonShape center = new PolygonShape();
+		final Vec2[] vertices = new Vec2[4];
+		vertices[0] = new Vec2(-CHARACTER_WIDTH, 0);
+		vertices[1] = new Vec2(CHARACTER_WIDTH, 0);
+		vertices[2] = new Vec2(CHARACTER_WIDTH, CHARACTER_HEIGHT);
+		vertices[3] = new Vec2(-CHARACTER_WIDTH, CHARACTER_HEIGHT);
+		center.set(vertices, 4);
+
+		final PhysicsDefinition physicsDefinition = new PhysicsDefinition(topCircle, bottomCircle, center);
+		return physicsDefinition;
 	}
 
 }
