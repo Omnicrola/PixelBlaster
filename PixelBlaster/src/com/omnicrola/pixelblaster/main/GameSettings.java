@@ -16,4 +16,6 @@ public class GameSettings {
 	public static final float MAP_TILE_SIZE_IN_METERS = 2.0f;
 	public static final float FRICTION_GROUND = 0.3f;
 
+	public static final String MAP_FILE_PATH = "assets/Levels/";
+
 }

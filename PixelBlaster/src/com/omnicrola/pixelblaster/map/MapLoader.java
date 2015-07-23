@@ -1,7 +1,5 @@
 package com.omnicrola.pixelblaster.map;
 
-import java.util.Random;
-
 import org.jbox2d.collision.shapes.Shape;
 import org.newdawn.slick.Image;
 
@@ -12,11 +10,12 @@ import com.omnicrola.pixelblaster.util.AssetManager;
 public class MapLoader {
 	private final AssetManager assetManager;
 
-	public MapLoader(AssetManager assetManager) {
+	public MapLoader(AssetManager assetManager, MapTileLoader mapTileLoader) {
 		this.assetManager = assetManager;
 	}
 
 	public ILevelMap load(int currentLevel) {
+		final MapData mapData = this.assetManager.getMapData(currentLevel);
 		final short[][] tileData = createTileData();
 		final IMapTile[] mapTiles = createTiles();
 		return new LevelMap(GameSettings.MAP_TILE_SIZE_IN_METERS, mapTiles, tileData, createBackground());
@@ -28,17 +27,16 @@ public class MapLoader {
 	}
 
 	private short[][] createTileData() {
-		final Random random = new Random(149);
+		int t = 0;
 		final short[][] data = new short[128][12];
 		for (int x = 0; x < data.length; x++) {
 			data[x][5] = 17;
-			data[x][4] = randTile(random);
+			data[x][4] = (short) t++;
+			if (t > 17) {
+				t = 0;
+			}
 		}
 		return data;
-	}
-
-	private short randTile(final Random random) {
-		return (short) (random.nextInt(100) < 50 ? 0 : random.nextInt(18));
 	}
 
 	private IMapTile[] createTiles() {

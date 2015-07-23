@@ -26,7 +26,7 @@ public class MapManager implements IGameSubsystem, IMapManager {
 	@Override
 	public void init(IGameContext context) {
 		if (!this.initialized) {
-			this.mapLoader = new MapLoader(context.getAssetManager());
+			this.mapLoader = new MapLoader(context.getAssetManager(), new MapTileLoader());
 			loadMapForCurrentLevel(context.getSubsystem(IPhysicsManager.class));
 			this.initialized = true;
 		}

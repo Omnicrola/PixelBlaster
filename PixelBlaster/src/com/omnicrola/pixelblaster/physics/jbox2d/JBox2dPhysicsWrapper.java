@@ -1,5 +1,6 @@
 package com.omnicrola.pixelblaster.physics.jbox2d;
 
+import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
@@ -32,12 +33,19 @@ public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 		def.type = translateType(physicsDefinition);
 		final Body body = this.world.createBody(def);
 
-		final FixtureDef fixtureDefinition = new FixtureDef();
-		fixtureDefinition.friction = physicsDefinition.getFriction();
-		fixtureDefinition.shape = physicsDefinition.getShape();
+		createFixtures(physicsDefinition, body);
 
-		body.createFixture(fixtureDefinition);
 		return new JBox2dPhysicsBody(body);
+	}
+
+	private void createFixtures(PhysicsDefinition physicsDefinition, final Body body) {
+		final Shape[] shapes = physicsDefinition.getShape();
+		for (final Shape shape : shapes) {
+			final FixtureDef fixtureDefinition = new FixtureDef();
+			fixtureDefinition.friction = physicsDefinition.getFriction();
+			fixtureDefinition.shape = shape;
+			body.createFixture(fixtureDefinition);
+		}
 	}
 
 	private BodyType translateType(PhysicsDefinition physicsDefinition) {

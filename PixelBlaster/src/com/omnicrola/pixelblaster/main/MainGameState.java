@@ -10,6 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import com.omnicrola.pixelblaster.graphics.Camera;
 import com.omnicrola.pixelblaster.graphics.SlickGraphicsWrapper;
+import com.omnicrola.pixelblaster.io.XmlMapLoader;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class MainGameState extends BasicGameState {
@@ -33,7 +34,7 @@ public class MainGameState extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		if (!this.isInitialized) {
-			this.assetManager = new AssetManager();
+			this.assetManager = new AssetManager(new XmlMapLoader());
 			this.camera = new Camera(GameSettings.PIXEL_TO_METER_RATIO, container.getWidth(), container.getHeight());
 			this.gameContext = new SlickGameContext(this.interlink, container, this.assetManager, this.camera);
 			for (final IGameSubsystem subsystem : this.subsystems) {

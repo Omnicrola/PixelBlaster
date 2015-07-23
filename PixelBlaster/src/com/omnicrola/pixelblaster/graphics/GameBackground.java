@@ -10,7 +10,7 @@ public class GameBackground {
 	}
 
 	public void render(IGraphicsWrapper graphics) {
-		// graphics.drawImageFullScreen(this.image);
+		graphics.drawImageFullScreen(this.image);
 	}
 
 }

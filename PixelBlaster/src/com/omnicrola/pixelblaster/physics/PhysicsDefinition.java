@@ -6,14 +6,14 @@ import org.jbox2d.common.Vec2;
 public class PhysicsDefinition {
 	private final Vec2 position;
 	private PhysicsType type;
-	private final Shape shape;
+	private final Shape[] shapes;
 	private boolean allowRotation;
 	private final float friction;
 	private boolean allowSleep;
 	private float maxVelocity;
 
-	public PhysicsDefinition(Shape shape) {
-		this.shape = shape;
+	public PhysicsDefinition(Shape... shapes) {
+		this.shapes = shapes;
 		this.position = new Vec2();
 		this.type = PhysicsType.DYNAMIC;
 		this.allowRotation = true;
@@ -66,8 +66,8 @@ public class PhysicsDefinition {
 		return this.friction;
 	}
 
-	public Shape getShape() {
-		return this.shape;
+	public Shape[] getShape() {
+		return this.shapes;
 	}
 
 }
