@@ -12,6 +12,7 @@ import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
 import com.omnicrola.pixelblaster.map.IMapManager;
+import com.omnicrola.pixelblaster.map.MapBounds;
 
 public class PlayerManager implements IGameSubsystem, IPlayerManager {
 
@@ -54,6 +55,13 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 	public void update(IGameContext gameContext, float delta) {
 		this.keyListener.update(delta);
 		gameContext.getCamera().focusOn(this.player);
+		containPlayerInMap();
+	}
+
+	private void containPlayerInMap() {
+		final IMapManager mapManager = this.context.getSubsystem(IMapManager.class);
+		final MapBounds mapBounds = mapManager.getMapBounds();
+		mapBounds.containEntity(this.player);
 	}
 
 	@Override

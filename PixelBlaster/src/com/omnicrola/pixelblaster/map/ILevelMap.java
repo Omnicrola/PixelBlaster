@@ -11,4 +11,6 @@ public interface ILevelMap extends IEntityPhysics {
 
 	Vector2f getPlayerSpawn();
 
+	MapBounds getMapBounds();
+
 }

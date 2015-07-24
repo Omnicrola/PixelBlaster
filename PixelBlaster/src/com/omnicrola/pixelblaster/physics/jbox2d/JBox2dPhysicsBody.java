@@ -12,25 +12,25 @@ import com.omnicrola.pixelblaster.physics.IPhysicsBody;
 public class JBox2dPhysicsBody implements IPhysicsBody {
 
 	private final Body body;
-	private final Vec2 forceVector;
+	private final Vec2 vectorCache;
 	private final List<Fixture> fixtures;
 
 	public JBox2dPhysicsBody(Body body, List<Fixture> fixtures) {
 		this.body = body;
 		this.fixtures = fixtures;
-		this.forceVector = new Vec2();
+		this.vectorCache = new Vec2();
 	}
 
 	@Override
 	public void applyForceAtCenter(Vector2f force) {
-		this.forceVector.set(force.x, force.y);
-		this.body.applyForce(this.forceVector, this.body.getWorldCenter());
+		this.vectorCache.set(force.x, force.y);
+		this.body.applyForce(this.vectorCache, this.body.getWorldCenter());
 	}
 
 	@Override
 	public void applyImpulseAtCenter(Vector2f force) {
-		this.forceVector.set(force.x, force.y);
-		this.body.applyLinearImpulse(this.forceVector, this.body.getWorldCenter());
+		this.vectorCache.set(force.x, force.y);
+		this.body.applyLinearImpulse(this.vectorCache, this.body.getWorldCenter());
 	}
 
 	@Override
@@ -41,8 +41,14 @@ public class JBox2dPhysicsBody implements IPhysicsBody {
 
 	@Override
 	public void setLinearVelocity(Vector2f velocity) {
-		this.forceVector.set(velocity.x, velocity.y);
-		this.body.setLinearVelocity(this.forceVector);
+		this.vectorCache.set(velocity.x, velocity.y);
+		this.body.setLinearVelocity(this.vectorCache);
+	}
+
+	@Override
+	public void setPosition(Vector2f vector) {
+		this.vectorCache.set(vector.x, vector.y);
+		this.body.setTransform(this.vectorCache, this.body.getAngle());
 	}
 
 	@Override

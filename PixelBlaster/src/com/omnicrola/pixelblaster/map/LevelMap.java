@@ -29,6 +29,8 @@ public class LevelMap implements ILevelMap {
 		this.background = background;
 		this.mapData = mapData;
 		this.physicsBodies = new ArrayList<>();
+
+		mapData.mapBounds.setTileSize(tileSize);
 	}
 
 	@Override
@@ -39,8 +41,8 @@ public class LevelMap implements ILevelMap {
 
 	@Override
 	public void create(IPhysicsWrapper physics) {
-		this.tileData.allButAir((x, y, mapTile) -> createPhysics(physics, mapTile.getShape(),
-				x * LevelMap.this.tileSize, y * LevelMap.this.tileSize));
+		this.tileData.allButAir((x, y, mapTile) -> createPhysics(physics, mapTile.getShape(), x
+				* LevelMap.this.tileSize, y * LevelMap.this.tileSize));
 	}
 
 	@Override
@@ -57,7 +59,11 @@ public class LevelMap implements ILevelMap {
 		physicsDefinition.setFriction(0.9f);
 		physicsDefinition.setType(PhysicsType.STATIC);
 		physics.createBody(physicsDefinition);
+	}
 
+	@Override
+	public MapBounds getMapBounds() {
+		return this.mapData.mapBounds;
 	}
 
 	@Override

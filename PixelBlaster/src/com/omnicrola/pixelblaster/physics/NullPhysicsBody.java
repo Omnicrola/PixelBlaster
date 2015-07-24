@@ -1,14 +1,42 @@
 package com.omnicrola.pixelblaster.physics;
 
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
+import org.newdawn.slick.geom.Vector2f;
 
-public class NullPhysicsBody extends Body {
+public class NullPhysicsBody implements IPhysicsBody {
+	public static NullPhysicsBody NULL = new NullPhysicsBody();
 
-	public NullPhysicsBody() {
-		super(new BodyDef(), null);
+	private NullPhysicsBody() {
 	}
 
-	public static Body NULL = new NullPhysicsBody();
+	@Override
+	public void applyForceAtCenter(Vector2f force) {
+	}
+
+	@Override
+	public Vector2f getPosition() {
+		return new Vector2f();
+	}
+
+	@Override
+	public float getAngle() {
+		return 0;
+	}
+
+	@Override
+	public void applyImpulseAtCenter(Vector2f forceVector) {
+	}
+
+	@Override
+	public Vector2f getLinearVelocity() {
+		return new Vector2f();
+	}
+
+	@Override
+	public void setLinearVelocity(Vector2f velocity) {
+	}
+
+	@Override
+	public void setPosition(Vector2f vector) {
+	}
 
 }

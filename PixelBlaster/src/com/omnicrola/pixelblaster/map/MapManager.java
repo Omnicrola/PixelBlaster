@@ -49,6 +49,11 @@ public class MapManager implements IGameSubsystem, IMapManager {
 	}
 
 	@Override
+	public MapBounds getMapBounds() {
+		return this.currentMap.getMapBounds();
+	}
+
+	@Override
 	public void render(IGraphicsWrapper graphics) {
 		this.currentMap.render(graphics);
 	}

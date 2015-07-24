@@ -32,6 +32,7 @@ public class GameEntity implements IGameEntity {
 	@Override
 	public void setPosition(Vector2f position) {
 		this.position.set(position);
+		this.physics.setPosition(position);
 	}
 
 	@Override

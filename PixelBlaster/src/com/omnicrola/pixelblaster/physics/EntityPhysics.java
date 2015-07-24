@@ -8,11 +8,12 @@ public class EntityPhysics implements IEntityPhysics {
 
 	private final PhysicsDefinition physicsDefinition;
 	protected IPhysicsBody physicsBody;
-	private final Vector2f forceVector;
+	private final Vector2f cacheVector;
 
 	public EntityPhysics(PhysicsDefinition physicsDefinition) {
 		this.physicsDefinition = physicsDefinition;
-		this.forceVector = new Vector2f();
+		this.cacheVector = new Vector2f();
+		this.physicsBody = NullPhysicsBody.NULL;
 	}
 
 	public void update(IGameEntity gameEntity, float delta) {
@@ -73,13 +74,18 @@ public class EntityPhysics implements IEntityPhysics {
 	}
 
 	private void applyImpulse(float forceX, float forceY) {
-		this.forceVector.set(forceX, forceY);
-		this.physicsBody.applyImpulseAtCenter(this.forceVector);
+		this.cacheVector.set(forceX, forceY);
+		this.physicsBody.applyImpulseAtCenter(this.cacheVector);
 	}
 
 	private void applyForce(float forceX, float forceY) {
-		this.forceVector.set(forceX, forceY);
-		this.physicsBody.applyForceAtCenter(this.forceVector);
+		this.cacheVector.set(forceX, forceY);
+		this.physicsBody.applyForceAtCenter(this.cacheVector);
+	}
+
+	public void setPosition(Vector2f position) {
+		this.cacheVector.set(position.x, position.y);
+		this.physicsBody.setPosition(this.cacheVector);
 	}
 
 }

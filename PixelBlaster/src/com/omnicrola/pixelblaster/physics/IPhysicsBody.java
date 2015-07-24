@@ -14,4 +14,6 @@ public interface IPhysicsBody {
 	public Vector2f getLinearVelocity();
 
 	public void setLinearVelocity(Vector2f velocity);
+
+	public void setPosition(Vector2f vector);
 }
