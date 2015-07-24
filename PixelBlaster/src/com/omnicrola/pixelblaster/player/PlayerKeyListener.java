@@ -4,6 +4,8 @@ import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.KeyListener;
 
+import com.omnicrola.pixelblaster.entity.MultiStateSprite.Facing;
+import com.omnicrola.pixelblaster.entity.MultiStateSprite.State;
 import com.omnicrola.pixelblaster.main.GameSettings;
 import com.omnicrola.pixelblaster.physics.EntityPhysics;
 
@@ -41,20 +43,43 @@ public class PlayerKeyListener implements KeyListener {
 		final EntityPhysics physics = this.player.getPhysics();
 		if (this.moveRight) {
 			physics.moveRight(GameSettings.PLAYER_ACCELERATION);
+			setPlayerState(State.WALK);
+			this.player.getMultistateSprite().setFacing(Facing.RIGHT);
 		}
 		if (this.moveLeft) {
 			physics.moveLeft(GameSettings.PLAYER_ACCELERATION);
+			setPlayerState(State.WALK);
+			this.player.getMultistateSprite().setFacing(Facing.LEFT);
+		}
+		if (!this.moveLeft && !this.moveRight) {
+			removePlayerState(State.WALK);
+			setPlayerState(State.STAND);
 		}
 		if (this.moveUp) {
 			physics.moveUp(GameSettings.PLAYER_ACCELERATION);
 		}
 		if (this.moveDown) {
 			physics.moveDown(GameSettings.PLAYER_ACCELERATION);
+			setPlayerState(State.DUCK);
+		} else {
+			removePlayerState(State.DUCK);
 		}
 		if (this.isJumping) {
 			physics.jump(GameSettings.PLAYER_JUMP_SPEED);
+			setPlayerState(State.JUMP);
 			this.isJumping = false;
+		} else {
+			removePlayerState(State.JUMP);
 		}
+	}
+
+	private void removePlayerState(State state) {
+		this.player.getMultistateSprite().removeState(state);
+		;
+	}
+
+	private void setPlayerState(State state) {
+		this.player.getMultistateSprite().setState(state);
 	}
 
 	@Override

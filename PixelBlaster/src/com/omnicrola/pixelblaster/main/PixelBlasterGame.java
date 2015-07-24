@@ -10,6 +10,7 @@ import com.omnicrola.pixelblaster.input.ShowMenuHandler;
 import com.omnicrola.pixelblaster.map.MapManager;
 import com.omnicrola.pixelblaster.particles.ParticleManager;
 import com.omnicrola.pixelblaster.physics.PhysicsManager;
+import com.omnicrola.pixelblaster.player.PlayerBuilder;
 import com.omnicrola.pixelblaster.player.PlayerManager;
 
 public class PixelBlasterGame extends StateBasedGame {
@@ -35,7 +36,7 @@ public class PixelBlasterGame extends StateBasedGame {
 		mainGameState.addSubsystem(new MapManager());
 		mainGameState.addSubsystem(new EntityManager());
 		mainGameState.addSubsystem(new ParticleManager());
-		mainGameState.addSubsystem(new PlayerManager());
+		mainGameState.addSubsystem(new PlayerManager(new PlayerBuilder()));
 		mainGameState.addSubsystem(new ShowMenuHandler(this));
 		mainGameState.addSubsystem(new PhysicsManager());
 		addState(mainGameState);

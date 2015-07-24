@@ -62,7 +62,7 @@ public class EntityManager implements IGameSubsystem, IEntityManager {
 	@Override
 	public void render(IGraphicsWrapper graphics) {
 		for (final IGameEntity gameEntity : this.entities) {
-			graphics.drawShape(gameEntity.getSprite());
+			gameEntity.getSprite().render(graphics);
 		}
 	}
 

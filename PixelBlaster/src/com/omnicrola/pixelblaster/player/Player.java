@@ -4,8 +4,8 @@ import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 
-import com.omnicrola.pixelblaster.entity.EntitySprite;
 import com.omnicrola.pixelblaster.entity.GameEntity;
+import com.omnicrola.pixelblaster.entity.MultiStateSprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
 import com.omnicrola.pixelblaster.physics.EntityPhysics;
 import com.omnicrola.pixelblaster.physics.PhysicsDefinition;
@@ -15,9 +15,15 @@ public class Player extends GameEntity {
 
 	private static final float CHARACTER_HEIGHT = 0.7f;
 	private static final float CHARACTER_WIDTH = 0.3f;
+	private final MultiStateSprite multistateSprite;
 
-	public Player(EntitySprite baseShape) {
-		super(baseShape, createPlayerPhysics());
+	public Player(MultiStateSprite multistateSprite) {
+		super(multistateSprite, createPlayerPhysics());
+		this.multistateSprite = multistateSprite;
+	}
+
+	public MultiStateSprite getMultistateSprite() {
+		return this.multistateSprite;
 	}
 
 	private static EntityPhysics createPlayerPhysics() {

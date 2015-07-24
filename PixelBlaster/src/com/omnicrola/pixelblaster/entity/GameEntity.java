@@ -43,6 +43,7 @@ public class GameEntity implements IGameEntity {
 	@Override
 	public void update(float delta) {
 		this.physics.update(this, delta);
+		this.sprite.update(delta);
 	}
 
 	@Override

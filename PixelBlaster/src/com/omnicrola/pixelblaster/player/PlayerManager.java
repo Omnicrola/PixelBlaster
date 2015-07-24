@@ -1,11 +1,8 @@
 package com.omnicrola.pixelblaster.player;
 
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.entity.EntitySprite;
 import com.omnicrola.pixelblaster.entity.IEntityManager;
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
@@ -19,8 +16,10 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 	private Player player;
 	private PlayerKeyListener keyListener;
 	private IGameContext context;
+	private final PlayerBuilder playerBuilder;
 
-	public PlayerManager() {
+	public PlayerManager(PlayerBuilder playerBuilder) {
+		this.playerBuilder = playerBuilder;
 	}
 
 	@Override
@@ -39,9 +38,7 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 	}
 
 	private void buildPlayer() throws SlickException {
-		final Image image = new Image("sprites/alienGreen_stand.png");
-		final EntitySprite baseShape = new EntitySprite(image, new Rectangle(0, 0, 1f, 2f));
-		this.player = new Player(baseShape);
+		this.player = this.playerBuilder.build(this.context.getAssetManager());
 		respawnPlayer();
 	}
 

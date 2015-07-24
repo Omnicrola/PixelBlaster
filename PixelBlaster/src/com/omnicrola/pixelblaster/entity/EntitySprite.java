@@ -4,10 +4,12 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
+
 public class EntitySprite implements IEntitySprite {
-	private final Image image;
-	private float rotation;
-	private final Rectangle bounds;
+	protected Image image;
+	protected float rotation;
+	protected final Rectangle bounds;
 
 	public EntitySprite(Image image, Rectangle bounds) {
 		this.image = image;
@@ -48,5 +50,14 @@ public class EntitySprite implements IEntitySprite {
 	@Override
 	public Rectangle getBounds() {
 		return new Rectangle(this.bounds.getX(), this.bounds.getY(), this.bounds.getWidth(), this.bounds.getHeight());
+	}
+
+	@Override
+	public void render(IGraphicsWrapper graphics) {
+		graphics.drawImage(this.image, this.bounds);
+	}
+
+	@Override
+	public void update(float delta) {
 	}
 }
