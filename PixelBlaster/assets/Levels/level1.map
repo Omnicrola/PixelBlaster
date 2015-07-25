@@ -899,9 +899,31 @@
         <MapTile x="125" y="5" index="17"/>
         <MapTile x="126" y="5" index="17"/>
         <MapTile x="127" y="5" index="17"/>
+        <MapTile x="6" y="0" index="3"/>
+        <MapTile x="6" y="1" index="3"/>
+        <MapTile x="6" y="2" index="3"/>
+        <MapTile x="6" y="3" index="3"/>
+        <MapTile x="6" y="4" index="3"/>
+        <MapTile x="6" y="5" index="3"/>
+        <MapTile x="6" y="6" index="3"/>
+        <MapTile x="6" y="7" index="3"/>
+        <MapTile x="6" y="8" index="3"/>
+        <MapTile x="6" y="9" index="3"/>
+        <MapTile x="6" y="10" index="3"/>
+        <MapTile x="20" y="0" index="3"/>
+        <MapTile x="20" y="1" index="3"/>
+        <MapTile x="20" y="2" index="3"/>
+        <MapTile x="20" y="3" index="3"/>
+        <MapTile x="20" y="4" index="3"/>
+        <MapTile x="20" y="5" index="3"/>
+        <MapTile x="20" y="6" index="3"/>
+        <MapTile x="20" y="7" index="3"/>
+        <MapTile x="20" y="8" index="3"/>
+        <MapTile x="20" y="9" index="3"/>
+        <MapTile x="20" y="10" index="3"/>
     </mapTiles>
     <mapWidth>128</mapWidth>
     <mapHeight>11</mapHeight>
-    <MapBounds minX="5" minY="0" maxX="120" maxY="20"/>
-    <playerSpawn x="6" y="4"/>
+    <MapBounds minX="5" minY="0" maxX="11" maxY="128"/>
+    <playerSpawn x="8" y="4"/>
 </Map>

@@ -64,9 +64,16 @@ public class PlayerKeyListener implements KeyListener {
 		} else {
 			removePlayerState(State.DUCK);
 		}
-		if (this.isJumping) {
+		final boolean isInMidAir = this.player.isInMidAir();
+		final boolean isNotInMidair = !isInMidAir;
+		final boolean hasNotDoubleJumped = !this.player.hasDoubleJumped();
+		if (this.isJumping && (isNotInMidair || hasNotDoubleJumped)) {
 			physics.jump(GameSettings.PLAYER_JUMP_SPEED);
 			setPlayerState(State.JUMP);
+			this.player.setInMidAir(true);
+			if (isInMidAir && hasNotDoubleJumped) {
+				this.player.setHasDoubleJumped(true);
+			}
 			this.isJumping = false;
 		}
 	}

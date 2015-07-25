@@ -20,6 +20,8 @@ public class PlayerFootCollisionDetector implements ICollisionDetector {
 
 	@Override
 	public void collisionOccured(int otherFixtureId) {
+		this.player.setInMidAir(false);
+		this.player.setHasDoubleJumped(false);
 		this.player.getMultistateSprite().removeState(State.JUMP);
 	}
 }

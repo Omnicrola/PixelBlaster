@@ -30,9 +30,11 @@ public class MapCreator {
 		this.mapData.mapHeight = 11;
 		this.mapData.mapWidth = 128;
 		this.mapData.mapBounds = new MapBounds(5, 0, 11, 128);
-		this.mapData.playerSpawn = new Coordinate(6, 4);
+		this.mapData.playerSpawn = new Coordinate(8, 4);
 		fillArea(0, 5, 127, 10, CENTER);
 		fillArea(0, 5, 127, 5, FULL_MID);
+		fillArea(6, 0, 6, 10, CENTER_ROUND);
+		fillArea(20, 0, 20, 10, CENTER_ROUND);
 
 	}
 
