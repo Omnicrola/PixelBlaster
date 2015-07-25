@@ -14,10 +14,12 @@ public class JBox2dPhysicsBody implements IPhysicsBody {
 	private final Body body;
 	private final Vec2 vectorCache;
 	private final List<Fixture> fixtures;
+	private final List<JBox2dPhysicsSensor> sensors;
 
-	public JBox2dPhysicsBody(Body body, List<Fixture> fixtures) {
+	public JBox2dPhysicsBody(Body body, List<Fixture> fixtures, List<JBox2dPhysicsSensor> sensors) {
 		this.body = body;
 		this.fixtures = fixtures;
+		this.sensors = sensors;
 		this.vectorCache = new Vec2();
 	}
 

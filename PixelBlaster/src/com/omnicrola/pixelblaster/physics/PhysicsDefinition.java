@@ -1,5 +1,8 @@
 package com.omnicrola.pixelblaster.physics;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 
@@ -11,11 +14,15 @@ public class PhysicsDefinition {
 	private float friction;
 	private boolean allowSleep;
 	private float maxVelocity;
+	private final ArrayList<SensorDefinition> sensors;
+	private CollisionType collisionType;
 
 	public PhysicsDefinition(Shape... shapes) {
 		this.shapes = shapes;
 		this.position = new Vec2();
+		this.sensors = new ArrayList<>();
 		this.type = PhysicsType.DYNAMIC;
+		this.collisionType = CollisionType.NONE;
 		this.allowRotation = true;
 		this.allowSleep = true;
 		this.maxVelocity = 10f;
@@ -72,6 +79,22 @@ public class PhysicsDefinition {
 
 	public Shape[] getShapes() {
 		return this.shapes;
+	}
+
+	public void addSensor(SensorDefinition sensor) {
+		this.sensors.add(sensor);
+	}
+
+	public List<SensorDefinition> getSensors() {
+		return this.sensors;
+	}
+
+	public CollisionType getDetectionType() {
+		return this.collisionType;
+	}
+
+	public void setCollisionType(CollisionType collisionType) {
+		this.collisionType = collisionType;
 	}
 
 }

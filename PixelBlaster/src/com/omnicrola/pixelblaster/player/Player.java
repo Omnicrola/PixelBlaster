@@ -3,13 +3,16 @@ package com.omnicrola.pixelblaster.player;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
+import org.newdawn.slick.geom.Rectangle;
 
 import com.omnicrola.pixelblaster.entity.GameEntity;
 import com.omnicrola.pixelblaster.entity.MultiStateSprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
+import com.omnicrola.pixelblaster.physics.CollisionType;
 import com.omnicrola.pixelblaster.physics.EntityPhysics;
 import com.omnicrola.pixelblaster.physics.PhysicsDefinition;
 import com.omnicrola.pixelblaster.physics.PhysicsType;
+import com.omnicrola.pixelblaster.physics.SensorDefinition;
 
 public class Player extends GameEntity {
 
@@ -29,11 +32,23 @@ public class Player extends GameEntity {
 	private static EntityPhysics createPlayerPhysics() {
 
 		final PhysicsDefinition physicsDefinition = createCapsuleShape();
+		addSensors(physicsDefinition);
 		physicsDefinition.setType(PhysicsType.DYNAMIC);
 		physicsDefinition.allowRotation(false);
 		physicsDefinition.allowSleep(false);
 		physicsDefinition.setMaxVelocity(GameSettings.PLAYER_MAXIMUM_VELOCITY);
 		return new EntityPhysics(physicsDefinition);
+	}
+
+	private static void addSensors(PhysicsDefinition physicsDefinition) {
+		//@formatter:off
+		final Rectangle shape = new Rectangle(
+				-CHARACTER_WIDTH,
+				CHARACTER_WIDTH - 5,
+				CHARACTER_WIDTH,
+				CHARACTER_HEIGHT + 5);
+		//@formatter:on
+		physicsDefinition.addSensor(new SensorDefinition(CollisionType.PLAYER_FOOT, shape));
 	}
 
 	private static PhysicsDefinition createCapsuleShape() {
