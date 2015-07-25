@@ -3,8 +3,8 @@ package com.omnicrola.pixelblaster.physics;
 
 public interface IPhysicsWrapper {
 
-	public void destroyBody(IPhysicsBody body);
+	public void destroyEntity(IPhysicsEntity body);
 
-	public IPhysicsBody createBody(PhysicsDefinition physicsDefinition);
+	public IPhysicsEntity createBody(PhysicsDefinition physicsDefinition);
 
 }

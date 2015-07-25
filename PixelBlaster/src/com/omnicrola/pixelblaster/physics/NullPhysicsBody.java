@@ -2,7 +2,7 @@ package com.omnicrola.pixelblaster.physics;
 
 import org.newdawn.slick.geom.Vector2f;
 
-public class NullPhysicsBody implements IPhysicsBody {
+public class NullPhysicsBody implements IPhysicsEntity {
 	public static NullPhysicsBody NULL = new NullPhysicsBody();
 
 	private NullPhysicsBody() {

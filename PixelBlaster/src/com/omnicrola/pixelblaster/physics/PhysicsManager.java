@@ -23,8 +23,9 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 	private Camera camera;
 
 	@Override
-	public void loadPhysics(IEntityPhysics entityPhysics) {
-		entityPhysics.create(this.physicsWrapper);
+	public IPhysicsEntity createPhysics(PhysicsDefinition physicsDefinition) {
+		final IPhysicsEntity physicsEntity = this.physicsWrapper.createBody(physicsDefinition);
+		return physicsEntity;
 	}
 
 	@Override

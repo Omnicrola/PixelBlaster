@@ -7,7 +7,7 @@ import org.newdawn.slick.KeyListener;
 import com.omnicrola.pixelblaster.entity.MultiStateSprite.Facing;
 import com.omnicrola.pixelblaster.entity.MultiStateSprite.State;
 import com.omnicrola.pixelblaster.main.GameSettings;
-import com.omnicrola.pixelblaster.physics.EntityPhysics;
+import com.omnicrola.pixelblaster.physics.PhysicsWrapper;
 
 public class PlayerKeyListener implements KeyListener {
 
@@ -40,7 +40,7 @@ public class PlayerKeyListener implements KeyListener {
 	}
 
 	public void update(float delta) {
-		final EntityPhysics physics = this.player.getPhysics();
+		final PhysicsWrapper physics = this.player.getPhysics();
 		if (this.moveRight) {
 			physics.moveRight(GameSettings.PLAYER_ACCELERATION);
 			setPlayerState(State.WALK);

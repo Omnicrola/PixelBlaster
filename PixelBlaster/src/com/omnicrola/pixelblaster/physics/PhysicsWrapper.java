@@ -4,16 +4,21 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.entity.IGameEntity;
 
-public class EntityPhysics implements IEntityPhysics {
+public class PhysicsWrapper implements IEntityPhysics {
 
-	private final PhysicsDefinition physicsDefinition;
-	protected IPhysicsBody physicsBody;
+	private IPhysicsEntity physicsBody;
 	private final Vector2f cacheVector;
+	private float maximumVelocity;
 
-	public EntityPhysics(PhysicsDefinition physicsDefinition) {
-		this.physicsDefinition = physicsDefinition;
+	public PhysicsWrapper(IPhysicsEntity physicsBody) {
+		this.physicsBody = physicsBody;
 		this.cacheVector = new Vector2f();
-		this.physicsBody = NullPhysicsBody.NULL;
+		this.maximumVelocity = 1.0f;
+	}
+
+	@Override
+	public void setMaximumVelocity(float maximumVelocity) {
+		this.maximumVelocity = maximumVelocity;
 	}
 
 	public void update(IGameEntity gameEntity, float delta) {
@@ -24,10 +29,9 @@ public class EntityPhysics implements IEntityPhysics {
 
 	private void limitLinearVelocity() {
 		final Vector2f velocity = this.physicsBody.getLinearVelocity();
-		final float maximumVelocity = this.physicsDefinition.getMaxVelocity();
 		final float actualSpeed = velocity.length();
-		if (actualSpeed > maximumVelocity) {
-			velocity.scale(maximumVelocity / actualSpeed);
+		if (actualSpeed > this.maximumVelocity) {
+			velocity.scale(this.maximumVelocity / actualSpeed);
 			this.physicsBody.setLinearVelocity(velocity);
 		}
 	}
@@ -43,13 +47,8 @@ public class EntityPhysics implements IEntityPhysics {
 	}
 
 	@Override
-	public void create(IPhysicsWrapper physics) {
-		this.physicsBody = physics.createBody(this.physicsDefinition);
-	}
-
-	@Override
 	public void destroy(IPhysicsWrapper physics) {
-		physics.destroyBody(this.physicsBody);
+		physics.destroyEntity(this.physicsBody);
 		this.physicsBody = null;
 	}
 

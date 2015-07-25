@@ -36,7 +36,7 @@ public class MapManager implements IGameSubsystem, IMapManager {
 
 	private void loadMapForCurrentLevel(IPhysicsManager physicsManager) {
 		this.currentMap = this.mapLoader.load(this.currentLevel);
-		physicsManager.loadPhysics(this.currentMap);
+		this.currentMap.loadPhysics(physicsManager);
 	}
 
 	@Override

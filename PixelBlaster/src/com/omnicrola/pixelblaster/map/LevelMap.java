@@ -8,7 +8,8 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.graphics.GameBackground;
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
-import com.omnicrola.pixelblaster.physics.IPhysicsBody;
+import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
+import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.physics.IPhysicsWrapper;
 import com.omnicrola.pixelblaster.physics.PhysicsDefinition;
 import com.omnicrola.pixelblaster.physics.PhysicsType;
@@ -19,7 +20,7 @@ public class LevelMap implements ILevelMap {
 	private static final float HORIZ_PHYSICS_OFFSET = 0.5f;
 	private final MapTileDataSet tileData;
 	private final float tileSize;
-	private final List<IPhysicsBody> physicsBodies;
+	private final List<IPhysicsEntity> physicsEntities;
 	private final GameBackground background;
 	private final XmlMapData mapData;
 
@@ -28,7 +29,7 @@ public class LevelMap implements ILevelMap {
 		this.tileData = tileData;
 		this.background = background;
 		this.mapData = mapData;
-		this.physicsBodies = new ArrayList<>();
+		this.physicsEntities = new ArrayList<>();
 
 		mapData.mapBounds.setTileSize(tileSize);
 	}
@@ -40,8 +41,8 @@ public class LevelMap implements ILevelMap {
 	}
 
 	@Override
-	public void create(IPhysicsWrapper physics) {
-		this.tileData.allButAir((x, y, mapTile) -> createPhysics(physics, mapTile.getShape(), x
+	public void loadPhysics(IPhysicsManager physicsManager) {
+		this.tileData.allButAir((x, y, mapTile) -> createPhysics(physicsManager, mapTile.getShape(), x
 				* LevelMap.this.tileSize, y * LevelMap.this.tileSize));
 	}
 
@@ -53,12 +54,13 @@ public class LevelMap implements ILevelMap {
 		return new Vector2f(x, y);
 	}
 
-	private void createPhysics(IPhysicsWrapper physics, Shape shape, float pX, float pY) {
+	private void createPhysics(IPhysicsManager physicsManager, Shape shape, float pX, float pY) {
 		final PhysicsDefinition physicsDefinition = new PhysicsDefinition(shape);
 		physicsDefinition.setPosition(pX + HORIZ_PHYSICS_OFFSET, pY);
 		physicsDefinition.setFriction(0.9f);
 		physicsDefinition.setType(PhysicsType.STATIC);
-		physics.createBody(physicsDefinition);
+		final IPhysicsEntity physics = physicsManager.createPhysics(physicsDefinition);
+		this.physicsEntities.add(physics);
 	}
 
 	@Override
@@ -68,8 +70,12 @@ public class LevelMap implements ILevelMap {
 
 	@Override
 	public void destroy(IPhysicsWrapper physics) {
-		for (final IPhysicsBody body : this.physicsBodies) {
-			physics.destroyBody(body);
+		for (final IPhysicsEntity entity : this.physicsEntities) {
+			physics.destroyEntity(entity);
 		}
+	}
+
+	@Override
+	public void setMaximumVelocity(float maximumVelocity) {
 	}
 }

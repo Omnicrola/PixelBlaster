@@ -10,6 +10,8 @@ import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
 import com.omnicrola.pixelblaster.map.IMapManager;
 import com.omnicrola.pixelblaster.map.MapBounds;
+import com.omnicrola.pixelblaster.physics.IPhysicsManager;
+import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class PlayerManager implements IGameSubsystem, IPlayerManager {
 
@@ -38,7 +40,9 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 	}
 
 	private void buildPlayer() throws SlickException {
-		this.player = this.playerBuilder.build(this.context.getAssetManager());
+		final AssetManager assetManager = this.context.getAssetManager();
+		final IPhysicsManager subsystem = this.context.getSubsystem(IPhysicsManager.class);
+		this.player = this.playerBuilder.build(assetManager, subsystem);
 		respawnPlayer();
 	}
 

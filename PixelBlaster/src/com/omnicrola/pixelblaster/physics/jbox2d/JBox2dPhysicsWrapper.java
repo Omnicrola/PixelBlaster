@@ -14,7 +14,7 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.newdawn.slick.geom.Rectangle;
 
-import com.omnicrola.pixelblaster.physics.IPhysicsBody;
+import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsWrapper;
 import com.omnicrola.pixelblaster.physics.PhysicsDefinition;
 import com.omnicrola.pixelblaster.physics.PhysicsType;
@@ -29,11 +29,11 @@ public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 	}
 
 	@Override
-	public void destroyBody(IPhysicsBody body) {
+	public void destroyEntity(IPhysicsEntity body) {
 	}
 
 	@Override
-	public IPhysicsBody createBody(PhysicsDefinition physicsDefinition) {
+	public IPhysicsEntity createBody(PhysicsDefinition physicsDefinition) {
 		final BodyDef def = new BodyDef();
 		def.position = physicsDefinition.getPosition();
 		def.fixedRotation = physicsDefinition.allowRotation();

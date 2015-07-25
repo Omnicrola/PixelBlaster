@@ -6,12 +6,10 @@ import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
-import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 
 public class EntityManager implements IGameSubsystem, IEntityManager {
 	private final ArrayList<IGameEntity> entities;
 	private final ArrayList<IGameEntity> entityCopies;
-	private IPhysicsManager physicsManager;
 
 	public EntityManager() {
 		this.entities = new ArrayList<>();
@@ -21,7 +19,6 @@ public class EntityManager implements IGameSubsystem, IEntityManager {
 	@Override
 	public void addEntity(IGameEntity entity) {
 		this.entities.add(entity);
-		this.physicsManager.loadPhysics(entity.getPhysics());
 	}
 
 	@Override
@@ -33,7 +30,6 @@ public class EntityManager implements IGameSubsystem, IEntityManager {
 	public void init(IGameContext context) {
 		this.entities.clear();
 		this.entityCopies.clear();
-		this.physicsManager = context.getSubsystem(IPhysicsManager.class);
 	}
 
 	@Override
@@ -54,7 +50,6 @@ public class EntityManager implements IGameSubsystem, IEntityManager {
 		for (final IGameEntity gameEntity : this.entityCopies) {
 			if (!gameEntity.isAlive()) {
 				this.entities.remove(gameEntity);
-				this.physicsManager.destroyPhysics(gameEntity.getPhysics());
 			}
 		}
 	}

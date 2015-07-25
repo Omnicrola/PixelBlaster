@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.physics.EntityPhysics;
+import com.omnicrola.pixelblaster.physics.PhysicsWrapper;
 
 public class GameEntity implements IGameEntity {
 	private final Vector2f position;
@@ -13,9 +13,9 @@ public class GameEntity implements IGameEntity {
 	private final EntitySprite sprite;
 	private float rotation;
 	private final List<IUpdateBehavior> updateBehaviors;
-	private final EntityPhysics physics;
+	private final PhysicsWrapper physics;
 
-	public GameEntity(EntitySprite sprite, EntityPhysics physics) {
+	public GameEntity(EntitySprite sprite, PhysicsWrapper physics) {
 		this.sprite = sprite;
 		this.physics = physics;
 		this.updateBehaviors = new ArrayList<>();
@@ -52,7 +52,7 @@ public class GameEntity implements IGameEntity {
 	}
 
 	@Override
-	public EntityPhysics getPhysics() {
+	public PhysicsWrapper getPhysics() {
 		return this.physics;
 	}
 

@@ -7,9 +7,9 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Fixture;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.physics.IPhysicsBody;
+import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 
-public class JBox2dPhysicsBody implements IPhysicsBody {
+public class JBox2dPhysicsBody implements IPhysicsEntity {
 
 	private final Body body;
 	private final Vec2 vectorCache;
