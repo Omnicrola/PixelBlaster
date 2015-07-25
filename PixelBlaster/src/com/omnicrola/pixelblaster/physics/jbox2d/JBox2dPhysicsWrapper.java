@@ -23,9 +23,11 @@ import com.omnicrola.pixelblaster.physics.SensorDefinition;
 public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 
 	private final World world;
+	private final JBox2dContactListener contactHandler;
 
-	public JBox2dPhysicsWrapper(World world) {
+	public JBox2dPhysicsWrapper(World world, JBox2dContactListener contactHandler) {
 		this.world = world;
+		this.contactHandler = contactHandler;
 	}
 
 	@Override
@@ -43,7 +45,7 @@ public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 
 		final ArrayList<Fixture> fixtures = createFixtures(physicsDefinition, body);
 		final List<JBox2dPhysicsSensor> sensors = createSensors(physicsDefinition.getSensors(), body);
-		return new JBox2dPhysicsBody(body, fixtures, sensors);
+		return new JBox2dPhysicsBody(this.contactHandler, body, fixtures, sensors);
 	}
 
 	private ArrayList<Fixture> createFixtures(PhysicsDefinition physicsDefinition, final Body body) {
@@ -54,7 +56,7 @@ public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 			final FixtureDef fixtureDefinition = new FixtureDef();
 			fixtureDefinition.friction = physicsDefinition.getFriction();
 			fixtureDefinition.shape = shape;
-			fixtureDefinition.userData = physicsDefinition.getDetectionType();
+			fixtureDefinition.userData = physicsDefinition.getId();
 			fixtures.add(body.createFixture(fixtureDefinition));
 		}
 
@@ -66,7 +68,7 @@ public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 		for (final SensorDefinition sensorDefinition : sensorDefinitions) {
 			final FixtureDef def = new FixtureDef();
 			def.isSensor = true;
-			def.userData = sensorDefinition.getDetectionType();
+			def.userData = sensorDefinition.getSensorId();
 			def.shape = createRectangleShape(sensorDefinition.getBounds());
 			final Fixture fixture = body.createFixture(def);
 			sensors.add(new JBox2dPhysicsSensor(fixture));

@@ -87,4 +87,8 @@ public class PhysicsWrapper implements IEntityPhysics {
 		this.physicsBody.setPosition(this.cacheVector);
 	}
 
+	public void addCollisionListener(ICollisionDetector collisionDetector) {
+		this.physicsBody.addCollisionDetector(collisionDetector);
+	}
+
 }

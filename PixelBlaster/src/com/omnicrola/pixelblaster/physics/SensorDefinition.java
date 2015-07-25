@@ -5,10 +5,10 @@ import org.newdawn.slick.geom.Rectangle;
 public class SensorDefinition {
 
 	private final Rectangle bounds;
-	private final CollisionType collisionType;
+	private final int sensorId;
 
-	public SensorDefinition(CollisionType collisionType, Rectangle bounds) {
-		this.collisionType = collisionType;
+	public SensorDefinition(int sensorId, Rectangle bounds) {
+		this.sensorId = sensorId;
 		this.bounds = bounds;
 	}
 
@@ -16,7 +16,7 @@ public class SensorDefinition {
 		return this.bounds;
 	}
 
-	public CollisionType getDetectionType() {
-		return this.collisionType;
+	public int getSensorId() {
+		return this.sensorId;
 	}
 }

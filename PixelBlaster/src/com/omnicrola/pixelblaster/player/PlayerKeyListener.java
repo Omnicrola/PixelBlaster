@@ -68,8 +68,6 @@ public class PlayerKeyListener implements KeyListener {
 			physics.jump(GameSettings.PLAYER_JUMP_SPEED);
 			setPlayerState(State.JUMP);
 			this.isJumping = false;
-		} else {
-			removePlayerState(State.JUMP);
 		}
 	}
 

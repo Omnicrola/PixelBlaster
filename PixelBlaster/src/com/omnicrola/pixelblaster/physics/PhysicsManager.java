@@ -12,6 +12,7 @@ import com.omnicrola.pixelblaster.main.GameSettings;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
+import com.omnicrola.pixelblaster.physics.jbox2d.JBox2dContactListener;
 import com.omnicrola.pixelblaster.physics.jbox2d.JBox2dPhysicsWrapper;
 import com.omnicrola.pixelblaster.physics.jbox2d.Slick2dDebugDraw;
 
@@ -37,7 +38,9 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 	public void load(GameSubsystemInterlink interlink) {
 		interlink.setSubsystem(IPhysicsManager.class, this);
 		this.world = new World(new Vec2(0, GameSettings.GRAVITY_ACCELLERATION), true);
-		this.physicsWrapper = new JBox2dPhysicsWrapper(this.world);
+		final JBox2dContactListener contactHandler = new JBox2dContactListener();
+		this.world.setContactListener(contactHandler);
+		this.physicsWrapper = new JBox2dPhysicsWrapper(this.world, contactHandler);
 	}
 
 	@Override

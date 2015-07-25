@@ -39,4 +39,7 @@ public class NullPhysicsBody implements IPhysicsEntity {
 	public void setPosition(Vector2f vector) {
 	}
 
+	@Override
+	public void addCollisionDetector(ICollisionDetector collisionDetector) {
+	}
 }

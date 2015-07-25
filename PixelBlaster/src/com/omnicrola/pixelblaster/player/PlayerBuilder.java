@@ -8,7 +8,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 import com.omnicrola.pixelblaster.entity.MultiStateSprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
-import com.omnicrola.pixelblaster.physics.CollisionType;
+import com.omnicrola.pixelblaster.physics.CollisionIds;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.physics.PhysicsDefinition;
@@ -22,13 +22,19 @@ public class PlayerBuilder {
 	private static final float CHARACTER_WIDTH = 0.3f;
 
 	public Player build(AssetManager assetManager, IPhysicsManager physicsManager) {
+		final PhysicsWrapper physicsWrapper = createPhysics(physicsManager);
+		final MultiStateSprite multiStateSprite = createSprite(assetManager);
+		final Player player = new Player(multiStateSprite, physicsWrapper);
+		physicsWrapper.addCollisionListener(new PlayerFootCollisionDetector(CollisionIds.PLAYER_FOOT, player));
+		return player;
+	}
+
+	private static PhysicsWrapper createPhysics(IPhysicsManager physicsManager) {
 		final PhysicsDefinition playerPhysicsDefinition = createPlayerPhysics();
 		final IPhysicsEntity physicsEntity = physicsManager.createPhysics(playerPhysicsDefinition);
-		final MultiStateSprite multiStateSprite = createSprite(assetManager);
 		final PhysicsWrapper physicsWrapper = new PhysicsWrapper(physicsEntity);
 		physicsWrapper.setMaximumVelocity(GameSettings.PLAYER_MAXIMUM_VELOCITY);
-		final Player player = new Player(multiStateSprite, physicsWrapper);
-		return player;
+		return physicsWrapper;
 	}
 
 	private static MultiStateSprite createSprite(AssetManager assetManager) {
@@ -74,7 +80,7 @@ public class PlayerBuilder {
 				CHARACTER_WIDTH,
 				CHARACTER_HEIGHT + 5);
 		//@formatter:on
-		physicsDefinition.addSensor(new SensorDefinition(CollisionType.PLAYER_FOOT, shape));
+		physicsDefinition.addSensor(new SensorDefinition(CollisionIds.PLAYER_FOOT, shape));
 	}
 
 	private static PhysicsDefinition createCapsuleShape() {

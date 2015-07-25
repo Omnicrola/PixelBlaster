@@ -16,4 +16,6 @@ public interface IPhysicsEntity {
 	public void setLinearVelocity(Vector2f velocity);
 
 	public void setPosition(Vector2f vector);
+
+	public void addCollisionDetector(ICollisionDetector collisionDetector);
 }

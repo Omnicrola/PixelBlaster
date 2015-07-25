@@ -15,14 +15,14 @@ public class PhysicsDefinition {
 	private boolean allowSleep;
 	private float maxVelocity;
 	private final ArrayList<SensorDefinition> sensors;
-	private CollisionType collisionType;
+	private int collisionId;
 
 	public PhysicsDefinition(Shape... shapes) {
 		this.shapes = shapes;
 		this.position = new Vec2();
 		this.sensors = new ArrayList<>();
 		this.type = PhysicsType.DYNAMIC;
-		this.collisionType = CollisionType.NONE;
+		this.collisionId = CollisionIds.NONE;
 		this.allowRotation = true;
 		this.allowSleep = true;
 		this.maxVelocity = 10f;
@@ -89,12 +89,11 @@ public class PhysicsDefinition {
 		return this.sensors;
 	}
 
-	public CollisionType getDetectionType() {
-		return this.collisionType;
+	public int getId() {
+		return this.collisionId;
 	}
 
-	public void setCollisionType(CollisionType collisionType) {
-		this.collisionType = collisionType;
+	public void setCollisionId(int collisionId) {
+		this.collisionId = collisionId;
 	}
-
 }

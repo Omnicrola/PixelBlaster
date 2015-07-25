@@ -7,6 +7,7 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Fixture;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 
 public class JBox2dPhysicsBody implements IPhysicsEntity {
@@ -15,8 +16,11 @@ public class JBox2dPhysicsBody implements IPhysicsEntity {
 	private final Vec2 vectorCache;
 	private final List<Fixture> fixtures;
 	private final List<JBox2dPhysicsSensor> sensors;
+	private final JBox2dContactListener contactListener;
 
-	public JBox2dPhysicsBody(Body body, List<Fixture> fixtures, List<JBox2dPhysicsSensor> sensors) {
+	public JBox2dPhysicsBody(JBox2dContactListener contactHandler, Body body, List<Fixture> fixtures,
+			List<JBox2dPhysicsSensor> sensors) {
+		this.contactListener = contactHandler;
 		this.body = body;
 		this.fixtures = fixtures;
 		this.sensors = sensors;
@@ -64,4 +68,8 @@ public class JBox2dPhysicsBody implements IPhysicsEntity {
 		return this.body.getAngle();
 	}
 
+	@Override
+	public void addCollisionDetector(ICollisionDetector collisionDetector) {
+		this.contactListener.addHandler(collisionDetector);
+	}
 }
