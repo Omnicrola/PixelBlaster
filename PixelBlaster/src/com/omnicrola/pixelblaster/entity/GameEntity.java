@@ -5,17 +5,18 @@ import java.util.List;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.physics.PhysicsWrapper;
+import com.omnicrola.pixelblaster.graphics.IEntitySprite;
+import com.omnicrola.pixelblaster.physics.IEntityPhysics;
 
 public class GameEntity implements IGameEntity {
+	protected final IEntitySprite sprite;
+	protected final IEntityPhysics physics;
 	private final Vector2f position;
 	private final boolean isAlive;
-	private final EntitySprite sprite;
 	private float rotation;
 	private final List<IUpdateBehavior> updateBehaviors;
-	private final PhysicsWrapper physics;
 
-	public GameEntity(EntitySprite sprite, PhysicsWrapper physics) {
+	public GameEntity(IEntitySprite sprite, IEntityPhysics physics) {
 		this.sprite = sprite;
 		this.physics = physics;
 		this.updateBehaviors = new ArrayList<>();
@@ -44,6 +45,13 @@ public class GameEntity implements IGameEntity {
 	public void update(float delta) {
 		this.physics.update(this, delta);
 		this.sprite.update(delta);
+		updateBehavior(delta);
+	}
+
+	private void updateBehavior(float delta) {
+		for (final IUpdateBehavior behavior : this.updateBehaviors) {
+			behavior.update(this, delta);
+		}
 	}
 
 	@Override
@@ -52,7 +60,7 @@ public class GameEntity implements IGameEntity {
 	}
 
 	@Override
-	public PhysicsWrapper getPhysics() {
+	public IEntityPhysics getPhysics() {
 		return this.physics;
 	}
 

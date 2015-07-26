@@ -1,6 +1,5 @@
 package com.omnicrola.pixelblaster.player;
 
-import com.omnicrola.pixelblaster.entity.MultiStateSprite.State;
 import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 
 public class PlayerFootCollisionDetector implements ICollisionDetector {
@@ -22,6 +21,6 @@ public class PlayerFootCollisionDetector implements ICollisionDetector {
 	public void collisionOccured(int otherFixtureId) {
 		this.player.setInMidAir(false);
 		this.player.setHasDoubleJumped(false);
-		this.player.getMultistateSprite().removeState(State.JUMP);
+		this.player.getMultistateSprite().removeState(PlayerState.JUMP);
 	}
 }

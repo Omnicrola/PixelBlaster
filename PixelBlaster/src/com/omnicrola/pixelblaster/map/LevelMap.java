@@ -6,6 +6,7 @@ import java.util.List;
 import org.jbox2d.collision.shapes.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.omnicrola.pixelblaster.entity.IGameEntity;
 import com.omnicrola.pixelblaster.graphics.GameBackground;
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
@@ -42,8 +43,8 @@ public class LevelMap implements ILevelMap {
 
 	@Override
 	public void loadPhysics(IPhysicsManager physicsManager) {
-		this.tileData.allButAir((x, y, mapTile) -> createPhysics(physicsManager, mapTile.getShape(), x
-				* LevelMap.this.tileSize, y * LevelMap.this.tileSize));
+		this.tileData.allButAir((x, y, mapTile) -> createPhysics(physicsManager, mapTile.getShape(),
+				x * LevelMap.this.tileSize, y * LevelMap.this.tileSize));
 	}
 
 	@Override
@@ -77,5 +78,33 @@ public class LevelMap implements ILevelMap {
 
 	@Override
 	public void setMaximumVelocity(float maximumVelocity) {
+	}
+
+	@Override
+	public void setPosition(Vector2f position) {
+	}
+
+	@Override
+	public void update(IGameEntity gameEntity, float delta) {
+	}
+
+	@Override
+	public void moveRight(float force) {
+	}
+
+	@Override
+	public void moveLeft(float force) {
+	}
+
+	@Override
+	public void moveUp(float force) {
+	}
+
+	@Override
+	public void moveDown(float force) {
+	}
+
+	@Override
+	public void jump(float force) {
 	}
 }

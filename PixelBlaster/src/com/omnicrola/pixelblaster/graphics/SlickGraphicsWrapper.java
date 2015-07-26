@@ -5,11 +5,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
-import com.omnicrola.pixelblaster.entity.IEntitySprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
 
 public class SlickGraphicsWrapper implements IGraphicsWrapper {
 
+	private static final Color FULL = new Color(1f, 1f, 1f, 1f);
 	private final Graphics graphics;
 	private final Camera camera;
 
@@ -32,12 +32,17 @@ public class SlickGraphicsWrapper implements IGraphicsWrapper {
 
 	@Override
 	public void drawImage(Image image, Rectangle bounds) {
+		drawImage(image, bounds, FULL);
+	}
+
+	@Override
+	public void drawImage(Image image, Rectangle bounds, Color drawColor) {
 		final float x = this.camera.translateX(bounds.getX());
 		final float y = this.camera.translateY(bounds.getY());
 		final float scaledWidth = this.camera.scale(bounds.getWidth());
 		final float scaledHeight = this.camera.scale(bounds.getHeight());
 		this.graphics.drawImage(image, x, y, x + scaledWidth, y + scaledHeight, 0, 0, image.getWidth(),
-				image.getHeight());
+				image.getHeight(), drawColor);
 		// DEBUG
 		if (GameSettings.DEBUG) {
 			// this.graphics.setColor(Color.yellow);

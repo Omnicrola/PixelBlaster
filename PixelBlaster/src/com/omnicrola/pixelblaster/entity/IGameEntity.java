@@ -2,6 +2,7 @@ package com.omnicrola.pixelblaster.entity;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import com.omnicrola.pixelblaster.graphics.IEntitySprite;
 import com.omnicrola.pixelblaster.physics.IEntityPhysics;
 
 public interface IGameEntity {

@@ -3,16 +3,13 @@ package com.omnicrola.pixelblaster.physics.jbox2d;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.collision.shapes.Shape;
-import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
-import org.newdawn.slick.geom.Rectangle;
 
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsWrapper;
@@ -69,22 +66,11 @@ public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 			final FixtureDef def = new FixtureDef();
 			def.isSensor = true;
 			def.userData = sensorDefinition.getSensorId();
-			def.shape = createRectangleShape(sensorDefinition.getBounds());
+			def.shape = sensorDefinition.getShape();
 			final Fixture fixture = body.createFixture(def);
 			sensors.add(new JBox2dPhysicsSensor(fixture));
 		}
 		return sensors;
-	}
-
-	private Shape createRectangleShape(Rectangle bounds) {
-		final PolygonShape polygonShape = new PolygonShape();
-		final Vec2[] vertices = new Vec2[4];
-		vertices[0] = new Vec2(bounds.getMinX(), bounds.getMinY());
-		vertices[1] = new Vec2(bounds.getMaxX(), bounds.getMinY());
-		vertices[2] = new Vec2(bounds.getMaxX(), bounds.getMaxY());
-		vertices[3] = new Vec2(bounds.getMinX(), bounds.getMaxY());
-		polygonShape.set(vertices, 4);
-		return polygonShape;
 	}
 
 	private BodyType translateType(PhysicsDefinition physicsDefinition) {

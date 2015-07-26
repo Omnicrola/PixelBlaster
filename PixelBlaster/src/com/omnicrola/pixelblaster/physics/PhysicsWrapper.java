@@ -21,6 +21,7 @@ public class PhysicsWrapper implements IEntityPhysics {
 		this.maximumVelocity = maximumVelocity;
 	}
 
+	@Override
 	public void update(IGameEntity gameEntity, float delta) {
 		limitLinearVelocity();
 		updatePosition(gameEntity);
@@ -52,10 +53,12 @@ public class PhysicsWrapper implements IEntityPhysics {
 		this.physicsBody = null;
 	}
 
+	@Override
 	public void moveLeft(float force) {
 		applyForce(-force, 0);
 	}
 
+	@Override
 	public void moveRight(float force) {
 		applyForce(force, 0);
 	}
@@ -64,10 +67,12 @@ public class PhysicsWrapper implements IEntityPhysics {
 		applyForce(0, -force);
 	}
 
+	@Override
 	public void moveDown(float force) {
 		applyForce(0, force);
 	}
 
+	@Override
 	public void jump(float force) {
 		applyImpulse(0, -force);
 	}
@@ -82,6 +87,7 @@ public class PhysicsWrapper implements IEntityPhysics {
 		this.physicsBody.applyForceAtCenter(this.cacheVector);
 	}
 
+	@Override
 	public void setPosition(Vector2f position) {
 		this.cacheVector.set(position.x, position.y);
 		this.physicsBody.setPosition(this.cacheVector);

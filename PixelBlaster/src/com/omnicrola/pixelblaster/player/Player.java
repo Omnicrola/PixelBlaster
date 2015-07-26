@@ -1,7 +1,7 @@
 package com.omnicrola.pixelblaster.player;
 
 import com.omnicrola.pixelblaster.entity.GameEntity;
-import com.omnicrola.pixelblaster.entity.MultiStateSprite;
+import com.omnicrola.pixelblaster.graphics.MultiStateSprite;
 import com.omnicrola.pixelblaster.physics.PhysicsWrapper;
 
 public class Player extends GameEntity {
@@ -9,14 +9,20 @@ public class Player extends GameEntity {
 	private final MultiStateSprite multistateSprite;
 	private boolean isInMidAir;
 	private boolean hasDoubleJumped;
+	private final Bubble bubble;
 
-	public Player(MultiStateSprite multistateSprite, PhysicsWrapper physicsWrapper) {
+	public Player(Bubble bubble, MultiStateSprite multistateSprite, PhysicsWrapper physicsWrapper) {
 		super(multistateSprite, physicsWrapper);
+		this.bubble = bubble;
 		this.multistateSprite = multistateSprite;
 	}
 
 	public MultiStateSprite getMultistateSprite() {
 		return this.multistateSprite;
+	}
+
+	public Bubble getBubble() {
+		return this.bubble;
 	}
 
 	public boolean isInMidAir() {

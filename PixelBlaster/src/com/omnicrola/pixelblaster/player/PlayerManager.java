@@ -34,9 +34,10 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 		this.context = context;
 		buildPlayer();
 		this.keyListener = new PlayerKeyListener(this.player);
-		context.getSubsystem(IEntityManager.class).addEntity(this.player);
+		final IEntityManager entityManager = context.getSubsystem(IEntityManager.class);
+		entityManager.addEntity(this.player);
+		entityManager.addEntity(this.player.getBubble());
 		context.getInput().addKeyListener(this.keyListener);
-
 	}
 
 	private void buildPlayer() throws SlickException {

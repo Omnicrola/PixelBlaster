@@ -1,12 +1,22 @@
 package com.omnicrola.pixelblaster.player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.entity.MultiStateSprite;
+import com.omnicrola.pixelblaster.entity.behavior.SynchEntityPosition;
+import com.omnicrola.pixelblaster.graphics.AnimatedSprite;
+import com.omnicrola.pixelblaster.graphics.EntitySprite;
+import com.omnicrola.pixelblaster.graphics.IEntitySprite;
+import com.omnicrola.pixelblaster.graphics.ISpriteState;
+import com.omnicrola.pixelblaster.graphics.MultiStateSprite;
+import com.omnicrola.pixelblaster.graphics.NullSprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
 import com.omnicrola.pixelblaster.physics.CollisionIds;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
@@ -20,13 +30,39 @@ import com.omnicrola.pixelblaster.util.AssetManager;
 public class PlayerBuilder {
 	private static final float CHARACTER_HEIGHT = 0.7f;
 	private static final float CHARACTER_WIDTH = 0.3f;
+	private static final String BASE = "sprites/PlayerGreen/alienGreen_";
 
 	public Player build(AssetManager assetManager, IPhysicsManager physicsManager) {
 		final PhysicsWrapper physicsWrapper = createPhysics(physicsManager);
 		final MultiStateSprite multiStateSprite = createSprite(assetManager);
-		final Player player = new Player(multiStateSprite, physicsWrapper);
+		final Bubble bubble = createBubble(physicsManager, assetManager);
+		final Player player = new Player(bubble, multiStateSprite, physicsWrapper);
+		player.addUpdateBehavior(new SynchEntityPosition(bubble, new Vector2f(-0.5f, 0.1f)));
 		physicsWrapper.addCollisionListener(new PlayerFootCollisionDetector(CollisionIds.PLAYER_FOOT, player));
 		return player;
+	}
+
+	private static Bubble createBubble(IPhysicsManager physicsManager, AssetManager assetManager) {
+		final Rectangle bounds = new Rectangle(0, 0, 2, 2);
+		final Map<ISpriteState, IEntitySprite> sprites = new HashMap<>();
+		sprites.put(BubbleState.NONE, NullSprite.NULL);
+		sprites.put(BubbleState.BLACK, new EntitySprite(getBubbleImage(assetManager, "Black"), bounds));
+		sprites.put(BubbleState.BLUE, new EntitySprite(getBubbleImage(assetManager, "Blue"), bounds));
+		sprites.put(BubbleState.GREY, new EntitySprite(getBubbleImage(assetManager, "Grey"), bounds));
+		sprites.put(BubbleState.YELLOW, new EntitySprite(getBubbleImage(assetManager, "Yellow"), bounds));
+		final MultiStateSprite sprite = new MultiStateSprite(sprites, bounds, BubbleState.NONE);
+		sprite.setTransparency(0.5f);
+
+		final CircleShape circleShape = new CircleShape();
+		circleShape.m_radius = 1f;
+		final PhysicsDefinition physicsDefinition = new PhysicsDefinition();
+		physicsDefinition.addSensor(new SensorDefinition(1, circleShape));
+		final PhysicsWrapper physics = new PhysicsWrapper(physicsManager.createPhysics(physicsDefinition));
+		return new Bubble(sprite, physics);
+	}
+
+	private static Image getBubbleImage(AssetManager assetManager, String string) {
+		return assetManager.getImage("sprites/bubbles/bubble" + string + ".png");
 	}
 
 	private static PhysicsWrapper createPhysics(IPhysicsManager physicsManager) {
@@ -38,27 +74,31 @@ public class PlayerBuilder {
 	}
 
 	private static MultiStateSprite createSprite(AssetManager assetManager) {
-		final Image[] images = getImages(assetManager);
-		final MultiStateSprite multiStateSprite = new MultiStateSprite(images, new Rectangle(0, 0, 1f, 2f));
+		final Rectangle bounds = new Rectangle(0, 0, 1f, 2f);
+		final Map<ISpriteState, IEntitySprite> sprites = createSprites(assetManager, bounds);
+		final MultiStateSprite multiStateSprite = new MultiStateSprite(sprites, bounds, PlayerState.STAND);
 		return multiStateSprite;
 	}
 
-	private static Image[] getImages(AssetManager assetManager) {
-		final Image[] images = new Image[11];
-		final String base = "sprites/PlayerGreen/alienGreen_";
-		images[MultiStateSprite.STAND] = assetManager.getImage(base + "stand.png");
-		images[MultiStateSprite.FRONT] = assetManager.getImage(base + "front.png");
-		images[MultiStateSprite.WALK1] = assetManager.getImage(base + "walk1.png");
-		images[MultiStateSprite.WALK2] = assetManager.getImage(base + "walk2.png");
-		images[MultiStateSprite.SWIM1] = assetManager.getImage(base + "swim1.png");
-		images[MultiStateSprite.SWIM2] = assetManager.getImage(base + "swim2.png");
-		images[MultiStateSprite.JUMP] = assetManager.getImage(base + "jump.png");
-		images[MultiStateSprite.HIT] = assetManager.getImage(base + "hit.png");
-		images[MultiStateSprite.DUCK] = assetManager.getImage(base + "duck.png");
-		images[MultiStateSprite.CLIMB1] = assetManager.getImage(base + "climb1.png");
-		images[MultiStateSprite.CLIMB2] = assetManager.getImage(base + "climb2.png");
+	private static Map<ISpriteState, IEntitySprite> createSprites(AssetManager assetManager, Rectangle bounds) {
+		final HashMap<ISpriteState, IEntitySprite> sprites = new HashMap<>();
+		sprites.put(PlayerState.STAND, new EntitySprite(getPlayerImage(assetManager, "stand"), bounds));
+		sprites.put(PlayerState.WALK, createWalkSprite(assetManager, bounds));
+		sprites.put(PlayerState.JUMP, new EntitySprite(getPlayerImage(assetManager, "jump"), bounds));
+		sprites.put(PlayerState.DUCK, new EntitySprite(getPlayerImage(assetManager, "duck"), bounds));
+		sprites.put(PlayerState.HIT, new EntitySprite(getPlayerImage(assetManager, "hit"), bounds));
+		return sprites;
+	}
 
-		return images;
+	private static AnimatedSprite createWalkSprite(AssetManager assetManager, Rectangle bounds) {
+		final Image[] images = new Image[2];
+		images[0] = getPlayerImage(assetManager, "walk1");
+		images[1] = getPlayerImage(assetManager, "walk2");
+		return new AnimatedSprite(images, bounds, 8.0f);
+	}
+
+	private static Image getPlayerImage(AssetManager assetManager, String imageName) {
+		return assetManager.getImage(BASE + imageName + ".png");
 	}
 
 	private static PhysicsDefinition createPlayerPhysics() {
@@ -73,14 +113,15 @@ public class PlayerBuilder {
 	}
 
 	private static void addSensors(PhysicsDefinition physicsDefinition) {
-		//@formatter:off
-		final Rectangle shape = new Rectangle(
-				-CHARACTER_WIDTH,
-				CHARACTER_WIDTH - 5,
-				CHARACTER_WIDTH,
-				CHARACTER_HEIGHT + 5);
-		//@formatter:on
-		physicsDefinition.addSensor(new SensorDefinition(CollisionIds.PLAYER_FOOT, shape));
+		final PolygonShape polygonShape = new PolygonShape();
+
+		final Vec2[] vertices = new Vec2[4];
+		vertices[0] = new Vec2(-CHARACTER_WIDTH, CHARACTER_HEIGHT - 0.1f);
+		vertices[1] = new Vec2(CHARACTER_WIDTH, CHARACTER_HEIGHT - 0.1f);
+		vertices[2] = new Vec2(CHARACTER_WIDTH, CHARACTER_HEIGHT + 0.1f);
+		vertices[3] = new Vec2(-CHARACTER_WIDTH, CHARACTER_HEIGHT + 0.1f);
+		polygonShape.set(vertices, 4);
+		physicsDefinition.addSensor(new SensorDefinition(CollisionIds.PLAYER_FOOT, polygonShape));
 	}
 
 	private static PhysicsDefinition createCapsuleShape() {

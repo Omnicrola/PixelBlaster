@@ -4,10 +4,9 @@ import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.KeyListener;
 
-import com.omnicrola.pixelblaster.entity.MultiStateSprite.Facing;
-import com.omnicrola.pixelblaster.entity.MultiStateSprite.State;
+import com.omnicrola.pixelblaster.graphics.EntitySprite.Facing;
 import com.omnicrola.pixelblaster.main.GameSettings;
-import com.omnicrola.pixelblaster.physics.PhysicsWrapper;
+import com.omnicrola.pixelblaster.physics.IEntityPhysics;
 
 public class PlayerKeyListener implements KeyListener {
 
@@ -17,6 +16,7 @@ public class PlayerKeyListener implements KeyListener {
 	private boolean moveDown;
 	private boolean isJumping;
 	private final Player player;
+	private boolean bubbleE;
 
 	public PlayerKeyListener(Player player) {
 		this.player = player;
@@ -40,36 +40,49 @@ public class PlayerKeyListener implements KeyListener {
 	}
 
 	public void update(float delta) {
-		final PhysicsWrapper physics = this.player.getPhysics();
+		final IEntityPhysics physics = this.player.getPhysics();
+		moveDirection(physics);
+		handleJump(physics);
+		if (this.bubbleE) {
+			this.player.getBubble().turnOn(BubbleState.BLUE);
+		} else {
+			this.player.getBubble().turnOff();
+		}
+	}
+
+	private void moveDirection(final IEntityPhysics physics) {
 		if (this.moveRight) {
 			physics.moveRight(GameSettings.PLAYER_ACCELERATION);
-			setPlayerState(State.WALK);
+			setPlayerState(PlayerState.WALK);
 			this.player.getMultistateSprite().setFacing(Facing.RIGHT);
 		}
 		if (this.moveLeft) {
 			physics.moveLeft(GameSettings.PLAYER_ACCELERATION);
-			setPlayerState(State.WALK);
+			setPlayerState(PlayerState.WALK);
 			this.player.getMultistateSprite().setFacing(Facing.LEFT);
 		}
 		if (!this.moveLeft && !this.moveRight) {
-			removePlayerState(State.WALK);
-			setPlayerState(State.STAND);
+			removePlayerState(PlayerState.WALK);
+			setPlayerState(PlayerState.STAND);
 		}
 		if (this.moveUp) {
-			physics.moveUp(GameSettings.PLAYER_ACCELERATION);
+			physics.moveUp(0);
 		}
 		if (this.moveDown) {
 			physics.moveDown(GameSettings.PLAYER_ACCELERATION);
-			setPlayerState(State.DUCK);
+			setPlayerState(PlayerState.DUCK);
 		} else {
-			removePlayerState(State.DUCK);
+			removePlayerState(PlayerState.DUCK);
 		}
+	}
+
+	private void handleJump(final IEntityPhysics physics) {
 		final boolean isInMidAir = this.player.isInMidAir();
 		final boolean isNotInMidair = !isInMidAir;
 		final boolean hasNotDoubleJumped = !this.player.hasDoubleJumped();
 		if (this.isJumping && (isNotInMidair || hasNotDoubleJumped)) {
 			physics.jump(GameSettings.PLAYER_JUMP_SPEED);
-			setPlayerState(State.JUMP);
+			setPlayerState(PlayerState.JUMP);
 			this.player.setInMidAir(true);
 			if (isInMidAir && hasNotDoubleJumped) {
 				this.player.setHasDoubleJumped(true);
@@ -78,12 +91,12 @@ public class PlayerKeyListener implements KeyListener {
 		}
 	}
 
-	private void removePlayerState(State state) {
+	private void removePlayerState(PlayerState state) {
 		this.player.getMultistateSprite().removeState(state);
 		;
 	}
 
-	private void setPlayerState(State state) {
+	private void setPlayerState(PlayerState state) {
 		this.player.getMultistateSprite().setState(state);
 	}
 
@@ -99,6 +112,8 @@ public class PlayerKeyListener implements KeyListener {
 			this.moveDown = true;
 		} else if (key == Keyboard.KEY_SPACE) {
 			this.isJumping = true;
+		} else if (key == Keyboard.KEY_E) {
+			this.bubbleE = true;
 		}
 	}
 
@@ -114,6 +129,8 @@ public class PlayerKeyListener implements KeyListener {
 			this.moveDown = false;
 		} else if (key == Keyboard.KEY_SPACE) {
 			this.isJumping = false;
+		} else if (key == Keyboard.KEY_E) {
+			this.bubbleE = false;
 		}
 	}
 

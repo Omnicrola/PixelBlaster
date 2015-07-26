@@ -1,19 +1,19 @@
 package com.omnicrola.pixelblaster.physics;
 
-import org.newdawn.slick.geom.Rectangle;
+import org.jbox2d.collision.shapes.Shape;
 
 public class SensorDefinition {
 
-	private final Rectangle bounds;
+	private final Shape shape;
 	private final int sensorId;
 
-	public SensorDefinition(int sensorId, Rectangle bounds) {
+	public SensorDefinition(int sensorId, Shape shape) {
 		this.sensorId = sensorId;
-		this.bounds = bounds;
+		this.shape = shape;
 	}
 
-	public Rectangle getBounds() {
-		return this.bounds;
+	public Shape getShape() {
+		return this.shape;
 	}
 
 	public int getSensorId() {
