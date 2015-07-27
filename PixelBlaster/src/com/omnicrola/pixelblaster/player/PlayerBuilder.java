@@ -21,9 +21,9 @@ import com.omnicrola.pixelblaster.main.GameSettings;
 import com.omnicrola.pixelblaster.physics.CollisionIds;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
+import com.omnicrola.pixelblaster.physics.NullPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.PhysicsDefinition;
 import com.omnicrola.pixelblaster.physics.PhysicsType;
-import com.omnicrola.pixelblaster.physics.PhysicsWrapper;
 import com.omnicrola.pixelblaster.physics.SensorDefinition;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
@@ -33,12 +33,12 @@ public class PlayerBuilder {
 	private static final String BASE = "sprites/PlayerGreen/alienGreen_";
 
 	public Player build(AssetManager assetManager, IPhysicsManager physicsManager) {
-		final PhysicsWrapper physicsWrapper = createPhysics(physicsManager);
+		final IPhysicsEntity physicsEntity = createPhysics(physicsManager);
 		final MultiStateSprite multiStateSprite = createSprite(assetManager);
 		final Bubble bubble = createBubble(physicsManager, assetManager);
-		final Player player = new Player(bubble, multiStateSprite, physicsWrapper);
+		final Player player = new Player(bubble, multiStateSprite, physicsEntity);
 		player.addUpdateBehavior(new SynchEntityPosition(bubble, new Vector2f(-0.5f, 0.1f)));
-		physicsWrapper.addCollisionListener(new PlayerFootCollisionDetector(CollisionIds.PLAYER_FOOT, player));
+		physicsEntity.addCollisionDetector(new PlayerFootCollisionDetector(CollisionIds.PLAYER_FOOT, player));
 		return player;
 	}
 
@@ -53,24 +53,18 @@ public class PlayerBuilder {
 		final MultiStateSprite sprite = new MultiStateSprite(sprites, bounds, BubbleState.NONE);
 		sprite.setTransparency(0.5f);
 
-		final CircleShape circleShape = new CircleShape();
-		circleShape.m_radius = 1f;
-		final PhysicsDefinition physicsDefinition = new PhysicsDefinition();
-		physicsDefinition.addSensor(new SensorDefinition(1, circleShape));
-		final PhysicsWrapper physics = new PhysicsWrapper(physicsManager.createPhysics(physicsDefinition));
-		return new Bubble(sprite, physics);
+		return new Bubble(sprite, NullPhysicsEntity.NULL);
 	}
 
 	private static Image getBubbleImage(AssetManager assetManager, String string) {
 		return assetManager.getImage("sprites/bubbles/bubble" + string + ".png");
 	}
 
-	private static PhysicsWrapper createPhysics(IPhysicsManager physicsManager) {
+	private static IPhysicsEntity createPhysics(IPhysicsManager physicsManager) {
 		final PhysicsDefinition playerPhysicsDefinition = createPlayerPhysics();
 		final IPhysicsEntity physicsEntity = physicsManager.createPhysics(playerPhysicsDefinition);
-		final PhysicsWrapper physicsWrapper = new PhysicsWrapper(physicsEntity);
-		physicsWrapper.setMaximumVelocity(GameSettings.PLAYER_MAXIMUM_VELOCITY);
-		return physicsWrapper;
+		physicsEntity.setMaximumVelocity(GameSettings.PLAYER_MAXIMUM_VELOCITY);
+		return physicsEntity;
 	}
 
 	private static MultiStateSprite createSprite(AssetManager assetManager) {

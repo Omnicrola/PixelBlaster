@@ -2,6 +2,8 @@ package com.omnicrola.pixelblaster.physics;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import com.omnicrola.pixelblaster.entity.IGameEntity;
+
 public interface IPhysicsEntity {
 	public void applyForceAtCenter(Vector2f force);
 
@@ -18,4 +20,11 @@ public interface IPhysicsEntity {
 	public void setPosition(Vector2f vector);
 
 	public void addCollisionDetector(ICollisionDetector collisionDetector);
+
+	public void updateEntity(IGameEntity gameEntity, float delta);
+
+	public void destroy(IPhysicsWrapper physicsWrapper);
+
+	public void setMaximumVelocity(float playerMaximumVelocity);
+
 }

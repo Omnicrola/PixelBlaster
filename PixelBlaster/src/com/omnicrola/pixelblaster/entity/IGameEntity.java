@@ -3,13 +3,9 @@ package com.omnicrola.pixelblaster.entity;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.graphics.IEntitySprite;
-import com.omnicrola.pixelblaster.physics.IEntityPhysics;
+import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 
 public interface IGameEntity {
-
-	boolean isAlive();
-
-	void update(float delta);
 
 	IEntitySprite getSprite();
 
@@ -17,9 +13,13 @@ public interface IGameEntity {
 
 	void setPosition(Vector2f vector2f);
 
-	IEntityPhysics getPhysics();
-
 	void setRotation(float angle);
+
+	IPhysicsEntity getPhysics();
+
+	boolean isAlive();
+
+	void update(float delta);
 
 	void addUpdateBehavior(IUpdateBehavior behavior);
 

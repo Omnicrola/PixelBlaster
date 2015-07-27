@@ -5,8 +5,9 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.KeyListener;
 
 import com.omnicrola.pixelblaster.graphics.EntitySprite.Facing;
+import com.omnicrola.pixelblaster.graphics.MultiStateSprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
-import com.omnicrola.pixelblaster.physics.IEntityPhysics;
+import com.omnicrola.pixelblaster.physics.CharacterPhysicsWrapper;
 
 public class PlayerKeyListener implements KeyListener {
 
@@ -15,11 +16,17 @@ public class PlayerKeyListener implements KeyListener {
 	private boolean moveUp;
 	private boolean moveDown;
 	private boolean isJumping;
-	private final Player player;
 	private boolean bubbleE;
+	private final Bubble bubble;
+	private final CharacterPhysicsWrapper playerPhysics;
+	private final MultiStateSprite playerSprite;
+	private final Player player;
 
 	public PlayerKeyListener(Player player) {
+		this.playerPhysics = new CharacterPhysicsWrapper(player.getPhysics());
+		this.playerSprite = player.getMultistateSprite();
 		this.player = player;
+		this.bubble = player.getBubble();
 	}
 
 	@Override
@@ -40,48 +47,47 @@ public class PlayerKeyListener implements KeyListener {
 	}
 
 	public void update(float delta) {
-		final IEntityPhysics physics = this.player.getPhysics();
-		moveDirection(physics);
-		handleJump(physics);
+		moveDirection();
+		handleJump();
 		if (this.bubbleE) {
-			this.player.getBubble().turnOn(BubbleState.BLUE);
+			this.bubble.turnOn(BubbleState.BLUE);
 		} else {
-			this.player.getBubble().turnOff();
+			this.bubble.turnOff();
 		}
 	}
 
-	private void moveDirection(final IEntityPhysics physics) {
+	private void moveDirection() {
 		if (this.moveRight) {
-			physics.moveRight(GameSettings.PLAYER_ACCELERATION);
+			this.playerPhysics.moveRight(GameSettings.PLAYER_ACCELERATION);
 			setPlayerState(PlayerState.WALK);
-			this.player.getMultistateSprite().setFacing(Facing.RIGHT);
+			this.playerSprite.setFacing(Facing.RIGHT);
 		}
 		if (this.moveLeft) {
-			physics.moveLeft(GameSettings.PLAYER_ACCELERATION);
+			this.playerPhysics.moveLeft(GameSettings.PLAYER_ACCELERATION);
 			setPlayerState(PlayerState.WALK);
-			this.player.getMultistateSprite().setFacing(Facing.LEFT);
+			this.playerSprite.setFacing(Facing.LEFT);
 		}
 		if (!this.moveLeft && !this.moveRight) {
 			removePlayerState(PlayerState.WALK);
 			setPlayerState(PlayerState.STAND);
 		}
 		if (this.moveUp) {
-			physics.moveUp(0);
+			this.playerPhysics.moveUp(0);
 		}
 		if (this.moveDown) {
-			physics.moveDown(GameSettings.PLAYER_ACCELERATION);
+			this.playerPhysics.moveDown(GameSettings.PLAYER_ACCELERATION);
 			setPlayerState(PlayerState.DUCK);
 		} else {
 			removePlayerState(PlayerState.DUCK);
 		}
 	}
 
-	private void handleJump(final IEntityPhysics physics) {
+	private void handleJump() {
 		final boolean isInMidAir = this.player.isInMidAir();
 		final boolean isNotInMidair = !isInMidAir;
 		final boolean hasNotDoubleJumped = !this.player.hasDoubleJumped();
 		if (this.isJumping && (isNotInMidair || hasNotDoubleJumped)) {
-			physics.jump(GameSettings.PLAYER_JUMP_SPEED);
+			this.playerPhysics.jump(GameSettings.PLAYER_JUMP_SPEED);
 			setPlayerState(PlayerState.JUMP);
 			this.player.setInMidAir(true);
 			if (isInMidAir && hasNotDoubleJumped) {

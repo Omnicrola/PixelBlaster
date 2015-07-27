@@ -2,13 +2,13 @@ package com.omnicrola.pixelblaster.player;
 
 import com.omnicrola.pixelblaster.entity.GameEntity;
 import com.omnicrola.pixelblaster.graphics.MultiStateSprite;
-import com.omnicrola.pixelblaster.physics.IEntityPhysics;
+import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 
 public class Bubble extends GameEntity {
 
 	private final MultiStateSprite multiStateSprite;
 
-	public Bubble(MultiStateSprite sprite, IEntityPhysics physics) {
+	public Bubble(MultiStateSprite sprite, IPhysicsEntity physics) {
 		super(sprite, physics);
 		this.multiStateSprite = sprite;
 	}

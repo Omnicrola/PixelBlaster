@@ -30,7 +30,7 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 	}
 
 	@Override
-	public void destroyPhysics(IEntityPhysics physics) {
+	public void destroyPhysics(IPhysicsEntity physics) {
 		physics.destroy(this.physicsWrapper);
 	}
 

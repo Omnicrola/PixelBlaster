@@ -43,8 +43,8 @@ public class LevelMap implements ILevelMap {
 
 	@Override
 	public void loadPhysics(IPhysicsManager physicsManager) {
-		this.tileData.allButAir((x, y, mapTile) -> createPhysics(physicsManager, mapTile.getShape(),
-				x * LevelMap.this.tileSize, y * LevelMap.this.tileSize));
+		this.tileData.allButAir((x, y, mapTile) -> createPhysics(physicsManager, mapTile.getShape(), x
+				* LevelMap.this.tileSize, y * LevelMap.this.tileSize));
 	}
 
 	@Override
@@ -88,23 +88,4 @@ public class LevelMap implements ILevelMap {
 	public void update(IGameEntity gameEntity, float delta) {
 	}
 
-	@Override
-	public void moveRight(float force) {
-	}
-
-	@Override
-	public void moveLeft(float force) {
-	}
-
-	@Override
-	public void moveUp(float force) {
-	}
-
-	@Override
-	public void moveDown(float force) {
-	}
-
-	@Override
-	public void jump(float force) {
-	}
 }

@@ -29,6 +29,7 @@ public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 
 	@Override
 	public void destroyEntity(IPhysicsEntity body) {
+		System.err.println("Physics body destroy fail");
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 
 		final ArrayList<Fixture> fixtures = createFixtures(physicsDefinition, body);
 		final List<JBox2dPhysicsSensor> sensors = createSensors(physicsDefinition.getSensors(), body);
-		return new JBox2dPhysicsBody(this.contactHandler, body, fixtures, sensors);
+		return new JBox2dPhysicsEntity(this.contactHandler, body, fixtures, sensors);
 	}
 
 	private ArrayList<Fixture> createFixtures(PhysicsDefinition physicsDefinition, final Body body) {

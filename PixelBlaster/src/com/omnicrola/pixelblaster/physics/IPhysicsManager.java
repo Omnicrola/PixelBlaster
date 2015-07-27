@@ -2,7 +2,7 @@ package com.omnicrola.pixelblaster.physics;
 
 public interface IPhysicsManager {
 
-	void destroyPhysics(IEntityPhysics physics);
+	void destroyPhysics(IPhysicsEntity physics);
 
 	IPhysicsEntity createPhysics(PhysicsDefinition physicsDefinition);
 

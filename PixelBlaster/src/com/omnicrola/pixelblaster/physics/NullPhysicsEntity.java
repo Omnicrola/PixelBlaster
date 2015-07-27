@@ -2,10 +2,12 @@ package com.omnicrola.pixelblaster.physics;
 
 import org.newdawn.slick.geom.Vector2f;
 
-public class NullPhysicsBody implements IPhysicsEntity {
-	public static NullPhysicsBody NULL = new NullPhysicsBody();
+import com.omnicrola.pixelblaster.entity.IGameEntity;
 
-	private NullPhysicsBody() {
+public class NullPhysicsEntity implements IPhysicsEntity {
+	public static NullPhysicsEntity NULL = new NullPhysicsEntity();
+
+	private NullPhysicsEntity() {
 	}
 
 	@Override
@@ -42,4 +44,17 @@ public class NullPhysicsBody implements IPhysicsEntity {
 	@Override
 	public void addCollisionDetector(ICollisionDetector collisionDetector) {
 	}
+
+	@Override
+	public void updateEntity(IGameEntity gameEntity, float delta) {
+	}
+
+	@Override
+	public void destroy(IPhysicsWrapper physicsWrapper) {
+	}
+
+	@Override
+	public void setMaximumVelocity(float playerMaximumVelocity) {
+	}
+
 }
