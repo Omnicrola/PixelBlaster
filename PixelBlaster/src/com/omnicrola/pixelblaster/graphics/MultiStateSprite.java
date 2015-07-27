@@ -28,6 +28,12 @@ public class MultiStateSprite implements IEntitySprite {
 	}
 
 	public void setState(ISpriteState state) {
+		this.states.clear();
+		this.states.add(state);
+		updateState();
+	}
+
+	public void addState(ISpriteState state) {
 		this.states.add(state);
 		updateState();
 	}
@@ -96,9 +102,13 @@ public class MultiStateSprite implements IEntitySprite {
 
 	private void updateState() {
 		ISpriteState newState = this.defaultState;
-		for (final ISpriteState state : this.states) {
-			if (state.priority() < newState.priority()) {
-				newState = state;
+		if (this.states.isEmpty()) {
+			this.states.add(this.defaultState);
+		} else {
+			for (final ISpriteState state : this.states) {
+				if (state.priority() < newState.priority()) {
+					newState = state;
+				}
 			}
 		}
 		this.currentSprite = this.animatedSprites.get(newState);

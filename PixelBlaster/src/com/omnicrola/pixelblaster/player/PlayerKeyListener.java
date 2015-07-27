@@ -50,9 +50,8 @@ public class PlayerKeyListener implements KeyListener {
 		moveDirection();
 		handleJump();
 		if (this.bubbleE) {
-			this.bubble.turnOn(BubbleState.BLUE);
-		} else {
-			this.bubble.turnOff();
+			this.bubble.toggle();
+			this.bubbleE = false;
 		}
 	}
 
@@ -103,7 +102,7 @@ public class PlayerKeyListener implements KeyListener {
 	}
 
 	private void setPlayerState(PlayerState state) {
-		this.player.getMultistateSprite().setState(state);
+		this.player.getMultistateSprite().addState(state);
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -107,15 +108,29 @@ public class PlayerBuilder {
 	}
 
 	private static void addSensors(PhysicsDefinition physicsDefinition) {
+		physicsDefinition.addSensor(new SensorDefinition(CollisionIds.PLAYER_FOOT, createFootSensor()));
+		physicsDefinition.addSensor(new SensorDefinition(CollisionIds.PLAYER_BUBBLE, createBubbleSensor()));
+	}
+
+	private static Shape createBubbleSensor() {
+		final CircleShape circleShape = new CircleShape();
+		circleShape.m_p.y = 0.1f;
+		circleShape.m_radius = 1.0f;
+		return circleShape;
+	}
+
+	private static PolygonShape createFootSensor() {
 		final PolygonShape polygonShape = new PolygonShape();
 
 		final Vec2[] vertices = new Vec2[4];
-		vertices[0] = new Vec2(-CHARACTER_WIDTH, CHARACTER_HEIGHT - 0.1f);
-		vertices[1] = new Vec2(CHARACTER_WIDTH, CHARACTER_HEIGHT - 0.1f);
-		vertices[2] = new Vec2(CHARACTER_WIDTH, CHARACTER_HEIGHT + 0.1f);
-		vertices[3] = new Vec2(-CHARACTER_WIDTH, CHARACTER_HEIGHT + 0.1f);
+		final float bottomOfCapsule = CHARACTER_HEIGHT + CHARACTER_WIDTH - 0.01f;
+		final float sensorWidth = CHARACTER_WIDTH / 2f;
+		vertices[0] = new Vec2(-sensorWidth, bottomOfCapsule);
+		vertices[1] = new Vec2(sensorWidth, bottomOfCapsule);
+		vertices[2] = new Vec2(sensorWidth, bottomOfCapsule + 0.02f);
+		vertices[3] = new Vec2(-sensorWidth, bottomOfCapsule + 0.02f);
 		polygonShape.set(vertices, 4);
-		physicsDefinition.addSensor(new SensorDefinition(CollisionIds.PLAYER_FOOT, polygonShape));
+		return polygonShape;
 	}
 
 	private static PhysicsDefinition createCapsuleShape() {
@@ -135,6 +150,7 @@ public class PlayerBuilder {
 		center.set(vertices, 4);
 
 		final PhysicsDefinition physicsDefinition = new PhysicsDefinition(topCircle, bottomCircle, center);
+		physicsDefinition.setCollisionId(CollisionIds.PLAYER_BODY);
 		return physicsDefinition;
 	}
 
