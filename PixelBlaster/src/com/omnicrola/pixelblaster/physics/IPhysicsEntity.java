@@ -27,4 +27,8 @@ public interface IPhysicsEntity {
 
 	public void setMaximumVelocity(float playerMaximumVelocity);
 
+	public void disable();
+
+	public void enable();
+
 }

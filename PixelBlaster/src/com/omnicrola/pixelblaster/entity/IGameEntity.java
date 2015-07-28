@@ -4,6 +4,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.graphics.IEntitySprite;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
+import com.omnicrola.pixelblaster.physics.IPhysicsWrapper;
 
 public interface IGameEntity {
 
@@ -20,6 +21,8 @@ public interface IGameEntity {
 	boolean isAlive();
 
 	void update(float delta);
+
+	void destroy(IPhysicsWrapper physicsWrapper);
 
 	void addUpdateBehavior(IUpdateBehavior behavior);
 

@@ -57,4 +57,12 @@ public class NullPhysicsEntity implements IPhysicsEntity {
 	public void setMaximumVelocity(float playerMaximumVelocity) {
 	}
 
+	@Override
+	public void disable() {
+	}
+
+	@Override
+	public void enable() {
+	}
+
 }

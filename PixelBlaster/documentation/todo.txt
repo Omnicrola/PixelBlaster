@@ -1,0 +1,23 @@
+TODO List
+---------
+
+High Level
+----------
+[X] Create Basic Engine
+[X] Add physics system
+[X] Let the player move
+[X] Add an XML-based map system
+[X] Add one bubble (mass?)
+[X] Add one enemy
+
+Details - Add one Bubble
+----------
+[X] Show a bubble graphic centered on player when the player presses a key
+[X] Turn bubble off when player presses key again
+[ ] Increase mass of player when bubble is active
+
+Details - Add one enemy
+-----------------------
+[ ] Enemy spawns with map
+[ ] Enemy collides with player
+[ ] Enemy causes player to respawn when hit

@@ -5,24 +5,19 @@ import java.util.Map;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.entity.behavior.SynchEntityPosition;
 import com.omnicrola.pixelblaster.graphics.AnimatedSprite;
 import com.omnicrola.pixelblaster.graphics.EntitySprite;
 import com.omnicrola.pixelblaster.graphics.IEntitySprite;
 import com.omnicrola.pixelblaster.graphics.ISpriteState;
 import com.omnicrola.pixelblaster.graphics.MultiStateSprite;
-import com.omnicrola.pixelblaster.graphics.NullSprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
 import com.omnicrola.pixelblaster.physics.CollisionIds;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
-import com.omnicrola.pixelblaster.physics.NullPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.PhysicsDefinition;
 import com.omnicrola.pixelblaster.physics.PhysicsType;
 import com.omnicrola.pixelblaster.physics.SensorDefinition;
@@ -33,32 +28,11 @@ public class PlayerBuilder {
 	private static final float CHARACTER_WIDTH = 0.3f;
 	private static final String BASE = "sprites/PlayerGreen/alienGreen_";
 
-	public Player build(AssetManager assetManager, IPhysicsManager physicsManager) {
+	public MultiStateEntity build(AssetManager assetManager, IPhysicsManager physicsManager) {
 		final IPhysicsEntity physicsEntity = createPhysics(physicsManager);
 		final MultiStateSprite multiStateSprite = createSprite(assetManager);
-		final Bubble bubble = createBubble(physicsManager, assetManager);
-		final Player player = new Player(bubble, multiStateSprite, physicsEntity);
-		player.addUpdateBehavior(new SynchEntityPosition(bubble, new Vector2f(-0.5f, 0.1f)));
-		physicsEntity.addCollisionDetector(new PlayerFootCollisionDetector(CollisionIds.PLAYER_FOOT, player));
+		final MultiStateEntity player = new MultiStateEntity(multiStateSprite, physicsEntity);
 		return player;
-	}
-
-	private static Bubble createBubble(IPhysicsManager physicsManager, AssetManager assetManager) {
-		final Rectangle bounds = new Rectangle(0, 0, 2, 2);
-		final Map<ISpriteState, IEntitySprite> sprites = new HashMap<>();
-		sprites.put(BubbleState.NONE, NullSprite.NULL);
-		sprites.put(BubbleState.BLACK, new EntitySprite(getBubbleImage(assetManager, "Black"), bounds));
-		sprites.put(BubbleState.BLUE, new EntitySprite(getBubbleImage(assetManager, "Blue"), bounds));
-		sprites.put(BubbleState.GREY, new EntitySprite(getBubbleImage(assetManager, "Grey"), bounds));
-		sprites.put(BubbleState.YELLOW, new EntitySprite(getBubbleImage(assetManager, "Yellow"), bounds));
-		final MultiStateSprite sprite = new MultiStateSprite(sprites, bounds, BubbleState.NONE);
-		sprite.setTransparency(0.5f);
-
-		return new Bubble(sprite, NullPhysicsEntity.NULL);
-	}
-
-	private static Image getBubbleImage(AssetManager assetManager, String string) {
-		return assetManager.getImage("sprites/bubbles/bubble" + string + ".png");
 	}
 
 	private static IPhysicsEntity createPhysics(IPhysicsManager physicsManager) {
@@ -109,14 +83,6 @@ public class PlayerBuilder {
 
 	private static void addSensors(PhysicsDefinition physicsDefinition) {
 		physicsDefinition.addSensor(new SensorDefinition(CollisionIds.PLAYER_FOOT, createFootSensor()));
-		physicsDefinition.addSensor(new SensorDefinition(CollisionIds.PLAYER_BUBBLE, createBubbleSensor()));
-	}
-
-	private static Shape createBubbleSensor() {
-		final CircleShape circleShape = new CircleShape();
-		circleShape.m_p.y = 0.1f;
-		circleShape.m_radius = 1.0f;
-		return circleShape;
 	}
 
 	private static PolygonShape createFootSensor() {

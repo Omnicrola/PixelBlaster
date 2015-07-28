@@ -10,15 +10,17 @@ import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
 import com.omnicrola.pixelblaster.map.IMapManager;
 import com.omnicrola.pixelblaster.map.MapBounds;
+import com.omnicrola.pixelblaster.physics.CollisionIds;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class PlayerManager implements IGameSubsystem, IPlayerManager {
 
-	private Player player;
 	private PlayerKeyListener keyListener;
 	private IGameContext context;
 	private final PlayerBuilder playerBuilder;
+	private PlayerModel playerModel;
+	private PlayerController playerController;
 
 	public PlayerManager(PlayerBuilder playerBuilder) {
 		this.playerBuilder = playerBuilder;
@@ -27,43 +29,48 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 	@Override
 	public void load(GameSubsystemInterlink interlink) {
 		interlink.setSubsystem(IPlayerManager.class, this);
+		this.playerModel = new PlayerModel();
 	}
 
 	@Override
 	public void init(IGameContext context) throws SlickException {
 		this.context = context;
-		buildPlayer();
-		this.keyListener = new PlayerKeyListener(this.player);
-		final IEntityManager entityManager = context.getSubsystem(IEntityManager.class);
-		entityManager.addEntity(this.player);
-		entityManager.addEntity(this.player.getBubble());
+		buildPlayer(context.getSubsystem(IEntityManager.class));
+		this.keyListener = new PlayerKeyListener(this.playerController);
 		context.getInput().addKeyListener(this.keyListener);
 	}
 
-	private void buildPlayer() throws SlickException {
+	private void buildPlayer(IEntityManager entityManager) throws SlickException {
 		final AssetManager assetManager = this.context.getAssetManager();
 		final IPhysicsManager subsystem = this.context.getSubsystem(IPhysicsManager.class);
-		this.player = this.playerBuilder.build(assetManager, subsystem);
+		final MultiStateEntity playerEntity = this.playerBuilder.build(assetManager, subsystem);
+
+		this.playerModel.setEntity(playerEntity);
+		entityManager.addEntity(playerEntity);
+		this.playerController = new PlayerController(this.playerModel);
+		final PlayerFootCollisionDetector footDetector = new PlayerFootCollisionDetector(CollisionIds.PLAYER_FOOT,
+				this.playerController);
+		playerEntity.getPhysics().addCollisionDetector(footDetector);
 		respawnPlayer();
 	}
 
 	private void respawnPlayer() {
 		final IMapManager mapManager = this.context.getSubsystem(IMapManager.class);
 		final Vector2f spawnPoint = mapManager.getPlayerSpawn();
-		this.player.setPosition(spawnPoint);
+		this.playerModel.getEntity().setPosition(spawnPoint);
 	}
 
 	@Override
 	public void update(IGameContext gameContext, float delta) {
 		this.keyListener.update(delta);
-		gameContext.getCamera().focusOn(this.player);
+		gameContext.getCamera().focusOn(this.playerModel.getEntity());
 		containPlayerInMap();
 	}
 
 	private void containPlayerInMap() {
 		final IMapManager mapManager = this.context.getSubsystem(IMapManager.class);
 		final MapBounds mapBounds = mapManager.getMapBounds();
-		mapBounds.containEntity(this.player);
+		mapBounds.containEntity(this.playerModel.getEntity());
 	}
 
 	@Override

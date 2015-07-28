@@ -1,9 +1,11 @@
 package com.omnicrola.pixelblaster.physics.jbox2d;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.Filter;
 import org.jbox2d.dynamics.Fixture;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -13,6 +15,7 @@ import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsWrapper;
 
 public class JBox2dPhysicsEntity implements IPhysicsEntity {
+	private static final int NO_COLLISION_MASK = 0x0000;
 
 	private final Body body;
 	private final Vec2 vectorCache;
@@ -21,6 +24,7 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 	private final JBox2dContactListener contactListener;
 	private final Vector2f vector2f;
 	private float maximumVelocity;
+	private HashMap<Fixture, Filter> filterMap;
 
 	public JBox2dPhysicsEntity(JBox2dContactListener contactHandler, Body body, List<Fixture> fixtures,
 			List<JBox2dPhysicsSensor> sensors) {
@@ -31,6 +35,14 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 		this.maximumVelocity = 1.0f;
 		this.vectorCache = new Vec2();
 		this.vector2f = new Vector2f();
+		buildFilterMap();
+	}
+
+	private void buildFilterMap() {
+		this.filterMap = new HashMap<>();
+		for (final Fixture fixture : this.fixtures) {
+			this.filterMap.put(fixture, fixture.getFilterData());
+		}
 	}
 
 	@Override
@@ -108,6 +120,20 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 	@Override
 	public void setMaximumVelocity(float maximumVelocity) {
 		this.maximumVelocity = maximumVelocity;
+	}
+
+	@Override
+	public void disable() {
+		for (final Fixture fixture : this.fixtures) {
+			fixture.m_filter.maskBits = NO_COLLISION_MASK;
+		}
+	}
+
+	@Override
+	public void enable() {
+		for (final Fixture fixture : this.fixtures) {
+			fixture.m_filter.maskBits = this.filterMap.get(fixture).maskBits;
+		}
 	}
 
 }

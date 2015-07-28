@@ -5,11 +5,11 @@ import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 public class PlayerFootCollisionDetector implements ICollisionDetector {
 
 	private final int sensorId;
-	private final Player player;
+	private final PlayerController playerController;
 
-	public PlayerFootCollisionDetector(int sensorId, Player player) {
+	public PlayerFootCollisionDetector(int sensorId, PlayerController playerController) {
 		this.sensorId = sensorId;
-		this.player = player;
+		this.playerController = playerController;
 	}
 
 	@Override
@@ -19,8 +19,6 @@ public class PlayerFootCollisionDetector implements ICollisionDetector {
 
 	@Override
 	public void collisionOccured(int otherFixtureId) {
-		this.player.setInMidAir(false);
-		this.player.setHasDoubleJumped(false);
-		this.player.getMultistateSprite().removeState(PlayerState.JUMP);
+		this.playerController.clearJump();
 	}
 }

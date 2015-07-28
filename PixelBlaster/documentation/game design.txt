@@ -1,0 +1,29 @@
+Bubble World
+---------------
+
+Player's goal is to travel through a hostile environment and reach the end goal ( ????? ).
+
+Points are awarded for speed.
+
+Rules
+------
+	1) Player cannot shoot/throw 
+	2) Player cannot destroy enemies or traps directly
+	3) Player's Bubble has limited duration
+	4) Player can only form a bubble around themselves, or in front of them 
+
+Mechanics
+---------
+	1) Player has a bubble meter that governs the amount of time any type 
+		of bubble may be active
+	2) Bubble meter is recharged very slowly over time, or rapidly by acquiring powerups
+	3) Different colored bubbles do different things:
+		a) Grey increases mass of anything contained in it
+		b) Blue ?? 
+		c) Yellow ??
+		d) Black ??
+		e) Red??
+			-- Slow/freeze enemies
+			-- warp time
+			-- flip gravity
+			--
