@@ -4,6 +4,7 @@ import org.jbox2d.common.IViewportTransform;
 import org.newdawn.slick.geom.Rectangle;
 
 import com.omnicrola.pixelblaster.entity.IGameEntity;
+import com.omnicrola.pixelblaster.main.GameSettings;
 
 public class Camera {
 
@@ -41,8 +42,7 @@ public class Camera {
 			this.yOffset = minY - VERTICAL_GUTTER;
 		}
 		if (maxY > frameBottom()) {
-			// this.yOffset = maxY + this.viewportHeight;// - VERTICAL_GUTTER;
-			this.yOffset += 5f;
+			this.yOffset += GameSettings.CAMERA_SCROLL_SPEED;
 		}
 	}
 

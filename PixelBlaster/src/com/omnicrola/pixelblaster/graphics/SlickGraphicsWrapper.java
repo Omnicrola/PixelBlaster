@@ -19,18 +19,6 @@ public class SlickGraphicsWrapper implements IGraphicsWrapper {
 	}
 
 	@Override
-	public void setColor(Color color) {
-		this.graphics.setColor(color);
-	}
-
-	@Override
-	public void drawShape(IEntitySprite shape) {
-		final Rectangle bounds = shape.getBounds();
-		final Image image = shape.getImage();
-		drawImage(image, bounds);
-	}
-
-	@Override
 	public void drawImage(Image image, Rectangle bounds) {
 		drawImage(image, bounds, FULL);
 	}

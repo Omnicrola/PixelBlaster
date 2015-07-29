@@ -44,10 +44,13 @@ public class PlayerController {
 
 	}
 
-	public void duck() {
+	public void crouch() {
 		applyForce(0, -GameSettings.PLAYER_ACCELERATION);
 		setPlayerState(PlayerState.DUCK);
-		// removePlayerState(PlayerState.DUCK);
+	}
+
+	public void uncrouch() {
+		removePlayerState(PlayerState.DUCK);
 	}
 
 	public void jump() {
@@ -99,4 +102,5 @@ public class PlayerController {
 		this.hasDoubleJumped = false;
 		sprite().removeState(PlayerState.JUMP);
 	}
+
 }

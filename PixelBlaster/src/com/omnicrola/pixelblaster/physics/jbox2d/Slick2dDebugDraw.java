@@ -97,9 +97,8 @@ public class Slick2dDebugDraw extends DebugDraw {
 		}
 
 		this.graphics.setColor(new Color(color.x, color.y, color.z));
-		this.graphics.draw(p); // Draws shape filled with colour
+		this.graphics.draw(p);
 		this.graphics.setColor(Color.white);
-		// drawPolygon(vertices, vertexCount, color);
 	}
 
 	@Override

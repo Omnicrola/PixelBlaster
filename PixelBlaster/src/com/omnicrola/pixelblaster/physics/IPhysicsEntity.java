@@ -23,8 +23,6 @@ public interface IPhysicsEntity {
 
 	public void updateEntity(IGameEntity gameEntity, float delta);
 
-	public void destroy(IPhysicsWrapper physicsWrapper);
-
 	public void setMaximumVelocity(float playerMaximumVelocity);
 
 	public void disable();

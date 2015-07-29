@@ -58,7 +58,9 @@ public class PlayerKeyListener implements KeyListener {
 			this.playerController.stand();
 		}
 		if (this.moveDown) {
-			this.playerController.duck();
+			this.playerController.crouch();
+		} else {
+			this.playerController.uncrouch();
 		}
 	}
 

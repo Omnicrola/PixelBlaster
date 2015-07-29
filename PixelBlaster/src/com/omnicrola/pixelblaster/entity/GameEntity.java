@@ -7,7 +7,6 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.graphics.IEntitySprite;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
-import com.omnicrola.pixelblaster.physics.IPhysicsWrapper;
 
 public class GameEntity implements IGameEntity {
 	protected final IEntitySprite sprite;
@@ -77,8 +76,4 @@ public class GameEntity implements IGameEntity {
 		this.updateBehaviors.add(behavior);
 	}
 
-	@Override
-	public void destroy(IPhysicsWrapper physicsWrapper) {
-		this.physics.destroy(physicsWrapper);
-	}
 }

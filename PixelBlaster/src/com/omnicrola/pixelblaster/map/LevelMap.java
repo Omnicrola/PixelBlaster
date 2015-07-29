@@ -5,12 +5,10 @@ import java.util.List;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.entity.IGameEntity;
 import com.omnicrola.pixelblaster.graphics.GameBackground;
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
-import com.omnicrola.pixelblaster.physics.IPhysicsWrapper;
 import com.omnicrola.pixelblaster.util.Coordinate;
 import com.omnicrola.pixelblaster.util.PointSet;
 
@@ -70,25 +68,6 @@ public class LevelMap implements ILevelMap {
 	@Override
 	public MapBounds getMapBounds() {
 		return this.mapData.mapBounds;
-	}
-
-	@Override
-	public void destroy(IPhysicsWrapper physics) {
-		for (final IPhysicsEntity entity : this.physicsEntities) {
-			physics.destroyEntity(entity);
-		}
-	}
-
-	@Override
-	public void setMaximumVelocity(float maximumVelocity) {
-	}
-
-	@Override
-	public void setPosition(Vector2f position) {
-	}
-
-	@Override
-	public void update(IGameEntity gameEntity, float delta) {
 	}
 
 }

@@ -12,7 +12,6 @@ import org.newdawn.slick.geom.Vector2f;
 import com.omnicrola.pixelblaster.entity.IGameEntity;
 import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
-import com.omnicrola.pixelblaster.physics.IPhysicsWrapper;
 
 public class JBox2dPhysicsEntity implements IPhysicsEntity {
 	private static final int NO_COLLISION_MASK = 0x0000;
@@ -110,11 +109,6 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 			velocity.mulLocal(this.maximumVelocity / actualSpeed);
 			this.body.setLinearVelocity(velocity);
 		}
-	}
-
-	@Override
-	public void destroy(IPhysicsWrapper physicsWrapper) {
-		physicsWrapper.destroyEntity(this);
 	}
 
 	@Override

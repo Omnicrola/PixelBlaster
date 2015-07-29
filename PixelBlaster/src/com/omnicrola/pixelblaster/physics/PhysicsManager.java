@@ -14,21 +14,14 @@ import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
 import com.omnicrola.pixelblaster.physics.jbox2d.JBox2DPhysicsBuilder;
 import com.omnicrola.pixelblaster.physics.jbox2d.JBox2dContactListener;
-import com.omnicrola.pixelblaster.physics.jbox2d.JBox2dPhysicsWrapper;
 import com.omnicrola.pixelblaster.physics.jbox2d.Slick2dDebugDraw;
 
 public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 
-	private JBox2dPhysicsWrapper physicsWrapper;
 	private World world;
 	private Slick2dDebugDraw slick2dDebugDraw;
 	private Camera camera;
 	private JBox2dContactListener contactListener;
-
-	@Override
-	public void destroyPhysics(IPhysicsEntity physics) {
-		physics.destroy(this.physicsWrapper);
-	}
 
 	@Override
 	public void load(GameSubsystemInterlink interlink) {
@@ -36,7 +29,6 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 		this.world = new World(new Vec2(0, GameSettings.GRAVITY_ACCELLERATION), true);
 		this.contactListener = new JBox2dContactListener();
 		this.world.setContactListener(this.contactListener);
-		this.physicsWrapper = new JBox2dPhysicsWrapper(this.world, this.contactListener);
 	}
 
 	@Override
@@ -50,7 +42,7 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 
 	@Override
 	public void update(IGameContext gameContext, float delta) {
-		this.physicsWrapper.step(delta, 6, 2);
+		this.world.step(delta, 6, 2);
 	}
 
 	@Override
