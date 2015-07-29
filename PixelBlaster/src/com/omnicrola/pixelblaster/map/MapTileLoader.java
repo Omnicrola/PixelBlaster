@@ -2,10 +2,10 @@ package com.omnicrola.pixelblaster.map;
 
 import java.io.File;
 
-import org.jbox2d.collision.shapes.Shape;
 import org.newdawn.slick.Image;
 
 import com.omnicrola.pixelblaster.util.AssetManager;
+import com.omnicrola.pixelblaster.util.PointSet;
 
 public class MapTileLoader {
 
@@ -58,7 +58,7 @@ public class MapTileLoader {
 		return mapTiles;
 	}
 
-	private IMapTile tile(String filename, Shape shape) {
+	private IMapTile tile(String filename, PointSet shape) {
 		filename = filename + ".png";
 		final Image image = this.assetManager.getImage(filename);
 		return new MapTile(image, shape);

@@ -2,6 +2,8 @@ package com.omnicrola.pixelblaster.player;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import com.omnicrola.pixelblaster.entity.BubbleFactory;
+import com.omnicrola.pixelblaster.entity.IEntityManager;
 import com.omnicrola.pixelblaster.graphics.EntitySprite.Facing;
 import com.omnicrola.pixelblaster.graphics.MultiStateSprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
@@ -12,9 +14,13 @@ public class PlayerController {
 	private final Vector2f cacheVector;
 	private boolean isInMidAir;
 	private boolean hasDoubleJumped;
+	private final BubbleFactory bubbleFactory;
+	private final IEntityManager entityManager;
 
-	public PlayerController(PlayerModel playerModel) {
+	public PlayerController(IEntityManager entityManager, PlayerModel playerModel, BubbleFactory bubbleFactory) {
+		this.entityManager = entityManager;
 		this.playerModel = playerModel;
+		this.bubbleFactory = bubbleFactory;
 		this.cacheVector = new Vector2f();
 
 	}
@@ -70,6 +76,8 @@ public class PlayerController {
 	}
 
 	public void bubble() {
+		final Bubble bubble = this.bubbleFactory.createBubble(this.playerModel.getEntity());
+		this.entityManager.addEntity(bubble);
 	}
 
 	private void applyImpulse(float forceX, float forceY) {

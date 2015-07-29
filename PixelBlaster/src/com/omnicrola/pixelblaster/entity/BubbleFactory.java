@@ -11,8 +11,8 @@ import com.omnicrola.pixelblaster.graphics.IEntitySprite;
 import com.omnicrola.pixelblaster.graphics.ISpriteState;
 import com.omnicrola.pixelblaster.graphics.MultiStateSprite;
 import com.omnicrola.pixelblaster.graphics.NullSprite;
+import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
-import com.omnicrola.pixelblaster.physics.NullPhysicsEntity;
 import com.omnicrola.pixelblaster.player.Bubble;
 import com.omnicrola.pixelblaster.player.BubbleState;
 import com.omnicrola.pixelblaster.util.AssetManager;
@@ -27,7 +27,7 @@ public class BubbleFactory {
 		this.physicsManager = physicsManager;
 	}
 
-	private Bubble createBubble(IGameEntity entityInBubble) {
+	public Bubble createBubble(IGameEntity entityInBubble) {
 		final Rectangle bounds = new Rectangle(0, 0, 2, 2);
 		final Map<ISpriteState, IEntitySprite> sprites = new HashMap<>();
 		sprites.put(BubbleState.NONE, NullSprite.NULL);
@@ -38,10 +38,21 @@ public class BubbleFactory {
 		final MultiStateSprite sprite = new MultiStateSprite(sprites, bounds, BubbleState.NONE);
 		sprite.setTransparency(0.5f);
 
-		final Bubble bubble = new Bubble(sprite, NullPhysicsEntity.NULL);
+		final Bubble bubble = new Bubble(sprite, createCircleShape());
 		bubble.containEntity(entityInBubble);
 		return bubble;
 	}
+
+	//@formatter:off
+	private IPhysicsEntity createCircleShape() {
+		return this.physicsManager.getBuilder()
+				.setDynamic()
+				.addCircle(1.0f)
+				.friction(0.0f)
+				.density(1.0f)
+				.build();
+	}
+	//@formatter:on
 
 	private EntitySprite sprite(final Rectangle bounds, String color) {
 		return new EntitySprite(getBubbleImage(color), bounds);

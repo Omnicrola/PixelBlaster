@@ -1,73 +1,68 @@
 package com.omnicrola.pixelblaster.map;
 
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.collision.shapes.Shape;
-import org.jbox2d.common.Vec2;
+import com.omnicrola.pixelblaster.util.PointSet;
 
 public class TerrainShapes {
-	public static final Shape BASE = createRounded();
-	public static final Shape CENTER = createSquare();
-	public static final Shape ROUNDED = createRounded();
-	public static final Shape CLIFF_LEFT = createSquare();
-	public static final Shape CLIFF_RIGHT = createSquare();
-	public static final Shape CLIFF_ALT_LEFT = createSquare();
-	public static final Shape CLIFF_ALT_RIGHT = createSquare();
-	public static final Shape CORNER_LEFT = createSquare();
-	public static final Shape CORNER_RIGHT = createSquare();
-	public static final Shape HALF = createSquare();
-	public static final Shape HALF_LEFT = createSquare();
-	public static final Shape HALF_MID = createSquare();
-	public static final Shape HALF_RIGHT = createSquare();
-	public static final Shape HILL_LEFT = createHillLeft();
-	public static final Shape HILL_RIGHT = createHillRight();
-	public static final Shape LEFT = createSquare();
-	public static final Shape MID = createSquare();
-	public static final Shape RIGHT = createSquare();
+	public static final PointSet BASE = createRounded();
+	public static final PointSet CENTER = createSquare();
+	public static final PointSet ROUNDED = createRounded();
+	public static final PointSet CLIFF_LEFT = createSquare();
+	public static final PointSet CLIFF_RIGHT = createSquare();
+	public static final PointSet CLIFF_ALT_LEFT = createSquare();
+	public static final PointSet CLIFF_ALT_RIGHT = createSquare();
+	public static final PointSet CORNER_LEFT = createSquare();
+	public static final PointSet CORNER_RIGHT = createSquare();
+	public static final PointSet HALF = createSquare();
+	public static final PointSet HALF_LEFT = createSquare();
+	public static final PointSet HALF_MID = createSquare();
+	public static final PointSet HALF_RIGHT = createSquare();
+	public static final PointSet HILL_LEFT = createHillLeft();
+	public static final PointSet HILL_RIGHT = createHillRight();
+	public static final PointSet LEFT = createSquare();
+	public static final PointSet MID = createSquare();
+	public static final PointSet RIGHT = createSquare();
 
-	private static Shape createSquare() {
-		final PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(1.0f, 1.0f);
-		return polygonShape;
+	private static PointSet createSquare() {
+		final PointSet polygon = new PointSet();
+		polygon.addPoint(-1.0f, -1.0f);
+		polygon.addPoint(1.0f, -1.0f);
+		polygon.addPoint(1.0f, 1.0f);
+		polygon.addPoint(-1.0f, 1.0f);
+		return polygon;
 	}
 
-	private static Shape createRounded() {
-		final PolygonShape polygonShape = new PolygonShape();
-		final Vec2[] vertices = new Vec2[8];
+	private static PointSet createRounded() {
+		final PointSet polygon = new PointSet();
 		final float outerCorner = 0.75f;
 		final float innerCorner = 0.9125f;
 		final float edge = 1.0f;
-		vertices[0] = new Vec2(-edge, -outerCorner);
-		vertices[1] = new Vec2(-innerCorner, -innerCorner);
-		vertices[2] = new Vec2(-outerCorner, -edge);
+		polygon.addPoint(-edge, -outerCorner);
+		polygon.addPoint(-innerCorner, -innerCorner);
+		polygon.addPoint(-outerCorner, -edge);
 
-		vertices[3] = new Vec2(outerCorner, -edge);
-		vertices[4] = new Vec2(innerCorner, -innerCorner);
-		vertices[5] = new Vec2(edge, -outerCorner);
+		polygon.addPoint(outerCorner, -edge);
+		polygon.addPoint(innerCorner, -innerCorner);
+		polygon.addPoint(edge, -outerCorner);
 
-		vertices[6] = new Vec2(edge, edge);
-		vertices[7] = new Vec2(-edge, edge);
-		polygonShape.set(vertices, vertices.length);
-		return polygonShape;
+		polygon.addPoint(edge, edge);
+		polygon.addPoint(-edge, edge);
+		return polygon;
 	}
 
-	private static Shape createHillRight() {
-		final PolygonShape polygonShape = new PolygonShape();
-		final Vec2[] vertices = new Vec2[3];
-		vertices[0] = new Vec2(1.0f, -1.0f);
-		vertices[1] = new Vec2(1.0f, 1.0f);
-		vertices[2] = new Vec2(-1.0f, 1.0f);
-		polygonShape.set(vertices, vertices.length);
-		return polygonShape;
+	private static PointSet createHillRight() {
+		final PointSet polygon = new PointSet();
+		polygon.addPoint(1.0f, -1.0f);
+		polygon.addPoint(1.0f, 1.0f);
+		polygon.addPoint(-1.0f, 1.0f);
+		return polygon;
 	}
 
-	private static Shape createHillLeft() {
-		final PolygonShape polygonShape = new PolygonShape();
-		final Vec2[] vertices = new Vec2[3];
-		vertices[0] = new Vec2(-1.0f, -1.0f);
-		vertices[1] = new Vec2(1.0f, 1.0f);
-		vertices[2] = new Vec2(-1.0f, 1.0f);
-		polygonShape.set(vertices, vertices.length);
-		return polygonShape;
+	private static PointSet createHillLeft() {
+		final PointSet polygon = new PointSet();
+		polygon.addPoint(-1.0f, -1.0f);
+		polygon.addPoint(1.0f, 1.0f);
+		polygon.addPoint(-1.0f, 1.0f);
+		return polygon;
 	}
 
 }

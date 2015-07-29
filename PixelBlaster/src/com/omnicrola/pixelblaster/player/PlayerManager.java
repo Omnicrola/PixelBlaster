@@ -3,6 +3,7 @@ package com.omnicrola.pixelblaster.player;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.omnicrola.pixelblaster.entity.BubbleFactory;
 import com.omnicrola.pixelblaster.entity.IEntityManager;
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
@@ -42,12 +43,13 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 
 	private void buildPlayer(IEntityManager entityManager) throws SlickException {
 		final AssetManager assetManager = this.context.getAssetManager();
-		final IPhysicsManager subsystem = this.context.getSubsystem(IPhysicsManager.class);
-		final MultiStateEntity playerEntity = this.playerBuilder.build(assetManager, subsystem);
+		final IPhysicsManager physicsManager = this.context.getSubsystem(IPhysicsManager.class);
+		final MultiStateEntity playerEntity = this.playerBuilder.build(assetManager, physicsManager);
 
 		this.playerModel.setEntity(playerEntity);
 		entityManager.addEntity(playerEntity);
-		this.playerController = new PlayerController(this.playerModel);
+		this.playerController = new PlayerController(entityManager, this.playerModel, new BubbleFactory(assetManager,
+				physicsManager));
 		final PlayerFootCollisionDetector footDetector = new PlayerFootCollisionDetector(CollisionIds.PLAYER_FOOT,
 				this.playerController);
 		playerEntity.getPhysics().addCollisionDetector(footDetector);

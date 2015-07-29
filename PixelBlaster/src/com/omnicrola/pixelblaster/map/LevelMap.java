@@ -3,7 +3,6 @@ package com.omnicrola.pixelblaster.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jbox2d.collision.shapes.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.entity.IGameEntity;
@@ -12,9 +11,8 @@ import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.physics.IPhysicsWrapper;
-import com.omnicrola.pixelblaster.physics.PhysicsDefinition;
-import com.omnicrola.pixelblaster.physics.PhysicsType;
 import com.omnicrola.pixelblaster.util.Coordinate;
+import com.omnicrola.pixelblaster.util.PointSet;
 
 public class LevelMap implements ILevelMap {
 
@@ -43,8 +41,10 @@ public class LevelMap implements ILevelMap {
 
 	@Override
 	public void loadPhysics(IPhysicsManager physicsManager) {
+		System.out.println("loading map physics");
 		this.tileData.allButAir((x, y, mapTile) -> createPhysics(physicsManager, mapTile.getShape(), x
 				* LevelMap.this.tileSize, y * LevelMap.this.tileSize));
+		System.out.println("finished loading map physics");
 	}
 
 	@Override
@@ -55,14 +55,17 @@ public class LevelMap implements ILevelMap {
 		return new Vector2f(x, y);
 	}
 
-	private void createPhysics(IPhysicsManager physicsManager, Shape shape, float pX, float pY) {
-		final PhysicsDefinition physicsDefinition = new PhysicsDefinition(shape);
-		physicsDefinition.setPosition(pX + HORIZ_PHYSICS_OFFSET, pY);
-		physicsDefinition.setFriction(0.9f);
-		physicsDefinition.setType(PhysicsType.STATIC);
-		final IPhysicsEntity physics = physicsManager.createPhysics(physicsDefinition);
+	//@formatter:off
+	private void createPhysics(IPhysicsManager physicsManager, PointSet shape, float pX, float pY) {
+		final IPhysicsEntity physics = physicsManager.getBuilder()
+				.setStatic()
+				.friction(0.9f)
+				.position(pX + HORIZ_PHYSICS_OFFSET, pY)
+				.addPolygon(shape)
+				.build();
 		this.physicsEntities.add(physics);
 	}
+	//@formatter:on
 
 	@Override
 	public MapBounds getMapBounds() {

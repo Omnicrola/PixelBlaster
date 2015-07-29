@@ -54,6 +54,7 @@ public class JBox2dPhysicsWrapper implements IPhysicsWrapper {
 			final FixtureDef fixtureDefinition = new FixtureDef();
 			fixtureDefinition.friction = physicsDefinition.getFriction();
 			fixtureDefinition.shape = shape;
+			fixtureDefinition.density = 1.0f;
 			fixtureDefinition.userData = physicsDefinition.getId();
 			fixtures.add(body.createFixture(fixtureDefinition));
 		}

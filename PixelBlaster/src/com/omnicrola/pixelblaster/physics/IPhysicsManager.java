@@ -4,6 +4,6 @@ public interface IPhysicsManager {
 
 	void destroyPhysics(IPhysicsEntity physics);
 
-	IPhysicsEntity createPhysics(PhysicsDefinition physicsDefinition);
+	IPhysicsBuilder getBuilder();
 
 }

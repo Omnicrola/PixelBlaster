@@ -1,12 +1,11 @@
 package com.omnicrola.pixelblaster.map;
 
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.collision.shapes.Shape;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSettings;
+import com.omnicrola.pixelblaster.util.PointSet;
 
 public class MapTile implements IMapTile {
 
@@ -17,16 +16,16 @@ public class MapTile implements IMapTile {
 		}
 
 		@Override
-		public PolygonShape getShape() {
-			return new PolygonShape();
+		public PointSet getShape() {
+			return new PointSet();
 		}
 	};
 
 	private final Image image;
-	private final Shape shape;
+	private final PointSet shape;
 	private final Rectangle imageBounds;
 
-	public MapTile(Image image, Shape shape) {
+	public MapTile(Image image, PointSet shape) {
 		this.image = image;
 		this.shape = shape;
 		final float size = GameSettings.MAP_TILE_SIZE_IN_METERS;
@@ -34,7 +33,7 @@ public class MapTile implements IMapTile {
 	}
 
 	@Override
-	public Shape getShape() {
+	public PointSet getShape() {
 		return this.shape;
 	}
 

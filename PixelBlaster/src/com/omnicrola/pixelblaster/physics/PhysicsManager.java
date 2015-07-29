@@ -12,6 +12,7 @@ import com.omnicrola.pixelblaster.main.GameSettings;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
+import com.omnicrola.pixelblaster.physics.jbox2d.JBox2DPhysicsBuilder;
 import com.omnicrola.pixelblaster.physics.jbox2d.JBox2dContactListener;
 import com.omnicrola.pixelblaster.physics.jbox2d.JBox2dPhysicsWrapper;
 import com.omnicrola.pixelblaster.physics.jbox2d.Slick2dDebugDraw;
@@ -22,12 +23,7 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 	private World world;
 	private Slick2dDebugDraw slick2dDebugDraw;
 	private Camera camera;
-
-	@Override
-	public IPhysicsEntity createPhysics(PhysicsDefinition physicsDefinition) {
-		final IPhysicsEntity physicsEntity = this.physicsWrapper.createBody(physicsDefinition);
-		return physicsEntity;
-	}
+	private JBox2dContactListener contactListener;
 
 	@Override
 	public void destroyPhysics(IPhysicsEntity physics) {
@@ -38,9 +34,9 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 	public void load(GameSubsystemInterlink interlink) {
 		interlink.setSubsystem(IPhysicsManager.class, this);
 		this.world = new World(new Vec2(0, GameSettings.GRAVITY_ACCELLERATION), true);
-		final JBox2dContactListener contactHandler = new JBox2dContactListener();
-		this.world.setContactListener(contactHandler);
-		this.physicsWrapper = new JBox2dPhysicsWrapper(this.world, contactHandler);
+		this.contactListener = new JBox2dContactListener();
+		this.world.setContactListener(this.contactListener);
+		this.physicsWrapper = new JBox2dPhysicsWrapper(this.world, this.contactListener);
 	}
 
 	@Override
@@ -63,6 +59,11 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 		if (GameSettings.DEBUG) {
 			this.world.drawDebugData();
 		}
+	}
+
+	@Override
+	public IPhysicsBuilder getBuilder() {
+		return new JBox2DPhysicsBuilder(this.world, this.contactListener);
 	}
 
 }
