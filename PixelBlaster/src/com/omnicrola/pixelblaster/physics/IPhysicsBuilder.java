@@ -34,4 +34,6 @@ public interface IPhysicsBuilder {
 
 	public abstract IPhysicsBuilder addCircle(float radius, float x, float y);
 
+	IPhysicsBuilder collisionId(int collisionId);
+
 }

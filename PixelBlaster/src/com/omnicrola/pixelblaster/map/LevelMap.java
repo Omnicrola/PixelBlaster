@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.graphics.GameBackground;
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
+import com.omnicrola.pixelblaster.physics.CollisionIds;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.util.Coordinate;
@@ -39,10 +40,8 @@ public class LevelMap implements ILevelMap {
 
 	@Override
 	public void loadPhysics(IPhysicsManager physicsManager) {
-		System.out.println("loading map physics");
 		this.tileData.allButAir((x, y, mapTile) -> createPhysics(physicsManager, mapTile.getShape(), x
 				* LevelMap.this.tileSize, y * LevelMap.this.tileSize));
-		System.out.println("finished loading map physics");
 	}
 
 	@Override
@@ -57,6 +56,7 @@ public class LevelMap implements ILevelMap {
 	private void createPhysics(IPhysicsManager physicsManager, PointSet shape, float pX, float pY) {
 		final IPhysicsEntity physics = physicsManager.getBuilder()
 				.setStatic()
+				.collisionId(CollisionIds.MAP_TILE)
 				.friction(0.9f)
 				.position(pX + HORIZ_PHYSICS_OFFSET, pY)
 				.addPolygon(shape)

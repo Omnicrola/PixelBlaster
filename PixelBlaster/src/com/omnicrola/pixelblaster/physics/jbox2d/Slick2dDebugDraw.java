@@ -110,19 +110,19 @@ public class Slick2dDebugDraw extends DebugDraw {
 
 	@Override
 	public void drawTransform(Transform xf) {
-		getWorldToScreenToOut(xf.position, this.temp);
+		getWorldToScreenToOut(xf.p, this.temp);
 		this.temp2.setZero();
 		final float k_axisScale = 0.4f;
 
 		this.graphics.setColor(new Color(1, 0, 0));
-		this.temp2.x = xf.position.x + k_axisScale * xf.R.col1.x;
-		this.temp2.y = xf.position.y + k_axisScale * xf.R.col1.y;
+		this.temp2.x = xf.p.x + k_axisScale * xf.q.c;
+		this.temp2.y = xf.p.y + k_axisScale * xf.q.s;
 		getWorldToScreenToOut(this.temp2, this.temp2);
 		this.graphics.drawLine((int) this.temp.x, (int) this.temp.y, (int) this.temp2.x, (int) this.temp2.y);
 
 		this.graphics.setColor(new Color(0, 1, 0));
-		this.temp2.x = xf.position.x + k_axisScale * xf.R.col2.x;
-		this.temp2.y = xf.position.y + k_axisScale * xf.R.col2.y;
+		this.temp2.x = xf.p.x + k_axisScale * xf.q.c;
+		this.temp2.y = xf.p.y + k_axisScale * xf.q.s;
 		getWorldToScreenToOut(this.temp2, this.temp2);
 		this.graphics.drawLine((int) this.temp.x, (int) this.temp.y, (int) this.temp2.x, (int) this.temp2.y);
 		this.graphics.setColor(Color.white);

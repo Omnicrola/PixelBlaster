@@ -13,6 +13,7 @@ import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
 import com.omnicrola.pixelblaster.physics.jbox2d.JBox2DPhysicsBuilder;
+import com.omnicrola.pixelblaster.physics.jbox2d.JBox2DPhysicsModifier;
 import com.omnicrola.pixelblaster.physics.jbox2d.JBox2dContactListener;
 import com.omnicrola.pixelblaster.physics.jbox2d.Slick2dDebugDraw;
 
@@ -26,7 +27,7 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 	@Override
 	public void load(GameSubsystemInterlink interlink) {
 		interlink.setSubsystem(IPhysicsManager.class, this);
-		this.world = new World(new Vec2(0, GameSettings.GRAVITY_ACCELLERATION), true);
+		this.world = new World(new Vec2(0, GameSettings.GRAVITY_ACCELLERATION));
 		this.contactListener = new JBox2dContactListener();
 		this.world.setContactListener(this.contactListener);
 	}
@@ -56,6 +57,11 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 	@Override
 	public IPhysicsBuilder getBuilder() {
 		return new JBox2DPhysicsBuilder(this.world, this.contactListener);
+	}
+
+	@Override
+	public IPhysicsModifier modifyEntity(IPhysicsEntity physicsEntity) {
+		return new JBox2DPhysicsModifier(physicsEntity);
 	}
 
 }

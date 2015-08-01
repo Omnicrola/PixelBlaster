@@ -16,11 +16,11 @@ import org.jbox2d.dynamics.World;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.omnicrola.pixelblaster.physics.CollisionGroup;
 import com.omnicrola.pixelblaster.physics.CollisionIds;
 import com.omnicrola.pixelblaster.physics.IPhysicsBuilder;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.util.PointSet;
-import com.omnicrola.pixelblaster.util.Timekeeper;
 
 public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 
@@ -32,6 +32,7 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 	private float density;
 	private float maximumVelocity;
 	private final JBox2dContactListener contactListener;
+	private int collisionId;
 
 	public JBox2DPhysicsBuilder(World world, JBox2dContactListener contactListener) {
 		this.world = world;
@@ -40,15 +41,14 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 		this.friction = 0.2f;
 		this.density = 1.0f;
 		this.maximumVelocity = 1.0f;
+		this.collisionId = CollisionIds.NONE;
 		this.fixtures = new ArrayList<>();
 		this.sensors = new ArrayList<>();
 	}
 
 	@Override
 	public IPhysicsEntity build() {
-		final Timekeeper timekeeper = new Timekeeper();
 		final Body body = this.world.createBody(this.bodyDef);
-		timekeeper.lap();
 		final List<Fixture> fixtures = createFixtures(body);
 		final List<JBox2dPhysicsSensor> sensors = createSensors(body);
 		final JBox2dPhysicsEntity jBox2dPhysicsEntity = new JBox2dPhysicsEntity(this.contactListener, body, fixtures,
@@ -62,6 +62,7 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 		for (final FixtureDef fixtureDef : this.fixtures) {
 			fixtureDef.friction = this.friction;
 			fixtureDef.density = this.density;
+			fixtureDef.filter.groupIndex = CollisionGroup.WORLD;
 			final Fixture fixture = body.createFixture(fixtureDef);
 			fixtures.add(fixture);
 		}
@@ -128,7 +129,7 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 
 	private FixtureDef createFixtureDef() {
 		final FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.userData = CollisionIds.NONE;
+		fixtureDef.userData = this.collisionId;
 		return fixtureDef;
 	}
 
@@ -173,6 +174,12 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 	@Override
 	public IPhysicsBuilder position(float x, float y) {
 		this.bodyDef.position.set(x, y);
+		return this;
+	}
+
+	@Override
+	public IPhysicsBuilder collisionId(int collisionId) {
+		this.collisionId = collisionId;
 		return this;
 	}
 

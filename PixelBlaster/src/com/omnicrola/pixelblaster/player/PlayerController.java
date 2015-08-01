@@ -2,25 +2,21 @@ package com.omnicrola.pixelblaster.player;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.entity.BubbleFactory;
-import com.omnicrola.pixelblaster.entity.IEntityManager;
+import com.omnicrola.pixelblaster.entity.BubbleBuilder;
 import com.omnicrola.pixelblaster.graphics.EntitySprite.Facing;
-import com.omnicrola.pixelblaster.graphics.MultiStateSprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
-import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
+import com.omnicrola.pixelblaster.physics.IModifierToken;
 
 public class PlayerController {
 	private final PlayerModel playerModel;
 	private final Vector2f cacheVector;
 	private boolean isInMidAir;
 	private boolean hasDoubleJumped;
-	private final BubbleFactory bubbleFactory;
-	private final IEntityManager entityManager;
+	private final BubbleBuilder bubbleBuilder;
 
-	public PlayerController(IEntityManager entityManager, PlayerModel playerModel, BubbleFactory bubbleFactory) {
-		this.entityManager = entityManager;
+	public PlayerController(PlayerModel playerModel, BubbleBuilder bubbleBuilder) {
 		this.playerModel = playerModel;
-		this.bubbleFactory = bubbleFactory;
+		this.bubbleBuilder = bubbleBuilder;
 		this.cacheVector = new Vector2f();
 
 	}
@@ -28,14 +24,14 @@ public class PlayerController {
 	public void moveRight() {
 		applyForce(GameSettings.PLAYER_ACCELERATION, 0);
 		setPlayerState(PlayerState.WALK);
-		sprite().setFacing(Facing.RIGHT);
+		player().setFacing(Facing.RIGHT);
 
 	}
 
 	public void moveLeft() {
 		applyForce(-GameSettings.PLAYER_ACCELERATION, 0);
 		setPlayerState(PlayerState.WALK);
-		sprite().setFacing(Facing.LEFT);
+		player().setFacing(Facing.LEFT);
 	}
 
 	public void stand() {
@@ -45,12 +41,25 @@ public class PlayerController {
 	}
 
 	public void crouch() {
-		applyForce(0, -GameSettings.PLAYER_ACCELERATION);
+		applyForce(0, GameSettings.PLAYER_ACCELERATION);
 		setPlayerState(PlayerState.DUCK);
 	}
 
 	public void uncrouch() {
 		removePlayerState(PlayerState.DUCK);
+	}
+
+	public void bubble() {
+		if (isBubbled()) {
+			this.playerModel.unBubble();
+		} else {
+			final IModifierToken modifierToken = this.bubbleBuilder.envelop(player());
+			this.playerModel.setBubble(modifierToken);
+		}
+	}
+
+	private boolean isBubbled() {
+		return this.playerModel.isBubbled();
 	}
 
 	public void jump() {
@@ -67,40 +76,31 @@ public class PlayerController {
 	}
 
 	private void removePlayerState(PlayerState state) {
-		sprite().removeState(state);
+		player().removeState(state);
 	}
 
 	private void setPlayerState(PlayerState state) {
-		sprite().addState(state);
-	}
-
-	private MultiStateSprite sprite() {
-		return this.playerModel.getEntity().getMultistateSprite();
-	}
-
-	public void bubble() {
-		final Bubble bubble = this.bubbleFactory.createBubble(this.playerModel.getEntity());
-		this.entityManager.addEntity(bubble);
+		player().addState(state);
 	}
 
 	private void applyImpulse(float forceX, float forceY) {
 		this.cacheVector.set(forceX, forceY);
-		physics().applyImpulseAtCenter(this.cacheVector);
+		player().applyImpulseAtCenter(this.cacheVector);
 	}
 
 	private void applyForce(float forceX, float forceY) {
 		this.cacheVector.set(forceX, forceY);
-		physics().applyForceAtCenter(this.cacheVector);
+		player().applyForceAtCenter(this.cacheVector);
 	}
 
-	private IPhysicsEntity physics() {
-		return this.playerModel.getEntity().getPhysics();
+	private MultiStateEntity player() {
+		return this.playerModel.getEntity();
 	}
 
 	public void clearJump() {
 		this.isInMidAir = false;
 		this.hasDoubleJumped = false;
-		sprite().removeState(PlayerState.JUMP);
+		player().removeState(PlayerState.JUMP);
 	}
 
 }

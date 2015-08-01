@@ -3,7 +3,7 @@ package com.omnicrola.pixelblaster.player;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.entity.BubbleFactory;
+import com.omnicrola.pixelblaster.entity.BubbleBuilder;
 import com.omnicrola.pixelblaster.entity.IEntityManager;
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
@@ -19,12 +19,11 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 
 	private PlayerKeyListener keyListener;
 	private IGameContext context;
-	private final PlayerBuilder playerBuilder;
+	private PlayerBuilder playerBuilder;
 	private PlayerModel playerModel;
 	private PlayerController playerController;
 
-	public PlayerManager(PlayerBuilder playerBuilder) {
-		this.playerBuilder = playerBuilder;
+	public PlayerManager() {
 	}
 
 	@Override
@@ -36,23 +35,26 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 	@Override
 	public void init(IGameContext context) throws SlickException {
 		this.context = context;
+		initPlayerControl();
 		buildPlayer(context.getSubsystem(IEntityManager.class));
 		this.keyListener = new PlayerKeyListener(this.playerController);
 		context.getInput().addKeyListener(this.keyListener);
 	}
 
-	private void buildPlayer(IEntityManager entityManager) throws SlickException {
+	private void initPlayerControl() {
 		final AssetManager assetManager = this.context.getAssetManager();
 		final IPhysicsManager physicsManager = this.context.getSubsystem(IPhysicsManager.class);
-		final MultiStateEntity playerEntity = this.playerBuilder.build(assetManager, physicsManager);
+		this.playerBuilder = new PlayerBuilder(assetManager, physicsManager);
+		this.playerController = new PlayerController(this.playerModel, new BubbleBuilder(physicsManager));
+	}
 
+	private void buildPlayer(IEntityManager entityManager) throws SlickException {
+		final MultiStateEntity playerEntity = this.playerBuilder.build();
 		this.playerModel.setEntity(playerEntity);
 		entityManager.addEntity(playerEntity);
-		this.playerController = new PlayerController(entityManager, this.playerModel, new BubbleFactory(assetManager,
-				physicsManager));
 		final PlayerFootCollisionDetector footDetector = new PlayerFootCollisionDetector(CollisionIds.PLAYER_FOOT,
 				this.playerController);
-		playerEntity.getPhysics().addCollisionDetector(footDetector);
+		playerEntity.addCollisionDetector(footDetector);
 		respawnPlayer();
 	}
 

@@ -50,6 +50,7 @@ public class EntityManager implements IGameSubsystem, IEntityManager {
 		for (final IGameEntity gameEntity : this.entityCopies) {
 			if (!gameEntity.isAlive()) {
 				this.entities.remove(gameEntity);
+				gameEntity.dispose();
 			}
 		}
 	}

@@ -7,9 +7,11 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Filter;
 import org.jbox2d.dynamics.Fixture;
+import org.jbox2d.dynamics.FixtureDef;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.entity.IGameEntity;
+import com.omnicrola.pixelblaster.physics.CollisionGroup;
 import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 
@@ -24,6 +26,8 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 	private final Vector2f vector2f;
 	private float maximumVelocity;
 	private HashMap<Fixture, Filter> filterMap;
+
+	private boolean disabled;
 
 	public JBox2dPhysicsEntity(JBox2dContactListener contactHandler, Body body, List<Fixture> fixtures,
 			List<JBox2dPhysicsSensor> sensors) {
@@ -92,8 +96,12 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 
 	@Override
 	public void updateEntity(IGameEntity gameEntity, float delta) {
-		limitLinearVelocity();
-		updatePosition(gameEntity);
+		if (this.disabled) {
+			// counterGravity(gameEntity);
+		} else {
+			limitLinearVelocity();
+			updatePosition(gameEntity);
+		}
 	}
 
 	private void updatePosition(IGameEntity gameEntity) {
@@ -114,20 +122,42 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 	@Override
 	public void setMaximumVelocity(float maximumVelocity) {
 		this.maximumVelocity = maximumVelocity;
+
+	}
+
+	@Override
+	public float getMaximumVelocity() {
+		return this.maximumVelocity;
 	}
 
 	@Override
 	public void disable() {
+		this.disabled = true;
 		for (final Fixture fixture : this.fixtures) {
 			fixture.m_filter.maskBits = NO_COLLISION_MASK;
+			fixture.m_filter.groupIndex = CollisionGroup.NONE;
 		}
 	}
 
 	@Override
+	public void dispose() {
+		this.body.m_world.destroyBody(this.body);
+	}
+
+	@Override
 	public void enable() {
+		this.disabled = false;
 		for (final Fixture fixture : this.fixtures) {
 			fixture.m_filter.maskBits = this.filterMap.get(fixture).maskBits;
+			fixture.m_filter.groupIndex = CollisionGroup.WORLD;
 		}
+	}
+
+	public Fixture addFixture(FixtureDef fixtureDef) {
+		final Fixture newFixture = this.body.createFixture(fixtureDef);
+		this.fixtures.add(newFixture);
+		this.filterMap.put(newFixture, newFixture.getFilterData());
+		return newFixture;
 	}
 
 }

@@ -29,4 +29,8 @@ public interface IPhysicsEntity {
 
 	public void enable();
 
+	public float getMaximumVelocity();
+
+	public void dispose();
+
 }

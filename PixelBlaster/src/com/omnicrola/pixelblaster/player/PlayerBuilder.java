@@ -21,10 +21,17 @@ public class PlayerBuilder {
 	private static final float CHARACTER_HEIGHT = 0.7f;
 	private static final float CHARACTER_WIDTH = 0.3f;
 	private static final String BASE = "sprites/PlayerGreen/alienGreen_";
+	private final AssetManager assetManager;
+	private final IPhysicsManager physicsManager;
 
-	public MultiStateEntity build(AssetManager assetManager, IPhysicsManager physicsManager) {
-		final IPhysicsEntity physicsEntity = createPlayerPhysics(physicsManager);
-		final MultiStateSprite multiStateSprite = createSprite(assetManager);
+	public PlayerBuilder(AssetManager assetManager, IPhysicsManager physicsManager) {
+		this.assetManager = assetManager;
+		this.physicsManager = physicsManager;
+	}
+
+	public MultiStateEntity build() {
+		final IPhysicsEntity physicsEntity = createPlayerPhysics(this.physicsManager);
+		final MultiStateSprite multiStateSprite = createSprite(this.assetManager);
 		final MultiStateEntity player = new MultiStateEntity(multiStateSprite, physicsEntity);
 		return player;
 	}
@@ -68,6 +75,7 @@ public class PlayerBuilder {
 		final Rectangle footShape = new Rectangle(-sensorWidth,bottomOfCapsule,sensorWidth*2,0.02f);
 
 		return physicsManager.getBuilder()
+				.collisionId(CollisionIds.PLAYER_BODY)
 				.setDynamic()
 				.addCircle(width)
 				.addRectangle(new Rectangle(-width,0,width*2,height))
