@@ -20,7 +20,8 @@ import com.omnicrola.pixelblaster.util.AssetManager;
 public class PlayerBuilder {
 	private static final float CHARACTER_HEIGHT = 0.7f;
 	private static final float CHARACTER_WIDTH = 0.3f;
-	private static final String BASE = "sprites/PlayerGreen/alienGreen_";
+	private static final String PLAYER = "sprites/PlayerGreen/alienGreen_";
+	private static final String BUBBLE = "sprites/bubbles/bubble";
 	private final AssetManager assetManager;
 	private final IPhysicsManager physicsManager;
 
@@ -30,42 +31,57 @@ public class PlayerBuilder {
 	}
 
 	public MultiStateEntity build() {
-		final IPhysicsEntity physicsEntity = createPlayerPhysics(this.physicsManager);
-		final MultiStateSprite multiStateSprite = createSprite(this.assetManager);
+		final IPhysicsEntity physicsEntity = createPlayerPhysics();
+		final MultiStateSprite multiStateSprite = createSprite();
 		final MultiStateEntity player = new MultiStateEntity(multiStateSprite, physicsEntity);
 		return player;
 	}
 
-	private static MultiStateSprite createSprite(AssetManager assetManager) {
+	private MultiStateSprite createSprite() {
 		final Rectangle bounds = new Rectangle(0, 0, 1f, 2f);
-		final Map<ISpriteState, IEntitySprite> sprites = createSprites(assetManager, bounds);
+		final Map<ISpriteState, IEntitySprite> sprites = createSprites(bounds);
 		final MultiStateSprite multiStateSprite = new MultiStateSprite(sprites, bounds, PlayerState.STAND);
 		return multiStateSprite;
 	}
 
-	private static Map<ISpriteState, IEntitySprite> createSprites(AssetManager assetManager, Rectangle bounds) {
+	private Map<ISpriteState, IEntitySprite> createSprites(Rectangle bounds) {
 		final HashMap<ISpriteState, IEntitySprite> sprites = new HashMap<>();
-		sprites.put(PlayerState.STAND, new EntitySprite(getPlayerImage(assetManager, "stand"), bounds));
-		sprites.put(PlayerState.WALK, createWalkSprite(assetManager, bounds));
-		sprites.put(PlayerState.JUMP, new EntitySprite(getPlayerImage(assetManager, "jump"), bounds));
-		sprites.put(PlayerState.DUCK, new EntitySprite(getPlayerImage(assetManager, "duck"), bounds));
-		sprites.put(PlayerState.HIT, new EntitySprite(getPlayerImage(assetManager, "hit"), bounds));
+		sprites.put(PlayerState.STAND, playerImage("stand", bounds));
+		sprites.put(PlayerState.WALK, createWalkSprite(bounds));
+		sprites.put(PlayerState.JUMP, playerImage("jump", bounds));
+		sprites.put(PlayerState.DUCK, playerImage("duck", bounds));
+		sprites.put(PlayerState.HIT, playerImage("hit", bounds));
+
+		final Rectangle bubbleBounds = new Rectangle(-0.5f, 0, 2, 2);
+		sprites.put(PlayerState.BUBBLE_BLUE, bubbleImage("Blue", bubbleBounds));
 		return sprites;
 	}
 
-	private static AnimatedSprite createWalkSprite(AssetManager assetManager, Rectangle bounds) {
+	private IEntitySprite bubbleImage(String imageName, Rectangle bubbleBounds) {
+		final Image image = this.assetManager.getImage(BUBBLE + imageName + ".png");
+		final EntitySprite entitySprite = new EntitySprite(image, bubbleBounds);
+		entitySprite.setTransparency(0.5f);
+		return entitySprite;
+	}
+
+	private IEntitySprite playerImage(String imageName, Rectangle bounds) {
+		final Image image = this.assetManager.getImage(PLAYER + imageName + ".png");
+		return new EntitySprite(image, bounds);
+	}
+
+	private AnimatedSprite createWalkSprite(Rectangle bounds) {
 		final Image[] images = new Image[2];
-		images[0] = getPlayerImage(assetManager, "walk1");
-		images[1] = getPlayerImage(assetManager, "walk2");
+		images[0] = getImage(PLAYER + "walk1.png");
+		images[1] = getImage(PLAYER + "walk2.png");
 		return new AnimatedSprite(images, bounds, 8.0f);
 	}
 
-	private static Image getPlayerImage(AssetManager assetManager, String imageName) {
-		return assetManager.getImage(BASE + imageName + ".png");
+	private Image getImage(String path) {
+		return this.assetManager.getImage(path);
 	}
 
 	//@formatter:off
-	private static IPhysicsEntity createPlayerPhysics(IPhysicsManager physicsManager) {
+	private  IPhysicsEntity createPlayerPhysics() {
 		final float width = CHARACTER_WIDTH;
 		final float height = CHARACTER_HEIGHT;
 		final float maxVelocity = GameSettings.PLAYER_MAXIMUM_VELOCITY;
@@ -74,7 +90,7 @@ public class PlayerBuilder {
 		final float sensorWidth = CHARACTER_WIDTH / 2f;
 		final Rectangle footShape = new Rectangle(-sensorWidth,bottomOfCapsule,sensorWidth*2,0.02f);
 
-		return physicsManager.getBuilder()
+		return this.physicsManager.getBuilder()
 				.collisionId(CollisionIds.PLAYER_BODY)
 				.setDynamic()
 				.addCircle(width)

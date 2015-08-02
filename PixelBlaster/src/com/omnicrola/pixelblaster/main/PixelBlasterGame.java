@@ -6,7 +6,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import com.omnicrola.pixelblaster.entity.EntityManager;
 import com.omnicrola.pixelblaster.gui.MainMenuBuilder;
-import com.omnicrola.pixelblaster.input.ShowMenuHandler;
+import com.omnicrola.pixelblaster.input.InputManager;
 import com.omnicrola.pixelblaster.map.MapManager;
 import com.omnicrola.pixelblaster.particles.ParticleManager;
 import com.omnicrola.pixelblaster.physics.PhysicsManager;
@@ -36,7 +36,7 @@ public class PixelBlasterGame extends StateBasedGame {
 		mainGameState.addSubsystem(new EntityManager());
 		mainGameState.addSubsystem(new ParticleManager());
 		mainGameState.addSubsystem(new PlayerManager());
-		mainGameState.addSubsystem(new ShowMenuHandler(this));
+		mainGameState.addSubsystem(new InputManager(this));
 		mainGameState.addSubsystem(new PhysicsManager());
 		addState(mainGameState);
 	}

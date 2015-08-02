@@ -1,7 +1,9 @@
 package com.omnicrola.pixelblaster.graphics;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeSet;
 
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
@@ -10,26 +12,34 @@ import com.omnicrola.pixelblaster.graphics.EntitySprite.Facing;
 
 public class MultiStateSprite implements IEntitySprite {
 
-	private final HashSet<ISpriteState> states;
+	private final TreeSet<ISpriteState> states;
 	private final Map<ISpriteState, IEntitySprite> animatedSprites;
 	private final ISpriteState defaultState;
 	private Facing facing;
-	private float transparency;
 	private final HashSet<IEntitySprite> activeSprites;
 
 	public MultiStateSprite(Map<ISpriteState, IEntitySprite> sprites, Rectangle bounds, ISpriteState defaultState) {
 		this.animatedSprites = sprites;
 		this.defaultState = defaultState;
-		this.states = new HashSet<>();
+		this.states = new TreeSet<>(new SpriteStateComparator());
 		this.activeSprites = new HashSet<>();
 		this.facing = Facing.RIGHT;
-		this.transparency = 1f;
 		updateState();
 	}
 
-	public void addState(ISpriteState state) {
-		this.states.add(state);
+	public void addState(ISpriteState newState) {
+		removeAllStatesInGroup(newState.group());
+		this.states.add(newState);
 		updateState();
+	}
+
+	private void removeAllStatesInGroup(int groupId) {
+		final Iterator<ISpriteState> iterator = this.states.iterator();
+		while (iterator.hasNext()) {
+			if (groupId == iterator.next().group()) {
+				iterator.remove();
+			}
+		}
 	}
 
 	public void removeState(ISpriteState state) {
@@ -41,7 +51,6 @@ public class MultiStateSprite implements IEntitySprite {
 	public void update(float delta) {
 		for (final IEntitySprite sprite : this.activeSprites) {
 			sprite.setFacing(this.facing);
-			sprite.setTransparency(this.transparency);
 			sprite.update(delta);
 		}
 	}
@@ -96,25 +105,17 @@ public class MultiStateSprite implements IEntitySprite {
 
 	@Override
 	public void setTransparency(float value) {
-		this.transparency = value;
 	}
 
 	private void updateState() {
-		ISpriteState newState = this.defaultState;
 		this.activeSprites.clear();
 		if (this.states.isEmpty()) {
 			this.states.add(this.defaultState);
 		} else {
-			for (final ISpriteState state : this.states) {
-				if (state.priority() < newState.priority()) {
-					newState = state;
-				}
+			for (final ISpriteState iSpriteState : this.states) {
+				this.activeSprites.add(this.animatedSprites.get(iSpriteState));
 			}
 		}
-		this.activeSprites.add(this.animatedSprites.get(newState));
 	}
 
-	public void clearStates() {
-		this.states.clear();
-	}
 }

@@ -49,7 +49,7 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 	@Override
 	public void render(IGraphicsWrapper graphics) {
 		this.camera.applyTo(this.slick2dDebugDraw.getViewportTranform());
-		if (GameSettings.DEBUG) {
+		if (GameSettings.DEBUG_PHYSICS) {
 			this.world.drawDebugData();
 		}
 	}

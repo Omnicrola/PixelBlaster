@@ -23,26 +23,26 @@ public class PlayerController {
 
 	public void moveRight() {
 		applyForce(GameSettings.PLAYER_ACCELERATION, 0);
-		setPlayerState(PlayerState.WALK);
+		addPlayerState(PlayerState.WALK);
 		player().setFacing(Facing.RIGHT);
 
 	}
 
 	public void moveLeft() {
 		applyForce(-GameSettings.PLAYER_ACCELERATION, 0);
-		setPlayerState(PlayerState.WALK);
+		addPlayerState(PlayerState.WALK);
 		player().setFacing(Facing.LEFT);
 	}
 
 	public void stand() {
 		removePlayerState(PlayerState.WALK);
-		setPlayerState(PlayerState.STAND);
+		addPlayerState(PlayerState.STAND);
 
 	}
 
 	public void crouch() {
 		applyForce(0, GameSettings.PLAYER_ACCELERATION);
-		setPlayerState(PlayerState.DUCK);
+		addPlayerState(PlayerState.DUCK);
 	}
 
 	public void uncrouch() {
@@ -52,8 +52,10 @@ public class PlayerController {
 	public void bubble() {
 		if (isBubbled()) {
 			this.playerModel.unBubble();
+			removePlayerState(PlayerState.BUBBLE_BLUE);
 		} else {
 			final IModifierToken modifierToken = this.bubbleBuilder.envelop(player());
+			addPlayerState(PlayerState.BUBBLE_BLUE);
 			this.playerModel.setBubble(modifierToken);
 		}
 	}
@@ -71,7 +73,7 @@ public class PlayerController {
 				this.hasDoubleJumped = true;
 			}
 			applyImpulse(0, -GameSettings.PLAYER_JUMP_SPEED);
-			setPlayerState(PlayerState.JUMP);
+			addPlayerState(PlayerState.JUMP);
 		}
 	}
 
@@ -79,7 +81,7 @@ public class PlayerController {
 		player().removeState(state);
 	}
 
-	private void setPlayerState(PlayerState state) {
+	private void addPlayerState(PlayerState state) {
 		player().addState(state);
 	}
 

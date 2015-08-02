@@ -16,13 +16,15 @@ public class EntitySprite implements IEntitySprite {
 	protected final Rectangle bounds;
 	private boolean flippedX;
 	private final Color drawColor;
+	protected final Vector2f baseOffset;
 
 	public EntitySprite(Image image, Rectangle bounds) {
 		this.image = image;
 		this.bounds = bounds;
+		this.baseOffset = bounds.getLocation();
 		this.rotation = 0f;
 		this.flippedX = false;
-		this.drawColor = new Color(1, 1, 1, 0.75f);
+		this.drawColor = new Color(1f, 1f, 1f, 1f);
 	}
 
 	@Override
@@ -42,12 +44,14 @@ public class EntitySprite implements IEntitySprite {
 
 	@Override
 	public Rectangle getBounds() {
-		return new Rectangle(this.bounds.getX(), this.bounds.getY(), this.bounds.getWidth(), this.bounds.getHeight());
+		final float x = this.bounds.getX() + this.baseOffset.x;
+		final float y = this.bounds.getY() + this.baseOffset.y;
+		return new Rectangle(x, y, this.bounds.getWidth(), this.bounds.getHeight());
 	}
 
 	@Override
 	public void render(IGraphicsWrapper graphics) {
-		graphics.drawImage(this.image.getFlippedCopy(this.flippedX, false), this.bounds, this.drawColor);
+		graphics.drawImage(this.image.getFlippedCopy(this.flippedX, false), getBounds(), this.drawColor);
 	}
 
 	@Override
