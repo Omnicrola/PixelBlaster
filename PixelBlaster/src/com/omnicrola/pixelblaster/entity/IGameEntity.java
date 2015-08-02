@@ -10,9 +10,9 @@ import com.omnicrola.pixelblaster.physics.IPhysicsModifier;
 
 public interface IGameEntity {
 
-	IEntitySprite getSprite();
-
 	Vector2f getPosition();
+
+	IEntitySprite getSprite();
 
 	void setPosition(Vector2f position);
 

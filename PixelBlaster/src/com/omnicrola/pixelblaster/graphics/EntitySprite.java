@@ -26,40 +26,18 @@ public class EntitySprite implements IEntitySprite {
 	}
 
 	@Override
-	public float getY() {
-		return this.bounds.getY();
-	}
-
-	@Override
 	public void setTransparency(float transparency) {
 		this.drawColor.a = transparency;
 	}
 
 	@Override
-	public float getX() {
-		return this.bounds.getX();
-	}
-
-	@Override
-	public float getRotation() {
-		return this.rotation;
-	}
-
-	@Override
-	public Image getImage() {
-		return this.image;
-	}
-
-	@Override
-	public IEntitySprite setPosition(Vector2f position) {
+	public void setPosition(Vector2f position) {
 		this.bounds.setLocation(position);
-		return this;
 	}
 
 	@Override
-	public IEntitySprite setRotation(float rotation) {
+	public void setRotation(float rotation) {
 		this.rotation = rotation;
-		return this;
 	}
 
 	@Override

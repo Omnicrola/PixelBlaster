@@ -83,7 +83,9 @@ public class GameEntity implements IGameEntity {
 
 	@Override
 	public IEntitySprite getSprite() {
-		return this.sprite.setPosition(this.position).setRotation(this.rotation);
+		this.sprite.setPosition(this.position);
+		this.sprite.setRotation(this.rotation);
+		return this.sprite;
 	}
 
 	@Override

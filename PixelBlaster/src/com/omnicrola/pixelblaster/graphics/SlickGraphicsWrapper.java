@@ -33,8 +33,8 @@ public class SlickGraphicsWrapper implements IGraphicsWrapper {
 				image.getHeight(), drawColor);
 		// DEBUG
 		if (GameSettings.DEBUG) {
-			// this.graphics.setColor(Color.yellow);
-			// this.graphics.drawRect(x, y, scaledWidth, scaledHeight);
+			this.graphics.setColor(Color.yellow);
+			this.graphics.drawRect(x, y, scaledWidth, scaledHeight);
 		}
 	}
 

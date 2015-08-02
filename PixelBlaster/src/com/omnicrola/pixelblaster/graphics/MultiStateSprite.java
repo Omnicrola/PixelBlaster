@@ -3,7 +3,6 @@ package com.omnicrola.pixelblaster.graphics;
 import java.util.HashSet;
 import java.util.Map;
 
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -13,23 +12,18 @@ public class MultiStateSprite implements IEntitySprite {
 
 	private final HashSet<ISpriteState> states;
 	private final Map<ISpriteState, IEntitySprite> animatedSprites;
-	private IEntitySprite currentSprite;
 	private final ISpriteState defaultState;
 	private Facing facing;
 	private float transparency;
+	private final HashSet<IEntitySprite> activeSprites;
 
 	public MultiStateSprite(Map<ISpriteState, IEntitySprite> sprites, Rectangle bounds, ISpriteState defaultState) {
 		this.animatedSprites = sprites;
 		this.defaultState = defaultState;
 		this.states = new HashSet<>();
+		this.activeSprites = new HashSet<>();
 		this.facing = Facing.RIGHT;
-		this.currentSprite = sprites.values().iterator().next();
 		this.transparency = 1f;
-	}
-
-	public void setState(ISpriteState state) {
-		this.states.clear();
-		this.states.add(state);
 		updateState();
 	}
 
@@ -45,24 +39,32 @@ public class MultiStateSprite implements IEntitySprite {
 
 	@Override
 	public void update(float delta) {
-		this.currentSprite.setFacing(this.facing);
-		this.currentSprite.setTransparency(this.transparency);
-		this.currentSprite.update(delta);
+		for (final IEntitySprite sprite : this.activeSprites) {
+			sprite.setFacing(this.facing);
+			sprite.setTransparency(this.transparency);
+			sprite.update(delta);
+		}
 	}
 
 	@Override
-	public IEntitySprite setPosition(Vector2f position) {
-		return this.currentSprite.setPosition(position);
+	public void setPosition(Vector2f position) {
+		for (final IEntitySprite sprite : this.activeSprites) {
+			sprite.setPosition(position);
+		}
 	}
 
 	@Override
-	public IEntitySprite setRotation(float rotation) {
-		return this.currentSprite.setRotation(rotation);
+	public void setRotation(float rotation) {
+		for (final IEntitySprite sprite : this.activeSprites) {
+			sprite.setRotation(rotation);
+		}
 	}
 
 	@Override
 	public void render(IGraphicsWrapper graphics) {
-		this.currentSprite.render(graphics);
+		for (final IEntitySprite sprite : this.activeSprites) {
+			sprite.render(graphics);
+		}
 	}
 
 	@Override
@@ -71,28 +73,25 @@ public class MultiStateSprite implements IEntitySprite {
 	}
 
 	@Override
-	public Image getImage() {
-		return this.currentSprite.getImage();
-	}
-
-	@Override
-	public float getX() {
-		return this.currentSprite.getX();
-	}
-
-	@Override
-	public float getY() {
-		return this.currentSprite.getY();
-	}
-
-	@Override
 	public Rectangle getBounds() {
-		return this.currentSprite.getBounds();
+		final Rectangle bounds = new Rectangle(0, 0, 0, 0);
+		for (final IEntitySprite sprite : this.activeSprites) {
+			combine(bounds, sprite.getBounds());
+		}
+		return bounds;
 	}
 
-	@Override
-	public float getRotation() {
-		return this.currentSprite.getRotation();
+	private void combine(Rectangle bounds, Rectangle r2) {
+		final float x1 = Math.min(bounds.getMinX(), r2.getMinX());
+		final float y1 = Math.min(bounds.getMinY(), r2.getMinY());
+		final float x2 = Math.max(bounds.getMaxX(), r2.getMaxX());
+		final float y2 = Math.max(bounds.getMaxY(), r2.getMaxY());
+		final float width = x2 - x1;
+		final float height = y2 - y1;
+		bounds.setX(x1);
+		bounds.setY(y1);
+		bounds.setWidth(width);
+		bounds.setHeight(height);
 	}
 
 	@Override
@@ -102,6 +101,7 @@ public class MultiStateSprite implements IEntitySprite {
 
 	private void updateState() {
 		ISpriteState newState = this.defaultState;
+		this.activeSprites.clear();
 		if (this.states.isEmpty()) {
 			this.states.add(this.defaultState);
 		} else {
@@ -111,7 +111,7 @@ public class MultiStateSprite implements IEntitySprite {
 				}
 			}
 		}
-		this.currentSprite = this.animatedSprites.get(newState);
+		this.activeSprites.add(this.animatedSprites.get(newState));
 	}
 
 	public void clearStates() {

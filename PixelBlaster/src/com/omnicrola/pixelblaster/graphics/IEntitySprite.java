@@ -1,6 +1,5 @@
 package com.omnicrola.pixelblaster.graphics;
 
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -8,15 +7,7 @@ import com.omnicrola.pixelblaster.graphics.EntitySprite.Facing;
 
 public interface IEntitySprite {
 
-	Image getImage();
-
-	float getX();
-
-	float getY();
-
 	Rectangle getBounds();
-
-	float getRotation();
 
 	void setTransparency(float value);
 
@@ -26,8 +17,8 @@ public interface IEntitySprite {
 
 	void setFacing(Facing facing);
 
-	IEntitySprite setPosition(Vector2f position);
+	void setPosition(Vector2f position);
 
-	IEntitySprite setRotation(float rotation);
+	void setRotation(float rotation);
 
 }

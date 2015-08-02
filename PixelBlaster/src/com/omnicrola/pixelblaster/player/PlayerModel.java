@@ -31,6 +31,7 @@ public class PlayerModel {
 
 	public void unBubble() {
 		this.modifierToken.destroy();
+		this.isBubbled = false;
 	}
 
 }
