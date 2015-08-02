@@ -51,13 +51,21 @@ public class PlayerController {
 
 	public void bubble() {
 		if (isBubbled()) {
-			this.playerModel.unBubble();
-			removePlayerState(PlayerState.BUBBLE_BLUE);
+			turnBubbleOff();
 		} else {
-			final IModifierToken modifierToken = this.bubbleBuilder.envelop(player());
-			addPlayerState(PlayerState.BUBBLE_BLUE);
-			this.playerModel.setBubble(modifierToken);
+			turnBubbleOn();
 		}
+	}
+
+	private void turnBubbleOn() {
+		final IModifierToken modifierToken = this.bubbleBuilder.envelop(player());
+		addPlayerState(PlayerState.BUBBLE_BLUE);
+		this.playerModel.setBubble(modifierToken);
+	}
+
+	private void turnBubbleOff() {
+		this.playerModel.unBubble();
+		removePlayerState(PlayerState.BUBBLE_BLUE);
 	}
 
 	private boolean isBubbled() {
@@ -103,6 +111,49 @@ public class PlayerController {
 		this.isInMidAir = false;
 		this.hasDoubleJumped = false;
 		player().removeState(PlayerState.JUMP);
+	}
+
+	public float getBubblePower() {
+		return this.playerModel.getBubblePower();
+	}
+
+	public float getMaxBubblePower() {
+		return this.playerModel.getMaxBubblePower();
+	}
+
+	public void update(float delta) {
+		adjustBubblePower();
+		checkIfBubbleShouldCollapse();
+	}
+
+	private void checkIfBubbleShouldCollapse() {
+		final float bubblePower = this.playerModel.getBubblePower();
+		if (isBubbled() && bubblePower <= 0) {
+			turnBubbleOff();
+		}
+	}
+
+	private void adjustBubblePower() {
+		if (isBubbled()) {
+			decreaseBubblePower(GameSettings.BUBBLE_POWER_USE_RATE);
+		} else {
+			increaseBubblePower(GameSettings.BUBBLE_POWER_REGEN_RATE);
+		}
+	}
+
+	private void decreaseBubblePower(float decreaseAmount) {
+		final float bubblePower = this.playerModel.getBubblePower();
+		if (bubblePower > 0) {
+			this.playerModel.setBubblePower(bubblePower - decreaseAmount);
+		}
+	}
+
+	private void increaseBubblePower(float incrementAmount) {
+		final float bubblePower = this.playerModel.getBubblePower();
+		final float maxBubblePower = this.playerModel.getMaxBubblePower();
+		if (bubblePower < maxBubblePower) {
+			this.playerModel.setBubblePower(bubblePower + incrementAmount);
+		}
 	}
 
 }

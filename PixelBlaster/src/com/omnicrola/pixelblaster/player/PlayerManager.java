@@ -67,6 +67,7 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 	@Override
 	public void update(IGameContext gameContext, float delta) {
 		this.keyListener.update(delta);
+		this.playerController.update(delta);
 		gameContext.getCamera().focusOn(this.playerModel.getEntity());
 		containPlayerInMap();
 	}
@@ -79,6 +80,11 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 
 	@Override
 	public void render(IGraphicsWrapper graphics) {
+	}
+
+	@Override
+	public PlayerController getPlayerController() {
+		return this.playerController;
 	}
 
 }

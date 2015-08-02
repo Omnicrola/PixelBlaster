@@ -16,5 +16,7 @@ public class GameSettings {
 	public static final float MAP_TILE_SIZE_IN_METERS = 2.0f;
 
 	public static final String MAP_FILE_PATH = "assets/Levels/";
+	public static final float BUBBLE_POWER_REGEN_RATE = 0.05f;
+	public static final float BUBBLE_POWER_USE_RATE = 0.15f;
 
 }

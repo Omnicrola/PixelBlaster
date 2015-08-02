@@ -7,6 +7,8 @@ import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
+import com.omnicrola.pixelblaster.player.IPlayerManager;
+import com.omnicrola.pixelblaster.player.PlayerController;
 
 public class UiManager implements IGameSubsystem, IUiManager {
 	private BubbleMeter bubbleMeter;
@@ -32,6 +34,11 @@ public class UiManager implements IGameSubsystem, IUiManager {
 
 	@Override
 	public void update(IGameContext gameContext, float delta) {
+		final PlayerController playerModel = gameContext.getSubsystem(IPlayerManager.class).getPlayerController();
+		final float power = playerModel.getBubblePower();
+		final float maxPower = playerModel.getMaxBubblePower();
+
+		this.bubbleMeter.setPercentageFull(power / maxPower);
 	}
 
 	@Override
