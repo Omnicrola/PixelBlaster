@@ -20,6 +20,7 @@ public class MainGameState extends BasicGameState {
 	private AssetManager assetManager;
 	private SlickGameContext gameContext;
 	private Camera camera;
+	private Camera guiCamera;
 
 	public MainGameState() {
 		this.subsystems = new ArrayList<>();
@@ -36,7 +37,9 @@ public class MainGameState extends BasicGameState {
 		if (!this.isInitialized) {
 			this.assetManager = new AssetManager(new XmlMapLoader());
 			this.camera = new Camera(GameSettings.PIXEL_TO_METER_RATIO, container.getWidth(), container.getHeight());
-			this.gameContext = new SlickGameContext(this.interlink, container, this.assetManager, this.camera);
+			this.guiCamera = new Camera(1.0f, container.getWidth(), container.getHeight());
+			this.gameContext = new SlickGameContext(this.interlink, container, this.assetManager, this.camera,
+					this.guiCamera);
 			for (final IGameSubsystem subsystem : this.subsystems) {
 				subsystem.init(this.gameContext);
 			}

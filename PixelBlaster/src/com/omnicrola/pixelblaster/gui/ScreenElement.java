@@ -3,7 +3,8 @@ package com.omnicrola.pixelblaster.gui;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
+
+import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 
 public class ScreenElement implements IScreenElement {
 	protected final ArrayList<IScreenElement> children;
@@ -52,7 +53,7 @@ public class ScreenElement implements IScreenElement {
 	}
 
 	@Override
-	public void render(Graphics graphics, int offX, int offY) {
+	public void render(IGraphicsWrapper graphics, int offX, int offY) {
 		if (!this.isTransparent) {
 			graphics.setColor(this.backgroundColor);
 			graphics.drawRect(this.x + offX, this.y + offY, this.width, this.height);
@@ -60,7 +61,7 @@ public class ScreenElement implements IScreenElement {
 		renderChildren(graphics, offX, offY);
 	}
 
-	protected void renderChildren(Graphics graphics, int offX, int offY) {
+	protected void renderChildren(IGraphicsWrapper graphics, int offX, int offY) {
 		for (final IScreenElement element : this.children) {
 			element.render(graphics, offX + this.x, offY + this.y);
 		}

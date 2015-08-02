@@ -1,12 +1,13 @@
 package com.omnicrola.pixelblaster.gui;
 
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
+
+import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 
 public interface IScreenElement {
 	void setPosition(int x, int y);
 
-	void render(Graphics graphics, int offX, int offY);
+	void render(IGraphicsWrapper graphics, int offX, int offY);
 
 	void trigger();
 

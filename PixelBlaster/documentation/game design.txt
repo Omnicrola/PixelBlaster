@@ -26,4 +26,6 @@ Mechanics
 			-- Slow/freeze enemies
 			-- warp time
 			-- flip gravity
-			--
+			-- repel enemies
+			-- attract enemies
+			-- envelop enemies (duration)

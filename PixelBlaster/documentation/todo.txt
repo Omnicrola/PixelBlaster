@@ -8,7 +8,16 @@ High Level
 [X] Let the player move
 [X] Add an XML-based map system
 [X] Add one bubble (mass?)
-[X] Add one enemy
+[ ] Add a bubble meter
+[ ] Add a bubble powerup
+[ ] Add one enemy
+
+
+Details - Add a bubble meter
+---------------------------
+[ ] Add a meter to the top left labeled "bubble power"
+[ ] Cause the meter to regenerate over time
+[ ] When the player's bubble is active, decrease the meter at a steady rate
 
 Details - Add one Bubble
 ----------

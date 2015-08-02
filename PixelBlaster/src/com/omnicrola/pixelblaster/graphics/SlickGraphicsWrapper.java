@@ -24,6 +24,11 @@ public class SlickGraphicsWrapper implements IGraphicsWrapper {
 	}
 
 	@Override
+	public void drawImage(Image image, int x, int y) {
+		drawImage(image, new Rectangle(x, y, image.getWidth(), image.getHeight()), FULL);
+	}
+
+	@Override
 	public void drawImage(Image image, Rectangle bounds, Color drawColor) {
 		final float x = this.camera.translateX(bounds.getX());
 		final float y = this.camera.translateY(bounds.getY());
@@ -45,5 +50,25 @@ public class SlickGraphicsWrapper implements IGraphicsWrapper {
 		final float width = this.camera.getViewportWidth();
 		final float height = this.camera.getViewportHeight();
 		this.graphics.drawImage(image, 0, 0, width, height, 0, 0, imageWidth, imageHeight);
+	}
+
+	@Override
+	public void drawRect(int x, int y, int width, int height) {
+		this.graphics.drawRect(x, y, width, height);
+	}
+
+	@Override
+	public void fillRect(int x, int y, int width, int height) {
+		this.graphics.fillRect(x, y, width, height);
+	}
+
+	@Override
+	public void setColor(Color color) {
+		this.graphics.setColor(color);
+	}
+
+	@Override
+	public void drawString(String text, int x, int y) {
+		this.graphics.drawString(text, x, y);
 	}
 }

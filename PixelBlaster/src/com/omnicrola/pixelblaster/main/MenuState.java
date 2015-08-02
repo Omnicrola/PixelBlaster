@@ -6,6 +6,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import com.omnicrola.pixelblaster.graphics.Camera;
+import com.omnicrola.pixelblaster.graphics.SlickGraphicsWrapper;
 import com.omnicrola.pixelblaster.gui.MainMenu;
 import com.omnicrola.pixelblaster.gui.MainMenuBuilder;
 import com.omnicrola.pixelblaster.input.MainMenuKeyHandler;
@@ -32,7 +34,9 @@ public class MenuState extends BasicGameState {
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException {
-		this.menu.render(graphics, 0, 0);
+		final Camera camera = new Camera(1.0f, container.getWidth(), container.getHeight());
+		final SlickGraphicsWrapper slickGraphicsWrapper = new SlickGraphicsWrapper(camera, graphics);
+		this.menu.render(slickGraphicsWrapper, 0, 0);
 	}
 
 	@Override

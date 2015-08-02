@@ -1,7 +1,8 @@
 package com.omnicrola.pixelblaster.gui;
 
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
+
+import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 
 public class ButtonElement extends ScreenElement {
 
@@ -28,7 +29,7 @@ public class ButtonElement extends ScreenElement {
 	}
 
 	@Override
-	public void render(Graphics graphics, int offX, int offY) {
+	public void render(IGraphicsWrapper graphics, int offX, int offY) {
 		if (this.isSelected) {
 			graphics.setColor(this.highlightColor);
 		} else {

@@ -88,4 +88,5 @@ public class Camera {
 	public float getViewportHeight() {
 		return this.viewportHeight;
 	}
+
 }
