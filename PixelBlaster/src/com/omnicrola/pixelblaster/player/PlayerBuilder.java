@@ -12,9 +12,10 @@ import com.omnicrola.pixelblaster.graphics.IEntitySprite;
 import com.omnicrola.pixelblaster.graphics.ISpriteState;
 import com.omnicrola.pixelblaster.graphics.MultiStateSprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
-import com.omnicrola.pixelblaster.physics.CollisionIds;
+import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
+import com.omnicrola.pixelblaster.physics.RectangleSensor;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class PlayerBuilder {
@@ -30,8 +31,8 @@ public class PlayerBuilder {
 		this.physicsManager = physicsManager;
 	}
 
-	public MultiStateEntity build() {
-		final IPhysicsEntity physicsEntity = createPlayerPhysics();
+	public MultiStateEntity build(PlayerController playerController) {
+		final IPhysicsEntity physicsEntity = createPlayerPhysics(playerController);
 		final MultiStateSprite multiStateSprite = createSprite();
 		final MultiStateEntity player = new MultiStateEntity(multiStateSprite, physicsEntity);
 		return player;
@@ -81,17 +82,15 @@ public class PlayerBuilder {
 	}
 
 	//@formatter:off
-	private  IPhysicsEntity createPlayerPhysics() {
+	private  IPhysicsEntity createPlayerPhysics(PlayerController playerController) {
 		final float width = CHARACTER_WIDTH;
 		final float height = CHARACTER_HEIGHT;
 		final float maxVelocity = GameSettings.PLAYER_MAXIMUM_VELOCITY;
 
 		final float bottomOfCapsule = CHARACTER_HEIGHT + CHARACTER_WIDTH - 0.01f;
 		final float sensorWidth = CHARACTER_WIDTH / 2f;
-		final Rectangle footShape = new Rectangle(-sensorWidth,bottomOfCapsule,sensorWidth*2,0.02f);
-
-		return this.physicsManager.getBuilder()
-				.collisionId(CollisionIds.PLAYER_BODY)
+		final IPhysicsEntity physicsEntity = this.physicsManager.getBuilder()
+				.collisionId(CollisionIdentifier.PLAYER_BODY)
 				.setDynamic()
 				.addCircle(width)
 				.addRectangle(new Rectangle(-width,0,width*2,height))
@@ -99,8 +98,14 @@ public class PlayerBuilder {
 				.disableRotation()
 				.disableSleep()
 				.limitVelocity(maxVelocity)
-				.rectangleSensor(CollisionIds.PLAYER_FOOT, footShape)
 				.build();
+
+		final Rectangle footShape = new Rectangle(-sensorWidth, bottomOfCapsule, sensorWidth * 2f, 0.02f);
+		final RectangleSensor sensor = new RectangleSensor(footShape, CollisionIdentifier.MAP_TILE);
+		sensor.addContactHandler(new ClearPlayerJumpContactHandler(playerController));
+		physicsEntity.addSensor(sensor);
+
+		return physicsEntity;
 	}
 	//@formatter:on
 

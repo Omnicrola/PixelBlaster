@@ -1,6 +1,6 @@
 package com.omnicrola.pixelblaster.entity;
 
-import com.omnicrola.pixelblaster.physics.CollisionIds;
+import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.IModifierToken;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.physics.IPhysicsModifier;
@@ -19,7 +19,7 @@ public class BubbleBuilder {
 		final IModifierToken modifierToken = modifier
 				.addCircleShape(1.0f, 0.0f, 0.0f)
 				.density(0.0f)
-				.collisionId(CollisionIds.BUBBLE)
+				.collisionId(CollisionIdentifier.BUBBLE)
 				.modify();
 		return modifierToken;
 	}

@@ -26,16 +26,12 @@ public interface IPhysicsBuilder {
 
 	IPhysicsBuilder limitVelocity(float maxVelocity);
 
-	IPhysicsBuilder rectangleSensor(int sensorId, Rectangle rectangle);
-
 	IPhysicsBuilder setStatic();
 
 	IPhysicsBuilder position(float x, float y);
 
 	public abstract IPhysicsBuilder addCircle(float radius, float x, float y);
 
-	IPhysicsBuilder collisionId(int collisionId);
-
-	IPhysicsBuilder addCircleSensor(float radius, float x, float y, int sensorId);
+	IPhysicsBuilder collisionId(CollisionIdentifier collisionId);
 
 }

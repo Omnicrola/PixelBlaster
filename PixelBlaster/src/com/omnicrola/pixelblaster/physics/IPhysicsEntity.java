@@ -33,4 +33,6 @@ public interface IPhysicsEntity {
 
 	public void dispose();
 
+	public void addSensor(IPhysicsSensor sensor);
+
 }

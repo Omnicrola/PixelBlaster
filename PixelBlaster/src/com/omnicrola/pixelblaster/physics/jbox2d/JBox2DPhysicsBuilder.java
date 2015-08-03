@@ -17,7 +17,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.physics.CollisionGroup;
-import com.omnicrola.pixelblaster.physics.CollisionIds;
+import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.IPhysicsBuilder;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.util.PointSet;
@@ -26,13 +26,12 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 
 	private final World world;
 	private final ArrayList<FixtureDef> fixtures;
-	private final List<FixtureDef> sensors;
 	private final BodyDef bodyDef;
 	private float friction;
 	private float density;
 	private float maximumVelocity;
 	private final JBox2dContactListener contactListener;
-	private int collisionId;
+	private CollisionIdentifier collisionId;
 
 	public JBox2DPhysicsBuilder(World world, JBox2dContactListener contactListener) {
 		this.world = world;
@@ -41,18 +40,15 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 		this.friction = 0.2f;
 		this.density = 1.0f;
 		this.maximumVelocity = 1.0f;
-		this.collisionId = CollisionIds.NONE;
+		this.collisionId = CollisionIdentifier.NONE;
 		this.fixtures = new ArrayList<>();
-		this.sensors = new ArrayList<>();
 	}
 
 	@Override
 	public IPhysicsEntity build() {
 		final Body body = this.world.createBody(this.bodyDef);
 		final List<Fixture> fixtures = createFixtures(body);
-		final List<JBox2dPhysicsSensor> sensors = createSensors(body);
-		final JBox2dPhysicsEntity jBox2dPhysicsEntity = new JBox2dPhysicsEntity(this.contactListener, body, fixtures,
-				sensors);
+		final JBox2dPhysicsEntity jBox2dPhysicsEntity = new JBox2dPhysicsEntity(this.contactListener, body, fixtures);
 		jBox2dPhysicsEntity.setMaximumVelocity(this.maximumVelocity);
 		return jBox2dPhysicsEntity;
 	}
@@ -67,15 +63,6 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 			fixtures.add(fixture);
 		}
 		return fixtures;
-	}
-
-	private List<JBox2dPhysicsSensor> createSensors(Body body) {
-		final ArrayList<JBox2dPhysicsSensor> sensors = new ArrayList<>();
-		for (final FixtureDef fixtureDefinition : this.sensors) {
-			final Fixture fixture = body.createFixture(fixtureDefinition);
-			sensors.add(new JBox2dPhysicsSensor(fixture));
-		}
-		return sensors;
 	}
 
 	@Override
@@ -178,36 +165,12 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 	}
 
 	@Override
-	public IPhysicsBuilder collisionId(int collisionId) {
+	public IPhysicsBuilder collisionId(CollisionIdentifier collisionId) {
 		this.collisionId = collisionId;
 		return this;
 	}
 
-	@Override
-	public IPhysicsBuilder rectangleSensor(int sensorId, Rectangle rectangle) {
-		final PolygonShape polygonShape = convertRectangle(rectangle);
-		final FixtureDef fixtureDef = createFixtureDef();
-		fixtureDef.isSensor = true;
-		fixtureDef.shape = polygonShape;
-		fixtureDef.userData = sensorId;
-		this.sensors.add(fixtureDef);
-		return this;
-	}
-
-	@Override
-	public IPhysicsBuilder addCircleSensor(float radius, float x, float y, int sensorId) {
-		final CircleShape circleShape = new CircleShape();
-		circleShape.m_radius = radius;
-		circleShape.m_p.set(x, y);
-		final FixtureDef fixtureDef = createFixtureDef();
-		fixtureDef.isSensor = true;
-		fixtureDef.shape = circleShape;
-		fixtureDef.userData = sensorId;
-		this.sensors.add(fixtureDef);
-		return this;
-	}
-
-	private PolygonShape convertRectangle(Rectangle r) {
+	public static PolygonShape convertRectangle(Rectangle r) {
 		final PolygonShape polygonShape = new PolygonShape();
 		final Vec2[] vertices = new Vec2[4];
 		vertices[0] = new Vec2(r.getMinX(), r.getMinY());

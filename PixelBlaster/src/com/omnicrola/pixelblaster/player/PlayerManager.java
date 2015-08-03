@@ -11,7 +11,6 @@ import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
 import com.omnicrola.pixelblaster.map.IMapManager;
 import com.omnicrola.pixelblaster.map.MapBounds;
-import com.omnicrola.pixelblaster.physics.CollisionIds;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
@@ -49,12 +48,9 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 	}
 
 	private void buildPlayer(IEntityManager entityManager) throws SlickException {
-		final MultiStateEntity playerEntity = this.playerBuilder.build();
+		final MultiStateEntity playerEntity = this.playerBuilder.build(this.playerController);
 		this.playerModel.setEntity(playerEntity);
 		entityManager.addEntity(playerEntity);
-		final PlayerFootCollisionDetector footDetector = new PlayerFootCollisionDetector(CollisionIds.PLAYER_FOOT,
-				this.playerController);
-		playerEntity.addCollisionDetector(footDetector);
 		respawnPlayer();
 	}
 

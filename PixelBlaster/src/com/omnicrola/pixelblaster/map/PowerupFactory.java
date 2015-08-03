@@ -9,6 +9,8 @@ import org.newdawn.slick.geom.Vector2f;
 import com.omnicrola.pixelblaster.entity.GameEntity;
 import com.omnicrola.pixelblaster.graphics.EntitySprite;
 import com.omnicrola.pixelblaster.graphics.IEntitySprite;
+import com.omnicrola.pixelblaster.physics.CircleSensor;
+import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.util.AssetManager;
@@ -46,13 +48,15 @@ public class PowerupFactory {
 		final float width = powerupData.width;
 		final float x = X_PHYSICS_OFFSET + (width / 2f);
 		final float y = Y_PHYSICS_OFFSET + (powerupData.height / 2f);
-		return physicsManager.getBuilder()
-				.addCircle(width / 2f , x, y)
-				.addCircleSensor(width / 2f, x, y, powerupData.powerupId)
+		final IPhysicsEntity physicsEntity = physicsManager.getBuilder()
 				.setStatic()
 				.density(0)
 				.friction(0)
 				.build();
+
+		final CircleSensor circleSensor = new CircleSensor(width / 2f, x, y, CollisionIdentifier.PLAYER_BODY);
+		physicsEntity.addSensor(circleSensor);
+		return physicsEntity;
 	}
 	//@formatter:on
 

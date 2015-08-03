@@ -8,6 +8,7 @@ import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.dynamics.contacts.Contact;
 
+import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 
 public class JBox2dContactListener implements ContactListener {
@@ -20,15 +21,12 @@ public class JBox2dContactListener implements ContactListener {
 
 	@Override
 	public void beginContact(Contact contact) {
-		final int fixtureIdA = (int) contact.getFixtureA().getUserData();
-		final int fixtureIdB = (int) contact.getFixtureB().getUserData();
+		final CollisionIdentifier id1 = (CollisionIdentifier) contact.getFixtureA().getUserData();
+		final CollisionIdentifier id2 = (CollisionIdentifier) contact.getFixtureB().getUserData();
 		for (final ICollisionDetector contactHandler : this.handlers) {
-			final int sensorId = contactHandler.getSensorId();
-			if (sensorId == fixtureIdA) {
-				contactHandler.collisionOccured(fixtureIdB);
-			}
-			if (sensorId == fixtureIdB) {
-				contactHandler.collisionOccured(fixtureIdA);
+			final CollisionIdentifier targetId = contactHandler.getTarget();
+			if (targetId.equals(id1) || targetId.equals(id2)) {
+				contactHandler.collisionOccured();
 			}
 		}
 	}

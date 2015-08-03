@@ -14,6 +14,8 @@ import com.omnicrola.pixelblaster.entity.IGameEntity;
 import com.omnicrola.pixelblaster.physics.CollisionGroup;
 import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
+import com.omnicrola.pixelblaster.physics.IPhysicsSensor;
+import com.omnicrola.pixelblaster.physics.ISensorInspector;
 
 public class JBox2dPhysicsEntity implements IPhysicsEntity {
 	private static final int NO_COLLISION_MASK = 0x0000;
@@ -21,23 +23,21 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 	private final Body body;
 	private final Vec2 vectorCache;
 	private final List<Fixture> fixtures;
-	private final List<JBox2dPhysicsSensor> sensors;
 	private final JBox2dContactListener contactListener;
 	private final Vector2f vector2f;
 	private float maximumVelocity;
 	private HashMap<Fixture, Filter> filterMap;
-
 	private boolean disabled;
+	private final ISensorInspector sensorInspector;
 
-	public JBox2dPhysicsEntity(JBox2dContactListener contactHandler, Body body, List<Fixture> fixtures,
-			List<JBox2dPhysicsSensor> sensors) {
+	public JBox2dPhysicsEntity(JBox2dContactListener contactHandler, Body body, List<Fixture> fixtures) {
 		this.contactListener = contactHandler;
 		this.body = body;
 		this.fixtures = fixtures;
-		this.sensors = sensors;
 		this.maximumVelocity = 1.0f;
 		this.vectorCache = new Vec2();
 		this.vector2f = new Vector2f();
+		this.sensorInspector = new JBox2DSensorInspector(body);
 		buildFilterMap();
 	}
 
@@ -96,9 +96,7 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 
 	@Override
 	public void updateEntity(IGameEntity gameEntity, float delta) {
-		if (this.disabled) {
-			// counterGravity(gameEntity);
-		} else {
+		if (!this.disabled) {
 			limitLinearVelocity();
 			updatePosition(gameEntity);
 		}
@@ -151,6 +149,12 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 			fixture.m_filter.maskBits = this.filterMap.get(fixture).maskBits;
 			fixture.m_filter.groupIndex = CollisionGroup.WORLD;
 		}
+	}
+
+	@Override
+	public void addSensor(IPhysicsSensor sensor) {
+		sensor.identify(this.sensorInspector);
+		this.contactListener.addHandler(new JBox2DSensorHandler(sensor));
 	}
 
 	public Fixture addFixture(FixtureDef fixtureDef) {

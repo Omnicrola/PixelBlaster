@@ -1,6 +1,6 @@
 package com.omnicrola.pixelblaster.map;
 
-import com.omnicrola.pixelblaster.physics.CollisionIds;
+import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.util.Coordinate;
 
 @SuppressWarnings("unused")
@@ -42,19 +42,19 @@ public class MapCreator {
 
 	private void addPowerups() {
 		for (int i = 0; i < 20; i++) {
-			this.mapData.powerups.add(bubblePowerup(10.5f + i, 3f));
+			this.mapData.powerups.add(bubblePowerup(10.5f + i, 3.75f));
 		}
 	}
 
 	private PowerupData bubblePowerup(float x, float y) {
 		final PowerupData powerupData = new PowerupData();
-		final float size = (float) Math.random();
+		final float size = 0.5f;
 		powerupData.width = size;
 		powerupData.height = size;
 		powerupData.image = "bubble.png";
 		powerupData.x = x;
 		powerupData.y = y;
-		powerupData.powerupId = CollisionIds.POWERUP_BUBBLE;
+		powerupData.powerupId = CollisionIdentifier.NONE;
 		return powerupData;
 	}
 

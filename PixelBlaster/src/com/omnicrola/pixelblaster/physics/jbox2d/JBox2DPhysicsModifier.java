@@ -4,6 +4,7 @@ import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 
+import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.IModifierToken;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsModifier;
@@ -56,7 +57,7 @@ public class JBox2DPhysicsModifier implements IPhysicsModifier {
 	}
 
 	@Override
-	public IPhysicsModifier collisionId(int id) {
+	public IPhysicsModifier collisionId(CollisionIdentifier id) {
 		this.fixtureDef.userData = id;
 		return this;
 	}
