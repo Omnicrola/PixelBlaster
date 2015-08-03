@@ -5,11 +5,11 @@ import java.util.List;
 
 public abstract class PhysicsSensor implements IPhysicsSensor {
 
-	protected final CollisionIdentifier targetId;
 	private final List<IPhysicsContactHandler> contacthandlers;
+	private final CollisionPair collisionPair;
 
-	public PhysicsSensor(CollisionIdentifier targetId) {
-		this.targetId = targetId;
+	public PhysicsSensor(CollisionPair collisionPair) {
+		this.collisionPair = collisionPair;
 		this.contacthandlers = new ArrayList<>();
 	}
 
@@ -25,7 +25,7 @@ public abstract class PhysicsSensor implements IPhysicsSensor {
 	}
 
 	@Override
-	public CollisionIdentifier getTarget() {
-		return this.targetId;
+	public CollisionPair getCollisionPair() {
+		return this.collisionPair;
 	}
 }

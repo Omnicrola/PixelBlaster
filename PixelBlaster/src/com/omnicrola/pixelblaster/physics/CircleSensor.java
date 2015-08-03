@@ -6,8 +6,8 @@ public class CircleSensor extends PhysicsSensor {
 	private final float x;
 	private final float y;
 
-	public CircleSensor(float radius, float x, float y, CollisionIdentifier target) {
-		super(target);
+	public CircleSensor(float radius, float x, float y, CollisionPair collisionPair) {
+		super(collisionPair);
 		this.radius = radius;
 		this.x = x;
 		this.y = y;

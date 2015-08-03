@@ -17,6 +17,6 @@ public class GameSettings {
 
 	public static final String MAP_FILE_PATH = "assets/Levels/";
 	public static final float BUBBLE_POWER_REGEN_RATE = 0.05f;
-	public static final float BUBBLE_POWER_USE_RATE = 0.15f;
+	public static final float BUBBLE_POWER_USE_RATE = 0.25f;
 
 }

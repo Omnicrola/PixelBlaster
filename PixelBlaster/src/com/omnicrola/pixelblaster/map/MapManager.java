@@ -8,6 +8,7 @@ import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
+import com.omnicrola.pixelblaster.player.IPlayerManager;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class MapManager implements IGameSubsystem, IMapManager {
@@ -33,7 +34,8 @@ public class MapManager implements IGameSubsystem, IMapManager {
 			final AssetManager assetManager = context.getAssetManager();
 			final IPhysicsManager physicsManager = context.getSubsystem(IPhysicsManager.class);
 			final IEntityManager entityManager = context.getSubsystem(IEntityManager.class);
-			final MapTools mapTools = new MapTools(physicsManager, entityManager, assetManager);
+			final IPlayerManager playerManager = context.getSubsystem(IPlayerManager.class);
+			final MapTools mapTools = new MapTools(physicsManager, entityManager, assetManager, playerManager);
 
 			this.mapLoader = new MapLoader(assetManager, new MapTileLoader(assetManager));
 			loadMapForCurrentLevel(mapTools);

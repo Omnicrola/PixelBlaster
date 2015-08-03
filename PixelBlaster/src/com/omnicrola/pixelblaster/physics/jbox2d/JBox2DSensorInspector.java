@@ -6,7 +6,6 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.FixtureDef;
 
 import com.omnicrola.pixelblaster.physics.CircleSensor;
-import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.ISensorInspector;
 import com.omnicrola.pixelblaster.physics.RectangleSensor;
 
@@ -25,7 +24,7 @@ public class JBox2DSensorInspector implements ISensorInspector {
 		final FixtureDef sensorDef = new FixtureDef();
 		sensorDef.isSensor = true;
 		sensorDef.shape = circleShape;
-		sensorDef.userData = CollisionIdentifier.SENSOR;
+		sensorDef.userData = circleSensor.getCollisionPair().getPrimary();
 		this.body.createFixture(sensorDef);
 	}
 
@@ -35,7 +34,7 @@ public class JBox2DSensorInspector implements ISensorInspector {
 		final FixtureDef sensorDef = new FixtureDef();
 		sensorDef.isSensor = true;
 		sensorDef.shape = polygonShape;
-		sensorDef.userData = CollisionIdentifier.SENSOR;
+		sensorDef.userData = rectangleSensor.getCollisionPair().getPrimary();
 		this.body.createFixture(sensorDef);
 	}
 

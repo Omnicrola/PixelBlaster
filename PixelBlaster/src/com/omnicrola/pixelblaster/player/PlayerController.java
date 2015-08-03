@@ -141,14 +141,14 @@ public class PlayerController {
 		}
 	}
 
-	private void decreaseBubblePower(float decreaseAmount) {
+	public void decreaseBubblePower(float decreaseAmount) {
 		final float bubblePower = this.playerModel.getBubblePower();
 		if (bubblePower > 0) {
 			this.playerModel.setBubblePower(bubblePower - decreaseAmount);
 		}
 	}
 
-	private void increaseBubblePower(float incrementAmount) {
+	public void increaseBubblePower(float incrementAmount) {
 		final float bubblePower = this.playerModel.getBubblePower();
 		final float maxBubblePower = this.playerModel.getMaxBubblePower();
 		if (bubblePower < maxBubblePower) {

@@ -6,8 +6,8 @@ public class RectangleSensor extends PhysicsSensor {
 
 	private final Rectangle rectangle;
 
-	public RectangleSensor(Rectangle rectangle, CollisionIdentifier target) {
-		super(target);
+	public RectangleSensor(Rectangle rectangle, CollisionPair collisionPair) {
+		super(collisionPair);
 		this.rectangle = rectangle;
 	}
 

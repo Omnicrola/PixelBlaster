@@ -1,6 +1,6 @@
 package com.omnicrola.pixelblaster.physics.jbox2d;
 
-import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
+import com.omnicrola.pixelblaster.physics.CollisionPair;
 import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 import com.omnicrola.pixelblaster.physics.IPhysicsSensor;
 
@@ -13,8 +13,8 @@ public class JBox2DSensorHandler implements ICollisionDetector {
 	}
 
 	@Override
-	public CollisionIdentifier getTarget() {
-		return this.sensor.getTarget();
+	public CollisionPair getCollisionPair() {
+		return this.sensor.getCollisionPair();
 	}
 
 	@Override

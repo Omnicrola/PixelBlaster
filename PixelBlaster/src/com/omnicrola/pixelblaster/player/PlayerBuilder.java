@@ -13,6 +13,7 @@ import com.omnicrola.pixelblaster.graphics.ISpriteState;
 import com.omnicrola.pixelblaster.graphics.MultiStateSprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
 import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
+import com.omnicrola.pixelblaster.physics.CollisionPair;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.physics.RectangleSensor;
@@ -101,7 +102,7 @@ public class PlayerBuilder {
 				.build();
 
 		final Rectangle footShape = new Rectangle(-sensorWidth, bottomOfCapsule, sensorWidth * 2f, 0.02f);
-		final RectangleSensor sensor = new RectangleSensor(footShape, CollisionIdentifier.MAP_TILE);
+		final RectangleSensor sensor = new RectangleSensor(footShape, new CollisionPair(CollisionIdentifier.PLAYER_FOOT, CollisionIdentifier.MAP_TILE));
 		sensor.addContactHandler(new ClearPlayerJumpContactHandler(playerController));
 		physicsEntity.addSensor(sensor);
 

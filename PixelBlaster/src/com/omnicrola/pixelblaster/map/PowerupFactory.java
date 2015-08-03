@@ -11,8 +11,9 @@ import com.omnicrola.pixelblaster.graphics.EntitySprite;
 import com.omnicrola.pixelblaster.graphics.IEntitySprite;
 import com.omnicrola.pixelblaster.physics.CircleSensor;
 import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
+import com.omnicrola.pixelblaster.physics.CollisionPair;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
-import com.omnicrola.pixelblaster.physics.IPhysicsManager;
+import com.omnicrola.pixelblaster.powerups.BubbleEnergyPowerupContactHandler;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class PowerupFactory {
@@ -28,10 +29,10 @@ public class PowerupFactory {
 	}
 
 	private void createPowerup(PowerupData powerupData, float tileSize, MapTools mapTools) {
-		final IPhysicsManager physicsManager = mapTools.getPhysicsManager();
-		final IPhysicsEntity physics = buildPhysics(powerupData, physicsManager);
+		final IPhysicsEntity physics = buildPhysics(powerupData, mapTools);
 		final IEntitySprite sprite = buildSprite(powerupData, mapTools.getAssetManager());
 		final GameEntity gameEntity = new GameEntity(sprite, physics);
+		addContactSensor(powerupData, gameEntity, physics, mapTools);
 
 		adjustPosition(powerupData, gameEntity, tileSize);
 		mapTools.getEntityManager().addEntity(gameEntity);
@@ -43,22 +44,32 @@ public class PowerupFactory {
 		gameEntity.setPosition(new Vector2f(x, y));
 	}
 
-	//@formatter:off
-	private IPhysicsEntity buildPhysics(PowerupData powerupData, IPhysicsManager physicsManager) {
-		final float width = powerupData.width;
-		final float x = X_PHYSICS_OFFSET + (width / 2f);
-		final float y = Y_PHYSICS_OFFSET + (powerupData.height / 2f);
-		final IPhysicsEntity physicsEntity = physicsManager.getBuilder()
+	private IPhysicsEntity buildPhysics(PowerupData powerupData, MapTools mapTools) {
+		//@formatter:off
+		final IPhysicsEntity physicsEntity = mapTools.getPhysicsManager().getBuilder()
 				.setStatic()
 				.density(0)
 				.friction(0)
 				.build();
+		//@formatter:on
 
-		final CircleSensor circleSensor = new CircleSensor(width / 2f, x, y, CollisionIdentifier.PLAYER_BODY);
-		physicsEntity.addSensor(circleSensor);
 		return physicsEntity;
 	}
-	//@formatter:on
+
+	private void addContactSensor(PowerupData powerupData, GameEntity gameEntity, IPhysicsEntity physicsEntity,
+			MapTools mapTools) {
+		final float width = powerupData.width;
+		final float x = X_PHYSICS_OFFSET + (width / 2f);
+		final float y = Y_PHYSICS_OFFSET + (powerupData.height / 2f);
+
+		final CollisionPair collisionPair = new CollisionPair(CollisionIdentifier.POWERUP,
+				CollisionIdentifier.PLAYER_BODY);
+		final CircleSensor circleSensor = new CircleSensor(width / 2f, x, y, collisionPair);
+		final BubbleEnergyPowerupContactHandler contactHandler = new BubbleEnergyPowerupContactHandler(gameEntity,
+				mapTools.getPlayerManager());
+		circleSensor.addContactHandler(contactHandler);
+		physicsEntity.addSensor(circleSensor);
+	}
 
 	private IEntitySprite buildSprite(PowerupData powerupData, AssetManager assetManager) {
 		final Image image = assetManager.getImage(POWERUP + powerupData.image);

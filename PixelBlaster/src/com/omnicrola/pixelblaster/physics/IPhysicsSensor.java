@@ -4,7 +4,7 @@ public interface IPhysicsSensor {
 
 	public void identify(ISensorInspector inspector);
 
-	public CollisionIdentifier getTarget();
-
 	public void collisionOccured();
+
+	public CollisionPair getCollisionPair();
 }
