@@ -1,5 +1,6 @@
 package com.omnicrola.pixelblaster.map;
 
+import com.omnicrola.pixelblaster.physics.CollisionIds;
 import com.omnicrola.pixelblaster.util.Coordinate;
 
 @SuppressWarnings("unused")
@@ -29,13 +30,32 @@ public class MapCreator {
 	private void generate() {
 		this.mapData.mapHeight = 11;
 		this.mapData.mapWidth = 128;
-		this.mapData.mapBounds = new MapBounds(5, 0, 11, 128);
+		this.mapData.mapBounds = new MapBounds(0, 0, 100, 128);
 		this.mapData.playerSpawn = new Coordinate(8, 4);
 		fillArea(0, 5, 127, 10, CENTER);
 		fillArea(0, 5, 127, 5, FULL_MID);
-		fillArea(6, 0, 6, 10, CENTER_ROUND);
-		fillArea(20, 0, 20, 10, CENTER_ROUND);
+		// fillArea(6, 0, 6, 10, CENTER_ROUND);
+		// fillArea(20, 4, 20, 10, CENTER_ROUND);
+		addPowerups();
 
+	}
+
+	private void addPowerups() {
+		for (int i = 0; i < 20; i++) {
+			this.mapData.powerups.add(bubblePowerup(10.5f + i, 3f));
+		}
+	}
+
+	private PowerupData bubblePowerup(float x, float y) {
+		final PowerupData powerupData = new PowerupData();
+		final float size = (float) Math.random();
+		powerupData.width = size;
+		powerupData.height = size;
+		powerupData.image = "bubble.png";
+		powerupData.x = x;
+		powerupData.y = y;
+		powerupData.powerupId = CollisionIds.POWERUP_BUBBLE;
+		return powerupData;
 	}
 
 	private void fillArea(int x1, int y1, int x2, int y2, int tileIndex) {

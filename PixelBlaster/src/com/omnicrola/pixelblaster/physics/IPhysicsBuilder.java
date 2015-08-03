@@ -36,4 +36,6 @@ public interface IPhysicsBuilder {
 
 	IPhysicsBuilder collisionId(int collisionId);
 
+	IPhysicsBuilder addCircleSensor(float radius, float x, float y, int sensorId);
+
 }

@@ -3,7 +3,6 @@ package com.omnicrola.pixelblaster.map;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
-import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 
 public interface ILevelMap {
 
@@ -13,6 +12,6 @@ public interface ILevelMap {
 
 	MapBounds getMapBounds();
 
-	void loadPhysics(IPhysicsManager physicsManager);
+	void load(MapTools mapTools);
 
 }

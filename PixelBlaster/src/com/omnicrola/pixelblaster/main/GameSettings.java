@@ -2,8 +2,8 @@ package com.omnicrola.pixelblaster.main;
 
 public class GameSettings {
 
-	public static boolean DEBUG = false;
-	public static boolean DEBUG_PHYSICS = false;
+	public static boolean DEBUG = true;
+	public static boolean DEBUG_PHYSICS = true;
 
 	public static final float GRAVITY_ACCELLERATION = 0.01f;
 

@@ -28,8 +28,6 @@ public class EntityManager implements IGameSubsystem, IEntityManager {
 
 	@Override
 	public void init(IGameContext context) {
-		this.entities.clear();
-		this.entityCopies.clear();
 	}
 
 	@Override

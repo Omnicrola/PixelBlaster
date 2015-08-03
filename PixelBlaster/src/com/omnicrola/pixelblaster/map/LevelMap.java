@@ -21,12 +21,14 @@ public class LevelMap implements ILevelMap {
 	private final List<IPhysicsEntity> physicsEntities;
 	private final GameBackground background;
 	private final XmlMapData mapData;
+	private final PowerupFactory powerupFactory;
 
 	public LevelMap(float tileSize, MapTileDataSet tileData, GameBackground background, XmlMapData mapData) {
 		this.tileSize = tileSize;
 		this.tileData = tileData;
 		this.background = background;
 		this.mapData = mapData;
+		this.powerupFactory = new PowerupFactory();
 		this.physicsEntities = new ArrayList<>();
 
 		mapData.mapBounds.setTileSize(tileSize);
@@ -39,9 +41,11 @@ public class LevelMap implements ILevelMap {
 	}
 
 	@Override
-	public void loadPhysics(IPhysicsManager physicsManager) {
+	public void load(MapTools mapTools) {
+		final IPhysicsManager physicsManager = mapTools.getPhysicsManager();
 		this.tileData.allButAir((x, y, mapTile) -> createPhysics(physicsManager, mapTile.getShape(), x
 				* LevelMap.this.tileSize, y * LevelMap.this.tileSize));
+		this.powerupFactory.buildAll(this.tileSize, mapTools, this.mapData.powerups);
 	}
 
 	@Override

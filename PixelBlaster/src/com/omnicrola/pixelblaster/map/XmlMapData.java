@@ -34,4 +34,8 @@ public class XmlMapData {
 	@XmlElement(name = "playerSpawn")
 	public Coordinate playerSpawn;
 
+	@XmlElementWrapper
+	@XmlElement(name = "powerups")
+	public List<PowerupData> powerups = new ArrayList<>();
+
 }

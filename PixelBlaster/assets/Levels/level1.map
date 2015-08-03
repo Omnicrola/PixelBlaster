@@ -899,31 +899,171 @@
         <MapTile x="125" y="5" index="17"/>
         <MapTile x="126" y="5" index="17"/>
         <MapTile x="127" y="5" index="17"/>
-        <MapTile x="6" y="0" index="3"/>
-        <MapTile x="6" y="1" index="3"/>
-        <MapTile x="6" y="2" index="3"/>
-        <MapTile x="6" y="3" index="3"/>
-        <MapTile x="6" y="4" index="3"/>
-        <MapTile x="6" y="5" index="3"/>
-        <MapTile x="6" y="6" index="3"/>
-        <MapTile x="6" y="7" index="3"/>
-        <MapTile x="6" y="8" index="3"/>
-        <MapTile x="6" y="9" index="3"/>
-        <MapTile x="6" y="10" index="3"/>
-        <MapTile x="20" y="0" index="3"/>
-        <MapTile x="20" y="1" index="3"/>
-        <MapTile x="20" y="2" index="3"/>
-        <MapTile x="20" y="3" index="3"/>
-        <MapTile x="20" y="4" index="3"/>
-        <MapTile x="20" y="5" index="3"/>
-        <MapTile x="20" y="6" index="3"/>
-        <MapTile x="20" y="7" index="3"/>
-        <MapTile x="20" y="8" index="3"/>
-        <MapTile x="20" y="9" index="3"/>
-        <MapTile x="20" y="10" index="3"/>
     </mapTiles>
     <mapWidth>128</mapWidth>
     <mapHeight>11</mapHeight>
-    <MapBounds minX="5" minY="0" maxX="11" maxY="128"/>
+    <MapBounds minX="0" minY="0" maxX="100" maxY="128"/>
     <playerSpawn x="8" y="4"/>
+    <powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.7968385</width>
+            <height>0.7968385</height>
+            <x>10.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.6622261</width>
+            <height>0.6622261</height>
+            <x>11.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.23323737</width>
+            <height>0.23323737</height>
+            <x>12.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.80714655</width>
+            <height>0.80714655</height>
+            <x>13.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.43697694</width>
+            <height>0.43697694</height>
+            <x>14.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.11866438</width>
+            <height>0.11866438</height>
+            <x>15.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.23561902</width>
+            <height>0.23561902</height>
+            <x>16.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.15599209</width>
+            <height>0.15599209</height>
+            <x>17.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.9694708</width>
+            <height>0.9694708</height>
+            <x>18.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.837579</width>
+            <height>0.837579</height>
+            <x>19.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.041632883</width>
+            <height>0.041632883</height>
+            <x>20.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.0128527135</width>
+            <height>0.0128527135</height>
+            <x>21.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.41183114</width>
+            <height>0.41183114</height>
+            <x>22.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.81083566</width>
+            <height>0.81083566</height>
+            <x>23.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.80564624</width>
+            <height>0.80564624</height>
+            <x>24.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.6177807</width>
+            <height>0.6177807</height>
+            <x>25.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.10417945</width>
+            <height>0.10417945</height>
+            <x>26.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.5115303</width>
+            <height>0.5115303</height>
+            <x>27.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.24455401</width>
+            <height>0.24455401</height>
+            <x>28.5</x>
+            <y>3.0</y>
+        </powerups>
+        <powerups>
+            <powerupId>1001</powerupId>
+            <image>bubble.png</image>
+            <width>0.1653949</width>
+            <height>0.1653949</height>
+            <x>29.5</x>
+            <y>3.0</y>
+        </powerups>
+    </powerups>
 </Map>

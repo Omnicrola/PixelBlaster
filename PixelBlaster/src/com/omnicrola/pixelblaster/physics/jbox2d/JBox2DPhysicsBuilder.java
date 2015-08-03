@@ -194,6 +194,19 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 		return this;
 	}
 
+	@Override
+	public IPhysicsBuilder addCircleSensor(float radius, float x, float y, int sensorId) {
+		final CircleShape circleShape = new CircleShape();
+		circleShape.m_radius = radius;
+		circleShape.m_p.set(x, y);
+		final FixtureDef fixtureDef = createFixtureDef();
+		fixtureDef.isSensor = true;
+		fixtureDef.shape = circleShape;
+		fixtureDef.userData = sensorId;
+		this.sensors.add(fixtureDef);
+		return this;
+	}
+
 	private PolygonShape convertRectangle(Rectangle r) {
 		final PolygonShape polygonShape = new PolygonShape();
 		final Vec2[] vertices = new Vec2[4];
