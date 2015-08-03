@@ -16,8 +16,10 @@ public class BubbleEnergyPowerupContactHandler implements IPhysicsContactHandler
 
 	@Override
 	public void contactOccured() {
-		this.playerManager.getPlayerController().increaseBubblePower(1.0f);
-		this.gameEntity.kill();
+		if (this.gameEntity.isAlive()) {
+			this.playerManager.getPlayerController().increaseBubblePower(1.0f);
+			this.gameEntity.kill();
+		}
 	}
 
 }

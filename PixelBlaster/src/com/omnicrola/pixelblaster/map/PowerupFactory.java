@@ -62,7 +62,7 @@ public class PowerupFactory {
 		final float x = X_PHYSICS_OFFSET + (width / 2f);
 		final float y = Y_PHYSICS_OFFSET + (powerupData.height / 2f);
 
-		final CollisionPair collisionPair = new CollisionPair(CollisionIdentifier.POWERUP,
+		final CollisionPair collisionPair = new CollisionPair(new CollisionIdentifier(),
 				CollisionIdentifier.PLAYER_BODY);
 		final CircleSensor circleSensor = new CircleSensor(width / 2f, x, y, collisionPair);
 		final BubbleEnergyPowerupContactHandler contactHandler = new BubbleEnergyPowerupContactHandler(gameEntity,

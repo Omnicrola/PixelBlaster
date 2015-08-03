@@ -11,7 +11,7 @@ public class PlayerModel {
 	private final float maxBubblePower;
 
 	public PlayerModel() {
-		this.maxBubblePower = 100.0f;
+		this.maxBubblePower = 10.0f;
 		this.bubblePower = 5.0f;
 		this.isBubbled = false;
 	}
