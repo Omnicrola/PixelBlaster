@@ -66,7 +66,7 @@ public class PowerupFactory {
 				CollisionIdentifier.PLAYER_BODY);
 		final CircleSensor circleSensor = new CircleSensor(width / 2f, x, y, collisionPair);
 		final BubbleEnergyPowerupContactHandler contactHandler = new BubbleEnergyPowerupContactHandler(gameEntity,
-				mapTools.getPlayerManager());
+				mapTools.getPlayerManager(), mapTools.getAudioManager().getAudioController());
 		circleSensor.addContactHandler(contactHandler);
 		physicsEntity.addSensor(circleSensor);
 	}

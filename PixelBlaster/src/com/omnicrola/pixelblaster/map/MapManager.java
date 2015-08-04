@@ -2,13 +2,10 @@ package com.omnicrola.pixelblaster.map;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.entity.IEntityManager;
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
-import com.omnicrola.pixelblaster.physics.IPhysicsManager;
-import com.omnicrola.pixelblaster.player.IPlayerManager;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class MapManager implements IGameSubsystem, IMapManager {
@@ -32,10 +29,7 @@ public class MapManager implements IGameSubsystem, IMapManager {
 	public void init(IGameContext context) {
 		if (!this.initialized) {
 			final AssetManager assetManager = context.getAssetManager();
-			final IPhysicsManager physicsManager = context.getSubsystem(IPhysicsManager.class);
-			final IEntityManager entityManager = context.getSubsystem(IEntityManager.class);
-			final IPlayerManager playerManager = context.getSubsystem(IPlayerManager.class);
-			final MapTools mapTools = new MapTools(physicsManager, entityManager, assetManager, playerManager);
+			final MapTools mapTools = new MapTools(context);
 
 			this.mapLoader = new MapLoader(assetManager, new MapTileLoader(assetManager));
 			loadMapForCurrentLevel(mapTools);
