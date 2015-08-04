@@ -39,7 +39,7 @@ public class Camera {
 			this.xOffset = maxX - this.viewportWidth + RIGHT_HORIZONTAL_GUTTER;
 		}
 		if (minY < frameTop()) {
-			this.yOffset = minY - VERTICAL_GUTTER;
+			this.yOffset = minY + VERTICAL_GUTTER;
 		}
 		if (maxY > frameBottom()) {
 			this.yOffset += GameSettings.CAMERA_SCROLL_SPEED;
@@ -47,11 +47,11 @@ public class Camera {
 	}
 
 	private float frameTop() {
-		return this.yOffset + VERTICAL_GUTTER;
+		return this.yOffset - VERTICAL_GUTTER;
 	}
 
 	private float frameBottom() {
-		return this.yOffset + this.viewportHeight - VERTICAL_GUTTER;
+		return this.yOffset + this.viewportHeight + VERTICAL_GUTTER;
 	}
 
 	private float frameLeft() {
