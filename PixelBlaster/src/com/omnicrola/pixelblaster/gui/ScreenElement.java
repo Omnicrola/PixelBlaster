@@ -54,11 +54,15 @@ public class ScreenElement implements IScreenElement {
 
 	@Override
 	public void render(IGraphicsWrapper graphics, int offX, int offY) {
+		renderSelf(graphics, offX, offY);
+		renderChildren(graphics, offX, offY);
+	}
+
+	protected void renderSelf(IGraphicsWrapper graphics, int offX, int offY) {
 		if (!this.isTransparent) {
 			graphics.setColor(this.backgroundColor);
 			graphics.drawRect(this.x + offX, this.y + offY, this.width, this.height);
 		}
-		renderChildren(graphics, offX, offY);
 	}
 
 	protected void renderChildren(IGraphicsWrapper graphics, int offX, int offY) {
