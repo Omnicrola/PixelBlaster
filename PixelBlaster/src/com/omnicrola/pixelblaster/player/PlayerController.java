@@ -2,6 +2,8 @@ package com.omnicrola.pixelblaster.player;
 
 import org.newdawn.slick.geom.Vector2f;
 
+import com.omnicrola.pixelblaster.audio.AudioFx;
+import com.omnicrola.pixelblaster.audio.IAudioManager;
 import com.omnicrola.pixelblaster.entity.BubbleBuilder;
 import com.omnicrola.pixelblaster.graphics.EntitySprite.Facing;
 import com.omnicrola.pixelblaster.main.GameSettings;
@@ -13,9 +15,11 @@ public class PlayerController {
 	private boolean isInMidAir;
 	private boolean hasDoubleJumped;
 	private final BubbleBuilder bubbleBuilder;
+	private final IAudioManager audioManager;
 
-	public PlayerController(PlayerModel playerModel, BubbleBuilder bubbleBuilder) {
+	public PlayerController(PlayerModel playerModel, IAudioManager audioManager, BubbleBuilder bubbleBuilder) {
 		this.playerModel = playerModel;
+		this.audioManager = audioManager;
 		this.bubbleBuilder = bubbleBuilder;
 		this.cacheVector = new Vector2f();
 
@@ -80,6 +84,7 @@ public class PlayerController {
 			if (this.isInMidAir && hasNotDoubleJumped) {
 				this.hasDoubleJumped = true;
 			}
+			this.audioManager.getAudioController().playSound(AudioFx.JUMP, 0.25f);
 			applyImpulse(0, -GameSettings.PLAYER_JUMP_SPEED);
 			addPlayerState(PlayerState.JUMP);
 		}

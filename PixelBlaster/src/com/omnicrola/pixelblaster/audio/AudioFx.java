@@ -1,7 +1,7 @@
 package com.omnicrola.pixelblaster.audio;
 
 public enum AudioFx implements IAudioResource {
-	SPLASH("drip2.ogg");
+	SPLASH("drip2.ogg"), JUMP("jump.ogg");
 
 	private final String filename;
 

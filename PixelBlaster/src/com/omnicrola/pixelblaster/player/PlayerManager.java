@@ -3,6 +3,7 @@ package com.omnicrola.pixelblaster.player;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
+import com.omnicrola.pixelblaster.audio.IAudioManager;
 import com.omnicrola.pixelblaster.entity.BubbleBuilder;
 import com.omnicrola.pixelblaster.entity.IEntityManager;
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
@@ -44,7 +45,8 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 		final AssetManager assetManager = this.context.getAssetManager();
 		final IPhysicsManager physicsManager = this.context.getSubsystem(IPhysicsManager.class);
 		this.playerBuilder = new PlayerBuilder(assetManager, physicsManager);
-		this.playerController = new PlayerController(this.playerModel, new BubbleBuilder(physicsManager));
+		final IAudioManager audioManager = this.context.getSubsystem(IAudioManager.class);
+		this.playerController = new PlayerController(this.playerModel, audioManager, new BubbleBuilder(physicsManager));
 	}
 
 	private void buildPlayer(IEntityManager entityManager) throws SlickException {

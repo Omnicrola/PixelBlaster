@@ -11,6 +11,7 @@ public class AudioLibraryLoader {
 	public AudioLibrary load(AssetManager assetManager) {
 		final HashMap<IAudioResource, ISound> soundMap = new HashMap<>();
 		addSound(AudioFx.SPLASH, assetManager, soundMap);
+		addSound(AudioFx.JUMP, assetManager, soundMap);
 		return new AudioLibrary(soundMap);
 	}
 
