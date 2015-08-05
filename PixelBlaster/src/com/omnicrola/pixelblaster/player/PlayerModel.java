@@ -9,11 +9,13 @@ public class PlayerModel {
 	private IModifierToken modifierToken;
 	private float bubblePower;
 	private final float maxBubblePower;
+	private int score;
 
 	public PlayerModel() {
 		this.maxBubblePower = 10.0f;
 		this.bubblePower = 5.0f;
 		this.isBubbled = false;
+		this.score = 100;
 	}
 
 	public void setEntity(MultiStateEntity playerEntity) {
@@ -48,6 +50,14 @@ public class PlayerModel {
 
 	public void setBubblePower(float power) {
 		this.bubblePower = power;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getScore() {
+		return this.score;
 	}
 
 }

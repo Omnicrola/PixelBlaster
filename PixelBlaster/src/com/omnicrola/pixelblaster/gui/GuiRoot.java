@@ -4,11 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
-import com.omnicrola.pixelblaster.main.IGameContext;
-import com.omnicrola.pixelblaster.player.IPlayerManager;
-import com.omnicrola.pixelblaster.player.PlayerController;
 
-public class GuiRoot {
+public class GuiRoot implements IUserInterface {
 	private final BubbleMeter bubbleMeter;
 	private final GLabel scoreLabel;
 	private final List<ScreenElement> screenElements;
@@ -19,24 +16,17 @@ public class GuiRoot {
 		this.screenElements = Arrays.asList(bubbleMeter, scoreLabel);
 	}
 
-	public void update(IGameContext gameContext) {
-		updateBubbleMeter(gameContext);
-		updateScoreMeter();
+	@Override
+	public void setBubbleMeter(float percentage) {
+		this.bubbleMeter.setPercentageFull(percentage);
 	}
 
-	private void updateScoreMeter() {
-		final int newScore = 100;
-		this.scoreLabel.setText("Score: " + newScore);
+	@Override
+	public void setScore(int score) {
+		this.scoreLabel.setText("Score: " + score);
 	}
 
-	private void updateBubbleMeter(IGameContext gameContext) {
-		final PlayerController playerModel = gameContext.getSubsystem(IPlayerManager.class).getPlayerController();
-		final float power = playerModel.getBubblePower();
-		final float maxPower = playerModel.getMaxBubblePower();
-
-		this.bubbleMeter.setPercentageFull(power / maxPower);
-	}
-
+	@Override
 	public void render(IGraphicsWrapper guiGraphics) {
 		for (final ScreenElement screenElement : this.screenElements) {
 			screenElement.render(guiGraphics, 0, 0);

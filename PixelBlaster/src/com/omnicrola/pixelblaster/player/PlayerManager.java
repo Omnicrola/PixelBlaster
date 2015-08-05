@@ -46,7 +46,8 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 		final IPhysicsManager physicsManager = this.context.getSubsystem(IPhysicsManager.class);
 		this.playerBuilder = new PlayerBuilder(assetManager, physicsManager);
 		final IAudioManager audioManager = this.context.getSubsystem(IAudioManager.class);
-		this.playerController = new PlayerController(this.playerModel, audioManager, new BubbleBuilder(physicsManager));
+		this.playerController = new PlayerController(this.playerModel, audioManager, new BubbleBuilder(physicsManager),
+				new ScoreKeeper(2));
 	}
 
 	private void buildPlayer(IEntityManager entityManager) throws SlickException {

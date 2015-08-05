@@ -16,11 +16,14 @@ public class PlayerController {
 	private boolean hasDoubleJumped;
 	private final BubbleBuilder bubbleBuilder;
 	private final IAudioManager audioManager;
+	private final ScoreKeeper scoreKeeper;
 
-	public PlayerController(PlayerModel playerModel, IAudioManager audioManager, BubbleBuilder bubbleBuilder) {
+	public PlayerController(PlayerModel playerModel, IAudioManager audioManager, BubbleBuilder bubbleBuilder,
+			ScoreKeeper scoreKeeper) {
 		this.playerModel = playerModel;
 		this.audioManager = audioManager;
 		this.bubbleBuilder = bubbleBuilder;
+		this.scoreKeeper = scoreKeeper;
 		this.cacheVector = new Vector2f();
 
 	}
@@ -128,7 +131,13 @@ public class PlayerController {
 
 	public void update(float delta) {
 		adjustBubblePower();
+		updateScore(delta);
 		checkIfBubbleShouldCollapse();
+	}
+
+	private void updateScore(float delta) {
+		final int newScore = this.scoreKeeper.updateScore(this.playerModel.getScore(), delta);
+		this.playerModel.setScore(newScore);
 	}
 
 	private void checkIfBubbleShouldCollapse() {
@@ -159,6 +168,10 @@ public class PlayerController {
 		if (bubblePower < maxBubblePower) {
 			this.playerModel.setBubblePower(bubblePower + incrementAmount);
 		}
+	}
+
+	public int getScore() {
+		return this.playerModel.getScore();
 	}
 
 }

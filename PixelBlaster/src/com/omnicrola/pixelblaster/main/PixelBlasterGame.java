@@ -7,6 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import com.omnicrola.pixelblaster.audio.AudioLibraryLoader;
 import com.omnicrola.pixelblaster.audio.AudioManager;
 import com.omnicrola.pixelblaster.entity.EntityManager;
+import com.omnicrola.pixelblaster.gui.GuiControllerBuilder;
 import com.omnicrola.pixelblaster.gui.MainMenuBuilder;
 import com.omnicrola.pixelblaster.gui.UiManager;
 import com.omnicrola.pixelblaster.gui.UserInterfaceBuilder;
@@ -44,8 +45,14 @@ public class PixelBlasterGame extends StateBasedGame {
 		mainGameState.addSubsystem(new PlayerManager());
 		mainGameState.addSubsystem(new InputManager(this));
 		mainGameState.addSubsystem(new PhysicsManager());
-		mainGameState.addSubsystem(new UiManager(new UserInterfaceBuilder()));
+
+		final UiManager subsystem = buildGuiManager();
+		mainGameState.addSubsystem(subsystem);
 		addState(mainGameState);
+	}
+
+	private UiManager buildGuiManager() {
+		return new UiManager(new UserInterfaceBuilder(), new GuiControllerBuilder());
 	}
 
 }

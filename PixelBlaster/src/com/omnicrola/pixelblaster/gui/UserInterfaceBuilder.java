@@ -9,7 +9,7 @@ public class UserInterfaceBuilder {
 
 	private static final String UI_PATH = "sprites/ui/";
 
-	public GuiRoot build(IGameContext context) {
+	public IUserInterface build(IGameContext context) {
 		final AssetManager assetManager = context.getAssetManager();
 		final BubbleMeter bubbleMeter = buildBubbleMeter(assetManager);
 		final GLabel scoreLabel = buildScoreLabel();

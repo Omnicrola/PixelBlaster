@@ -10,10 +10,13 @@ import com.omnicrola.pixelblaster.main.IGameSubsystem;
 public class UiManager implements IGameSubsystem, IUiManager {
 	private IGameContext context;
 	private final UserInterfaceBuilder userInterfaceBuilder;
-	private GuiRoot rootElement;
+	private final GuiControllerBuilder uiControllerBuilder;
+	private IUserInterface rootElement;
+	private GuiController userController;
 
-	public UiManager(UserInterfaceBuilder userInterfaceBuilder) {
+	public UiManager(UserInterfaceBuilder userInterfaceBuilder, GuiControllerBuilder uiControllerBuilder) {
 		this.userInterfaceBuilder = userInterfaceBuilder;
+		this.uiControllerBuilder = uiControllerBuilder;
 	}
 
 	@Override
@@ -25,17 +28,17 @@ public class UiManager implements IGameSubsystem, IUiManager {
 	public void init(IGameContext context) throws SlickException {
 		this.context = context;
 		this.rootElement = this.userInterfaceBuilder.build(context);
+		this.userController = this.uiControllerBuilder.build(context);
 	}
 
 	@Override
 	public void update(IGameContext gameContext, float delta) {
-		this.rootElement.update(gameContext);
+		this.userController.update(this.rootElement);
 	}
 
 	@Override
 	public void render(IGraphicsWrapper graphicsWrapper) {
 		final IGraphicsWrapper guiGraphics = this.context.getGuiGraphics();
-		// this.bubbleMeter.render(guiGraphics, 0, 0);
 		this.rootElement.render(guiGraphics);
 	}
 
