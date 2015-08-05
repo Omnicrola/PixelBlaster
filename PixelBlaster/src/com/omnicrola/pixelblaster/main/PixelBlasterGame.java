@@ -9,6 +9,7 @@ import com.omnicrola.pixelblaster.audio.AudioManager;
 import com.omnicrola.pixelblaster.entity.EntityManager;
 import com.omnicrola.pixelblaster.gui.MainMenuBuilder;
 import com.omnicrola.pixelblaster.gui.UiManager;
+import com.omnicrola.pixelblaster.gui.UserInterfaceBuilder;
 import com.omnicrola.pixelblaster.input.InputManager;
 import com.omnicrola.pixelblaster.map.MapManager;
 import com.omnicrola.pixelblaster.map.MapTemplateReaderBuilder;
@@ -43,7 +44,7 @@ public class PixelBlasterGame extends StateBasedGame {
 		mainGameState.addSubsystem(new PlayerManager());
 		mainGameState.addSubsystem(new InputManager(this));
 		mainGameState.addSubsystem(new PhysicsManager());
-		mainGameState.addSubsystem(new UiManager());
+		mainGameState.addSubsystem(new UiManager(new UserInterfaceBuilder()));
 		addState(mainGameState);
 	}
 
