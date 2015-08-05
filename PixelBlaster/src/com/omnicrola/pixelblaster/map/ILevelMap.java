@@ -12,6 +12,6 @@ public interface ILevelMap {
 
 	MapBounds getMapBounds();
 
-	void load(MapTools mapTools);
+	void load();
 
 }

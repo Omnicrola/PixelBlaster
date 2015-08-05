@@ -1,33 +1,16 @@
 package com.omnicrola.pixelblaster.map;
 
-import java.io.File;
-
-import org.newdawn.slick.Image;
-
-import com.omnicrola.pixelblaster.graphics.GameBackground;
-import com.omnicrola.pixelblaster.main.GameSettings;
-import com.omnicrola.pixelblaster.util.AssetManager;
+import java.util.HashMap;
 
 public class MapLoader {
-	private final AssetManager assetManager;
-	private final MapTileLoader mapTileLoader;
+	private final HashMap<Integer, LevelMapTemplate> templates;
 
-	public MapLoader(AssetManager assetManager, MapTileLoader mapTileLoader) {
-		this.assetManager = assetManager;
-		this.mapTileLoader = mapTileLoader;
+	public MapLoader(HashMap<Integer, LevelMapTemplate> templates) {
+		this.templates = templates;
 	}
 
 	public ILevelMap load(int currentLevel) {
-		final XmlMapData mapData = this.assetManager.getMapData(currentLevel);
-		final MapTileDataSet tileData = this.mapTileLoader.loadData(mapData);
-		final GameBackground background = createBackground(mapData);
-		return new LevelMap(GameSettings.MAP_TILE_SIZE_IN_METERS, tileData, background, mapData);
-	}
-
-	private GameBackground createBackground(XmlMapData mapData) {
-		final String background = "Backgrounds" + File.separator + mapData.background;
-		final Image image = this.assetManager.getImage(background);
-		return new GameBackground(image);
+		return this.templates.get(currentLevel).load();
 	}
 
 }

@@ -6,7 +6,6 @@ import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
-import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class MapManager implements IGameSubsystem, IMapManager {
 
@@ -14,8 +13,10 @@ public class MapManager implements IGameSubsystem, IMapManager {
 	private MapLoader mapLoader;
 	private ILevelMap currentMap;
 	private boolean initialized;
+	private final MapTemplateReaderBuilder mapTemplateReaderBuilder;
 
-	public MapManager() {
+	public MapManager(MapTemplateReaderBuilder mapTemplateReaderBuilder) {
+		this.mapTemplateReaderBuilder = mapTemplateReaderBuilder;
 		this.currentLevel = 1;
 	}
 
@@ -28,18 +29,20 @@ public class MapManager implements IGameSubsystem, IMapManager {
 	@Override
 	public void init(IGameContext context) {
 		if (!this.initialized) {
-			final AssetManager assetManager = context.getAssetManager();
-			final MapTools mapTools = new MapTools(context);
-
-			this.mapLoader = new MapLoader(assetManager, new MapTileLoader(assetManager));
-			loadMapForCurrentLevel(mapTools);
+			buildMapLoader(context);
+			loadMapForCurrentLevel();
 			this.initialized = true;
 		}
 	}
 
-	private void loadMapForCurrentLevel(MapTools mapTools) {
+	private void buildMapLoader(IGameContext context) {
+		final MapTemplateReader mapTempateReader = this.mapTemplateReaderBuilder.build(context);
+		this.mapLoader = mapTempateReader.loadTemplates();
+	}
+
+	private void loadMapForCurrentLevel() {
 		this.currentMap = this.mapLoader.load(this.currentLevel);
-		this.currentMap.load(mapTools);
+		this.currentMap.load();
 	}
 
 	@Override

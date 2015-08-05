@@ -1,6 +1,5 @@
 package com.omnicrola.pixelblaster.map;
 
-import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.util.Coordinate;
 
 @SuppressWarnings("unused")
@@ -55,7 +54,6 @@ public class MapCreator {
 		powerupData.image = "bubble.png";
 		powerupData.x = x;
 		powerupData.y = y;
-		powerupData.powerupId = CollisionIdentifier.NONE;
 		return powerupData;
 	}
 
