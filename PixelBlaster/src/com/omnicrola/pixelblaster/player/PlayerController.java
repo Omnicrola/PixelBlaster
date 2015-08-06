@@ -86,7 +86,7 @@ public class PlayerController {
 			if (this.isInMidAir && hasNotDoubleJumped) {
 				this.hasDoubleJumped = true;
 			}
-			this.audioManager.getAudioController().playSound(AudioFx.JUMP, 0.25f);
+			this.audioManager.getAudioController().playSound(AudioFx.JUMP, 0.125f);
 			applyImpulse(0, -GameSettings.PLAYER_JUMP_SPEED);
 			addPlayerState(PlayerState.JUMP);
 		}

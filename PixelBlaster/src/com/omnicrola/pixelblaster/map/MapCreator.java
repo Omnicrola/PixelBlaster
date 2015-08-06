@@ -27,6 +27,8 @@ public class MapCreator {
 	}
 
 	private void generate() {
+		this.mapData.title = "Test Level 1:";
+		this.mapData.title = "Purple Destiny";
 		this.mapData.mapHeight = 11;
 		this.mapData.mapWidth = 128;
 		this.mapData.mapBounds = new MapBounds(0, 0, 100, 128);
@@ -34,8 +36,6 @@ public class MapCreator {
 		fillArea(0, 5, 127, 10, CENTER);
 		fillArea(0, 5, 127, 5, FULL_MID);
 		tileSequence(10, 5, new int[] { 14, 0, 0, 0, 15, 1, 1, 14, 0, 15, 1, 1, 0, 0, 11, 12, 13, 0, 0, 15 });
-		// fillArea(6, 0, 6, 10, CENTER_ROUND);
-		// fillArea(20, 4, 20, 10, CENTER_ROUND);
 		addPowerups();
 
 	}

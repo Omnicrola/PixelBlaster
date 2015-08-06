@@ -60,4 +60,12 @@ public class EntityManager implements IGameSubsystem, IEntityManager {
 		}
 	}
 
+	@Override
+	public void enter(IGameContext context) {
+	}
+
+	@Override
+	public void leave(IGameContext context) {
+	}
+
 }

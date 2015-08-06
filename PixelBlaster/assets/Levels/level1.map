@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Map>
+    <MapTitle>Purple Destiny</MapTitle>
+    <MapTitle>the beginning</MapTitle>
     <TilesetName>Planet</TilesetName>
     <Background>blue_desert.png</Background>
     <mapTiles>
@@ -926,7 +928,6 @@
     <playerSpawn x="8" y="4"/>
     <powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -934,7 +935,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -942,7 +942,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -950,7 +949,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -958,7 +956,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -966,7 +963,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -974,7 +970,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -982,7 +977,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -990,7 +984,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -998,7 +991,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -1006,7 +998,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -1014,7 +1005,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -1022,7 +1012,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -1030,7 +1019,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -1038,7 +1026,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -1046,7 +1033,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -1054,7 +1040,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -1062,7 +1047,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -1070,7 +1054,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>
@@ -1078,7 +1061,6 @@
             <y>3.75</y>
         </powerups>
         <powerups>
-            <powerupId/>
             <image>bubble.png</image>
             <width>0.5</width>
             <height>0.5</height>

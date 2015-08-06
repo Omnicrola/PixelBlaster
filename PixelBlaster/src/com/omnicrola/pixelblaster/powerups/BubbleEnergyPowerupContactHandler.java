@@ -1,7 +1,7 @@
 package com.omnicrola.pixelblaster.powerups;
 
-import com.omnicrola.pixelblaster.audio.AudioController;
 import com.omnicrola.pixelblaster.audio.AudioFx;
+import com.omnicrola.pixelblaster.audio.IAudioController;
 import com.omnicrola.pixelblaster.entity.GameEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsContactHandler;
 import com.omnicrola.pixelblaster.player.IPlayerManager;
@@ -10,10 +10,10 @@ public class BubbleEnergyPowerupContactHandler implements IPhysicsContactHandler
 
 	private final IPlayerManager playerManager;
 	private final GameEntity gameEntity;
-	private final AudioController audioController;
+	private final IAudioController audioController;
 
 	public BubbleEnergyPowerupContactHandler(GameEntity gameEntity, IPlayerManager playerManager,
-			AudioController audioController) {
+			IAudioController audioController) {
 		this.gameEntity = gameEntity;
 		this.playerManager = playerManager;
 		this.audioController = audioController;

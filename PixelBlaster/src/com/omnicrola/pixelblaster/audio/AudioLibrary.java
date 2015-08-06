@@ -10,10 +10,8 @@ public class AudioLibrary {
 		this.soundMap = soundMap;
 	}
 
-	public void playSound(IAudioResource audioResource, float volume) {
+	public ISound getSound(IAudioResource audioResource, float volume) {
 		final ISound resource = this.soundMap.get(audioResource);
-		if (resource != null) {
-			resource.play(volume);
-		}
+		return resource;
 	}
 }

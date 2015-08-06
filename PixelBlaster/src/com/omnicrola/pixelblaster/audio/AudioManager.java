@@ -17,7 +17,7 @@ public class AudioManager implements IGameSubsystem, IAudioManager {
 	}
 
 	@Override
-	public AudioController getAudioController() {
+	public IAudioController getAudioController() {
 		return this.audioController;
 	}
 
@@ -40,6 +40,16 @@ public class AudioManager implements IGameSubsystem, IAudioManager {
 
 	@Override
 	public void render(IGraphicsWrapper graphics) {
+	}
+
+	@Override
+	public void enter(IGameContext context) {
+		this.audioController.resume();
+	}
+
+	@Override
+	public void leave(IGameContext context) {
+		this.audioController.pause();
 	}
 
 }

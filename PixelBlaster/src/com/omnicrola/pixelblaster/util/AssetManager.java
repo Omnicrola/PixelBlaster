@@ -1,8 +1,11 @@
 package com.omnicrola.pixelblaster.util;
 
+import java.io.IOException;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 import com.omnicrola.pixelblaster.audio.IAudioResource;
 import com.omnicrola.pixelblaster.audio.ISound;
@@ -36,8 +39,9 @@ public class AssetManager {
 
 	public ISound getSound(IAudioResource resource) {
 		try {
-			return new SoundWrapper(new Sound(resource.getPath()));
-		} catch (final SlickException e) {
+			return new SoundWrapper(
+					AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream(resource.getPath())));
+		} catch (final IOException e) {
 			e.printStackTrace();
 			return NullSound.NULL;
 		}

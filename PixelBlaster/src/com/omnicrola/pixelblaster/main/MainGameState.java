@@ -48,6 +48,20 @@ public class MainGameState extends BasicGameState {
 	}
 
 	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		for (final IGameSubsystem gameSubsystem : this.subsystems) {
+			gameSubsystem.enter(this.gameContext);
+		}
+	}
+
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+		for (final IGameSubsystem gameSubsystem : this.subsystems) {
+			gameSubsystem.leave(this.gameContext);
+		}
+	}
+
+	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException {
 		for (final IGameSubsystem gameSubsystem : this.subsystems) {
 			gameSubsystem.render(new SlickGraphicsWrapper(this.camera, graphics));

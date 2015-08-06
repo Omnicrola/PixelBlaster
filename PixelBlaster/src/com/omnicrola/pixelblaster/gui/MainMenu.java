@@ -12,6 +12,7 @@ public class MainMenu extends ScreenElement {
 		this.children.addAll(options);
 		this.options = options;
 		this.currentIndex = 0;
+		setSelection();
 	}
 
 	public void selectCurrent() {

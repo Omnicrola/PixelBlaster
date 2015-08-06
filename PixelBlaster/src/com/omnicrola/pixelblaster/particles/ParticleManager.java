@@ -24,4 +24,12 @@ public class ParticleManager implements IGameSubsystem, IParticleManager {
 	public void render(IGraphicsWrapper graphics) {
 	}
 
+	@Override
+	public void enter(IGameContext context) {
+	}
+
+	@Override
+	public void leave(IGameContext context) {
+	}
+
 }

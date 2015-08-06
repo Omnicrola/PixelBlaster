@@ -38,7 +38,16 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 		initPlayerControl();
 		buildPlayer(context.getSubsystem(IEntityManager.class));
 		this.keyListener = new PlayerKeyListener(this.playerController);
+	}
+
+	@Override
+	public void enter(IGameContext context) {
 		context.getInput().addKeyListener(this.keyListener);
+	}
+
+	@Override
+	public void leave(IGameContext context) {
+		context.getInput().removeKeyListener(this.keyListener);
 	}
 
 	private void initPlayerControl() {

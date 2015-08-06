@@ -9,6 +9,10 @@ public interface IGameSubsystem {
 
 	public void init(IGameContext context) throws SlickException;
 
+	public void enter(IGameContext context);
+
+	public void leave(IGameContext context);
+
 	public void update(IGameContext gameContext, float delta);
 
 	public void render(IGraphicsWrapper graphics);

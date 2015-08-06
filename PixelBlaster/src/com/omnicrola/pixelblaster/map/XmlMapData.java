@@ -15,6 +15,12 @@ import com.omnicrola.pixelblaster.util.Coordinate;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class XmlMapData {
 
+	@XmlElement(name = "MapTitle")
+	String title = "Level1";
+
+	@XmlElement(name = "MapTitle")
+	String subtitle = "the beginning";
+
 	@XmlElement(name = "TilesetName")
 	String tilesetName = "Planet";
 

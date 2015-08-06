@@ -64,4 +64,12 @@ public class PhysicsManager implements IGameSubsystem, IPhysicsManager {
 		return new JBox2DPhysicsModifier(physicsEntity);
 	}
 
+	@Override
+	public void enter(IGameContext context) {
+	}
+
+	@Override
+	public void leave(IGameContext context) {
+	}
+
 }

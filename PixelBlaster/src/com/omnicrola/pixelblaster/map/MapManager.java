@@ -64,4 +64,12 @@ public class MapManager implements IGameSubsystem, IMapManager {
 		this.currentMap.render(graphics);
 	}
 
+	@Override
+	public void enter(IGameContext context) {
+	}
+
+	@Override
+	public void leave(IGameContext context) {
+	}
+
 }

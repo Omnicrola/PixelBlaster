@@ -21,7 +21,7 @@ import com.omnicrola.pixelblaster.player.PlayerManager;
 public class PixelBlasterGame extends StateBasedGame {
 
 	public PixelBlasterGame() {
-		super("Pixel Blaster");
+		super("Space Plus");
 	}
 
 	@Override

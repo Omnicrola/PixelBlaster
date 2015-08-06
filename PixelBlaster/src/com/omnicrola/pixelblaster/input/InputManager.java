@@ -28,7 +28,6 @@ public class InputManager extends AbstractKeyListener implements IGameSubsystem 
 
 	@Override
 	public void init(IGameContext context) throws SlickException {
-		context.getInput().addKeyListener(this);
 	}
 
 	@Override
@@ -56,6 +55,16 @@ public class InputManager extends AbstractKeyListener implements IGameSubsystem 
 		final FadeOutTransition leave = new FadeOutTransition(Color.black, 250);
 		final FadeInTransition enter = new FadeInTransition(Color.black, 250);
 		this.game.enterState(GameStates.MAIN_MENU.ordinal(), leave, enter);
+	}
+
+	@Override
+	public void enter(IGameContext context) {
+		context.getInput().addKeyListener(this);
+	}
+
+	@Override
+	public void leave(IGameContext context) {
+		context.getInput().removeKeyListener(this);
 	}
 
 }

@@ -32,6 +32,14 @@ public class UiManager implements IGameSubsystem, IUiManager {
 	}
 
 	@Override
+	public void enter(IGameContext context) {
+	}
+
+	@Override
+	public void leave(IGameContext context) {
+	}
+
+	@Override
 	public void update(IGameContext gameContext, float delta) {
 		this.userController.update(this.rootElement);
 	}

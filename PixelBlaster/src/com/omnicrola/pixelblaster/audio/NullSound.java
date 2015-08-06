@@ -9,4 +9,17 @@ public class NullSound implements ISound {
 	@Override
 	public void play(float volume) {
 	}
+
+	@Override
+	public boolean isFinished() {
+		return false;
+	}
+
+	@Override
+	public void pause() {
+	}
+
+	@Override
+	public void resume() {
+	}
 }
