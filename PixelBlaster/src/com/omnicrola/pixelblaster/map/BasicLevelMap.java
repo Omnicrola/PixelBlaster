@@ -42,4 +42,14 @@ public class BasicLevelMap implements ILevelMap {
 	public void load() {
 	}
 
+	@Override
+	public String getTitle() {
+		return this.mapData.title;
+	}
+
+	@Override
+	public String getSubtitle() {
+		return this.mapData.subtitle;
+	}
+
 }

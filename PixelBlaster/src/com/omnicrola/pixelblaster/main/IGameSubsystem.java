@@ -15,6 +15,6 @@ public interface IGameSubsystem {
 
 	public void update(IGameContext gameContext, float delta);
 
-	public void render(IGraphicsWrapper graphics);
+	public void render(IGraphicsWrapper graphics) throws SlickException;
 
 }

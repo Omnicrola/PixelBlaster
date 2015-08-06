@@ -1,12 +1,15 @@
 package com.omnicrola.pixelblaster.gui;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.SlickException;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
+import com.omnicrola.pixelblaster.gui.fx.IElementAffector;
 
-public class ScreenElement implements IScreenElement {
+public abstract class ScreenElement implements IScreenElement {
 	protected final ArrayList<IScreenElement> children;
 	private final ArrayList<IEventListener> listeners;
 	protected int x;
@@ -14,11 +17,14 @@ public class ScreenElement implements IScreenElement {
 	protected int width;
 	protected int height;
 	protected boolean isTransparent;
+	protected float opacity = 1.0f;
 	protected Color backgroundColor;
+	private final List<IElementAffector> effects;
 
 	public ScreenElement() {
 		this.children = new ArrayList<>();
 		this.listeners = new ArrayList<>();
+		this.effects = new ArrayList<>();
 		this.x = 0;
 		this.y = 0;
 		this.width = 0;
@@ -39,6 +45,11 @@ public class ScreenElement implements IScreenElement {
 	}
 
 	@Override
+	public void setOpacity(float opacity) {
+		this.opacity = opacity;
+	}
+
+	@Override
 	public void setTransparent(boolean isTransparent) {
 		this.isTransparent = isTransparent;
 	}
@@ -53,19 +64,22 @@ public class ScreenElement implements IScreenElement {
 	}
 
 	@Override
-	public void render(IGraphicsWrapper graphics, int offX, int offY) {
+	final public void render(IGraphicsWrapper graphics, int offX, int offY) throws SlickException {
+		renderBackground(graphics, offX, offY);
 		renderSelf(graphics, offX, offY);
 		renderChildren(graphics, offX, offY);
 	}
 
-	protected void renderSelf(IGraphicsWrapper graphics, int offX, int offY) {
+	public abstract void renderSelf(IGraphicsWrapper graphics, int offX, int offY);
+
+	protected void renderBackground(IGraphicsWrapper graphics, int offX, int offY) {
 		if (!this.isTransparent) {
 			graphics.setColor(this.backgroundColor);
 			graphics.drawRect(this.x + offX, this.y + offY, this.width, this.height);
 		}
 	}
 
-	protected void renderChildren(IGraphicsWrapper graphics, int offX, int offY) {
+	protected void renderChildren(IGraphicsWrapper graphics, int offX, int offY) throws SlickException {
 		for (final IScreenElement element : this.children) {
 			element.render(graphics, offX + this.x, offY + this.y);
 		}
@@ -86,6 +100,11 @@ public class ScreenElement implements IScreenElement {
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	@Override
+	public void addEffect(IElementAffector effect) {
+		this.effects.add(effect);
 	}
 
 }

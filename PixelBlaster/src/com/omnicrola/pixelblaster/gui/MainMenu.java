@@ -2,6 +2,8 @@ package com.omnicrola.pixelblaster.gui;
 
 import java.util.List;
 
+import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
+
 public class MainMenu extends ScreenElement {
 
 	private final List<ButtonElement> options;
@@ -38,6 +40,10 @@ public class MainMenu extends ScreenElement {
 			this.currentIndex++;
 		}
 		setSelection();
+	}
+
+	@Override
+	public void renderSelf(IGraphicsWrapper graphics, int offX, int offY) {
 	}
 
 }

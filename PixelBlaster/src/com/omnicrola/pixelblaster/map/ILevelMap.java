@@ -14,4 +14,8 @@ public interface ILevelMap {
 
 	void load();
 
+	String getTitle();
+
+	String getSubtitle();
+
 }

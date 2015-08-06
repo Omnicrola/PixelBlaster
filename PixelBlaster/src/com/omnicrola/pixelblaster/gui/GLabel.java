@@ -30,13 +30,7 @@ public class GLabel extends ScreenElement {
 	}
 
 	@Override
-	public void render(IGraphicsWrapper graphics, int offX, int offY) {
-		renderSelf(graphics, offX, offY);
-		renderText(graphics, offX, offY);
-		renderChildren(graphics, offX, offY);
-	}
-
-	private void renderText(IGraphicsWrapper graphics, int offX, int offY) {
+	public void renderSelf(IGraphicsWrapper graphics, int offX, int offY) {
 		if (this.isShadowed) {
 			graphics.setColor(this.shadowColor);
 			graphics.drawString(this.text, this.x + offX + 1, this.y + offY + 1);

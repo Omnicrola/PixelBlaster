@@ -29,7 +29,7 @@ public class ButtonElement extends ScreenElement {
 	}
 
 	@Override
-	public void render(IGraphicsWrapper graphics, int offX, int offY) {
+	public void renderSelf(IGraphicsWrapper graphics, int offX, int offY) {
 		if (this.isSelected) {
 			graphics.setColor(this.highlightColor);
 		} else {
@@ -39,7 +39,6 @@ public class ButtonElement extends ScreenElement {
 		graphics.fillRect(this.x + offX, this.y + offY, this.width, this.height);
 		graphics.setColor(Color.white);
 		graphics.drawString(this.text, this.x + offX + PADDING, this.y + offY + PADDING);
-		renderChildren(graphics, offX, offY);
 	}
 
 }

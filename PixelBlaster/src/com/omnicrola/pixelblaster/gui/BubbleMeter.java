@@ -20,7 +20,7 @@ public class BubbleMeter extends ScreenElement {
 	}
 
 	@Override
-	public void render(IGraphicsWrapper graphics, int offX, int offY) {
+	public void renderSelf(IGraphicsWrapper graphics, int offX, int offY) {
 		final int spacing = calculateSpacing();
 		final float totalIcons = (float) this.meterLength / (float) this.fullIcon.getWidth();
 		final float filledIcons = totalIcons * this.percentageFull;
@@ -30,8 +30,8 @@ public class BubbleMeter extends ScreenElement {
 			if (i <= filledIcons) {
 				drawFilledIcon(graphics, pX, pY);
 			} else {
-					drawEmptyIcon(graphics, pX, pY);
-				}
+				drawEmptyIcon(graphics, pX, pY);
+			}
 		}
 	}
 

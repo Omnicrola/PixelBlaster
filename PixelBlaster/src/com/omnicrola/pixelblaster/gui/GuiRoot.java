@@ -1,19 +1,16 @@
 package com.omnicrola.pixelblaster.gui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 
-public class GuiRoot implements IUserInterface {
+public class GuiRoot extends ScreenElement implements IUserInterface {
 	private final BubbleMeter bubbleMeter;
 	private final GLabel scoreLabel;
-	private final List<ScreenElement> screenElements;
 
 	public GuiRoot(BubbleMeter bubbleMeter, GLabel scoreLabel) {
 		this.bubbleMeter = bubbleMeter;
 		this.scoreLabel = scoreLabel;
-		this.screenElements = Arrays.asList(bubbleMeter, scoreLabel);
+		addChild(bubbleMeter);
+		addChild(scoreLabel);
 	}
 
 	@Override
@@ -27,11 +24,7 @@ public class GuiRoot implements IUserInterface {
 	}
 
 	@Override
-	public void render(IGraphicsWrapper guiGraphics) {
-		for (final ScreenElement screenElement : this.screenElements) {
-			screenElement.render(guiGraphics, 0, 0);
-		}
-
+	public void renderSelf(IGraphicsWrapper graphics, int offX, int offY) {
 	}
 
 }

@@ -1,13 +1,15 @@
 package com.omnicrola.pixelblaster.gui;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.SlickException;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
+import com.omnicrola.pixelblaster.gui.fx.IElementAffector;
 
 public interface IScreenElement {
 	void setPosition(int x, int y);
 
-	void render(IGraphicsWrapper graphics, int offX, int offY);
+	void render(IGraphicsWrapper graphics, int offX, int offY) throws SlickException;
 
 	void trigger();
 
@@ -18,5 +20,9 @@ public interface IScreenElement {
 	public abstract void setDimensions(int width, int height);
 
 	public abstract void setBackground(Color background);
+
+	void addEffect(IElementAffector effect);
+
+	void setOpacity(float opacity);
 
 }

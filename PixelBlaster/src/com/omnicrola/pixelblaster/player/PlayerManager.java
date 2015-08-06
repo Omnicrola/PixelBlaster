@@ -68,7 +68,7 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 
 	private void respawnPlayer() {
 		final IMapManager mapManager = this.context.getSubsystem(IMapManager.class);
-		final Vector2f spawnPoint = mapManager.getPlayerSpawn();
+		final Vector2f spawnPoint = mapManager.getMapController().getPlayerSpawn();
 		this.playerModel.getEntity().setPosition(spawnPoint);
 	}
 
@@ -82,7 +82,7 @@ public class PlayerManager implements IGameSubsystem, IPlayerManager {
 
 	private void containPlayerInMap() {
 		final IMapManager mapManager = this.context.getSubsystem(IMapManager.class);
-		final MapBounds mapBounds = mapManager.getMapBounds();
+		final MapBounds mapBounds = mapManager.getMapController().getMapBounds();
 		mapBounds.containEntity(this.playerModel.getEntity());
 	}
 

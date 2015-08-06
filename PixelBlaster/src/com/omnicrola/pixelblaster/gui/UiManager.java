@@ -6,13 +6,14 @@ import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
+import com.omnicrola.pixelblaster.map.IMapManager;
 
 public class UiManager implements IGameSubsystem, IUiManager {
 	private IGameContext context;
 	private final UserInterfaceBuilder userInterfaceBuilder;
 	private final GuiControllerBuilder uiControllerBuilder;
 	private IUserInterface rootElement;
-	private GuiController userController;
+	private GuiController uiController;
 
 	public UiManager(UserInterfaceBuilder userInterfaceBuilder, GuiControllerBuilder uiControllerBuilder) {
 		this.userInterfaceBuilder = userInterfaceBuilder;
@@ -28,7 +29,9 @@ public class UiManager implements IGameSubsystem, IUiManager {
 	public void init(IGameContext context) throws SlickException {
 		this.context = context;
 		this.rootElement = this.userInterfaceBuilder.build(context);
-		this.userController = this.uiControllerBuilder.build(context);
+		this.uiController = this.uiControllerBuilder.build(context);
+		context.getSubsystem(IMapManager.class).getMapController()
+				.addObserver(new DisplayLevelTitleObserver(this.rootElement));
 	}
 
 	@Override
@@ -41,13 +44,13 @@ public class UiManager implements IGameSubsystem, IUiManager {
 
 	@Override
 	public void update(IGameContext gameContext, float delta) {
-		this.userController.update(this.rootElement);
+		this.uiController.update(this.rootElement);
 	}
 
 	@Override
-	public void render(IGraphicsWrapper graphicsWrapper) {
+	public void render(IGraphicsWrapper graphicsWrapper) throws SlickException {
 		final IGraphicsWrapper guiGraphics = this.context.getGuiGraphics();
-		this.rootElement.render(guiGraphics);
+		this.rootElement.render(guiGraphics, 0, 0);
 	}
 
 }
