@@ -83,7 +83,6 @@ public class PlayerController {
 		final boolean isNotInMidAir = !this.isInMidAir;
 		final boolean hasNotDoubleJumped = !this.hasDoubleJumped;
 		if (isNotInMidAir || hasNotDoubleJumped) {
-			this.isInMidAir = true;
 			if (this.isInMidAir && hasNotDoubleJumped) {
 				this.hasDoubleJumped = true;
 			}
