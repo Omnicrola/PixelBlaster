@@ -25,4 +25,8 @@ public interface IGraphicsWrapper {
 
 	void setFont(Font font);
 
+	float getWidth();
+
+	float getHeight();
+
 }

@@ -31,7 +31,7 @@ public class UiManager implements IGameSubsystem, IUiManager {
 		this.rootElement = this.userInterfaceBuilder.build(context);
 		this.uiController = this.uiControllerBuilder.build(context);
 		context.getSubsystem(IMapManager.class).getMapController()
-				.addObserver(new DisplayLevelTitleObserver(this.rootElement));
+				.addObserver(new DisplayLevelTitleObserver(this.rootElement, context.getGuiGraphics()));
 	}
 
 	@Override

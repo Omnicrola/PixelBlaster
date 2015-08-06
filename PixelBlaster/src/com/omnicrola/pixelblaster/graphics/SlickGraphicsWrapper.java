@@ -77,4 +77,14 @@ public class SlickGraphicsWrapper implements IGraphicsWrapper {
 	public void drawString(String text, int x, int y) {
 		this.graphics.drawString(text, x, y);
 	}
+
+	@Override
+	public float getWidth() {
+		return this.camera.getViewportWidth();
+	}
+
+	@Override
+	public float getHeight() {
+		return this.camera.getViewportHeight();
+	}
 }

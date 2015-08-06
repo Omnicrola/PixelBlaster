@@ -14,8 +14,8 @@ public class GLabel extends ScreenElement {
 
 	public GLabel(String text) {
 		super();
-		this.text = text;
 		this.font = FontRepository.get(FontResource.KEN_VECTOR_FUTURE_THIN, 24);
+		setText(text);
 		this.textColor = Color.white;
 		this.shadowColor = Color.black;
 	}
@@ -45,5 +45,7 @@ public class GLabel extends ScreenElement {
 
 	public void setText(String text) {
 		this.text = text;
+		this.width = this.font.getWidth(text);
+		this.height = this.font.getLineHeight();
 	}
 }

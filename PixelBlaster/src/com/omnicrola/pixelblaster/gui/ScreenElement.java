@@ -133,4 +133,14 @@ public abstract class ScreenElement implements IScreenElement {
 		this.effects.add(effect);
 	}
 
+	@Override
+	public int getWidth() {
+		return this.width;
+	}
+
+	@Override
+	public int getHeight() {
+		return this.height;
+	}
+
 }

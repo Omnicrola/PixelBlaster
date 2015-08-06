@@ -63,4 +63,14 @@ public class NullScreenElement implements IScreenElement {
 	public void removeChild(IScreenElement screenElement) {
 	}
 
+	@Override
+	public int getWidth() {
+		return 0;
+	}
+
+	@Override
+	public int getHeight() {
+		return 0;
+	}
+
 }

@@ -31,4 +31,8 @@ public interface IScreenElement {
 
 	void removeChild(IScreenElement screenElement);
 
+	int getWidth();
+
+	int getHeight();
+
 }
