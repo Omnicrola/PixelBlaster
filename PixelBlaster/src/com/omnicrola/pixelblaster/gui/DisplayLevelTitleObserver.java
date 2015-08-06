@@ -1,6 +1,5 @@
 package com.omnicrola.pixelblaster.gui;
 
-import com.omnicrola.pixelblaster.gui.fx.FadeEffect;
 import com.omnicrola.pixelblaster.map.ILevelObserver;
 import com.omnicrola.pixelblaster.map.IMapController;
 
@@ -20,8 +19,8 @@ public class DisplayLevelTitleObserver implements ILevelObserver {
 		final GLabel titleElement = new GLabel(title);
 		final GLabel subtitleElement = new GLabel(subTitle);
 
-		titleElement.addEffect(new FadeEffect(5000));
-		subtitleElement.addEffect(new FadeEffect(4000));
+		titleElement.addEffect(new RemoveElementDelay(5000));
+		subtitleElement.addEffect(new RemoveElementDelay(4000));
 
 		this.rootElement.addChild(titleElement);
 		this.rootElement.addChild(subtitleElement);

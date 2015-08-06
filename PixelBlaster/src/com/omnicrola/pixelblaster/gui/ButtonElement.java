@@ -1,6 +1,7 @@
 package com.omnicrola.pixelblaster.gui;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 
@@ -10,10 +11,12 @@ public class ButtonElement extends ScreenElement {
 	private final String text;
 	private Color highlightColor;
 	private boolean isSelected;
+	private final Font font;
 
 	public ButtonElement(String text) {
 		super();
 		this.text = text;
+		this.font = FontRepository.get(FontResource.KEN_VECTOR_FUTURE_THIN, 24);
 		this.backgroundColor = Color.darkGray;
 		this.highlightColor = Color.green;
 		this.isTransparent = false;
@@ -38,6 +41,7 @@ public class ButtonElement extends ScreenElement {
 
 		graphics.fillRect(this.x + offX, this.y + offY, this.width, this.height);
 		graphics.setColor(Color.white);
+		// graphics.setFont(this.font);
 		graphics.drawString(this.text, this.x + offX + PADDING, this.y + offY + PADDING);
 	}
 

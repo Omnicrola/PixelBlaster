@@ -11,17 +11,19 @@ import com.omnicrola.pixelblaster.gui.fx.IElementAffector;
 
 public abstract class ScreenElement implements IScreenElement {
 	protected final ArrayList<IScreenElement> children;
+	protected final ArrayList<IScreenElement> childrenCopy;
 	private final ArrayList<IEventListener> listeners;
 	protected int x;
 	protected int y;
 	protected int width;
 	protected int height;
 	protected boolean isTransparent;
-	protected float opacity = 1.0f;
 	protected Color backgroundColor;
 	private final List<IElementAffector> effects;
+	private IScreenElement parent;
 
 	public ScreenElement() {
+		this.childrenCopy = new ArrayList<>();
 		this.children = new ArrayList<>();
 		this.listeners = new ArrayList<>();
 		this.effects = new ArrayList<>();
@@ -30,6 +32,7 @@ public abstract class ScreenElement implements IScreenElement {
 		this.width = 0;
 		this.height = 0;
 		this.isTransparent = true;
+		this.parent = null;
 		this.backgroundColor = Color.black;
 	}
 
@@ -45,11 +48,6 @@ public abstract class ScreenElement implements IScreenElement {
 	}
 
 	@Override
-	public void setOpacity(float opacity) {
-		this.opacity = opacity;
-	}
-
-	@Override
 	public void setTransparent(boolean isTransparent) {
 		this.isTransparent = isTransparent;
 	}
@@ -59,15 +57,41 @@ public abstract class ScreenElement implements IScreenElement {
 		return this.isTransparent;
 	}
 
+	@Override
 	public void addChild(IScreenElement element) {
 		this.children.add(element);
+		element.setParent(this);
+	}
+
+	@Override
+	public void removeChild(IScreenElement screenElement) {
+		this.children.remove(screenElement);
+	}
+
+	@Override
+	public void setParent(IScreenElement screenElement) {
+		this.parent = screenElement;
+	}
+
+	@Override
+	public void remove() {
+		if (this.parent != null) {
+			this.parent.removeChild(this);
+		}
 	}
 
 	@Override
 	final public void render(IGraphicsWrapper graphics, int offX, int offY) throws SlickException {
+		updateEffects();
 		renderBackground(graphics, offX, offY);
 		renderSelf(graphics, offX, offY);
 		renderChildren(graphics, offX, offY);
+	}
+
+	private void updateEffects() {
+		for (final IElementAffector effect : this.effects) {
+			effect.update(this);
+		}
 	}
 
 	public abstract void renderSelf(IGraphicsWrapper graphics, int offX, int offY);
@@ -80,7 +104,9 @@ public abstract class ScreenElement implements IScreenElement {
 	}
 
 	protected void renderChildren(IGraphicsWrapper graphics, int offX, int offY) throws SlickException {
-		for (final IScreenElement element : this.children) {
+		this.childrenCopy.clear();
+		this.childrenCopy.addAll(this.children);
+		for (final IScreenElement element : this.childrenCopy) {
 			element.render(graphics, offX + this.x, offY + this.y);
 		}
 	}

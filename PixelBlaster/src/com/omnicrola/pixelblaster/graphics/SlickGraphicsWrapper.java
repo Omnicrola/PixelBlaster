@@ -1,6 +1,7 @@
 package com.omnicrola.pixelblaster.graphics;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -16,6 +17,11 @@ public class SlickGraphicsWrapper implements IGraphicsWrapper {
 	public SlickGraphicsWrapper(Camera camera, Graphics graphics) {
 		this.camera = camera;
 		this.graphics = graphics;
+	}
+
+	@Override
+	public void setFont(Font font) {
+		this.graphics.setFont(font);
 	}
 
 	@Override

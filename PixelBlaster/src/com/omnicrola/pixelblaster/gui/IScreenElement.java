@@ -23,6 +23,12 @@ public interface IScreenElement {
 
 	void addEffect(IElementAffector effect);
 
-	void setOpacity(float opacity);
+	void addChild(IScreenElement child);
+
+	void remove();
+
+	void setParent(IScreenElement screenElement);
+
+	void removeChild(IScreenElement screenElement);
 
 }

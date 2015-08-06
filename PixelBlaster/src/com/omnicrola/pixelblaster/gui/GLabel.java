@@ -1,6 +1,7 @@
 package com.omnicrola.pixelblaster.gui;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 
@@ -9,10 +10,12 @@ public class GLabel extends ScreenElement {
 	private boolean isShadowed = false;
 	private Color shadowColor;
 	private Color textColor;
+	private final Font font;
 
 	public GLabel(String text) {
 		super();
 		this.text = text;
+		this.font = FontRepository.get(FontResource.KEN_VECTOR_FUTURE_THIN, 24);
 		this.textColor = Color.white;
 		this.shadowColor = Color.black;
 	}
@@ -31,6 +34,7 @@ public class GLabel extends ScreenElement {
 
 	@Override
 	public void renderSelf(IGraphicsWrapper graphics, int offX, int offY) {
+		// graphics.setFont(this.font);
 		if (this.isShadowed) {
 			graphics.setColor(this.shadowColor);
 			graphics.drawString(this.text, this.x + offX + 1, this.y + offY + 1);

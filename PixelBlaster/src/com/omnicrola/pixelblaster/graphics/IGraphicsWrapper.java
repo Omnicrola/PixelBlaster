@@ -1,6 +1,7 @@
 package com.omnicrola.pixelblaster.graphics;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -21,5 +22,7 @@ public interface IGraphicsWrapper {
 	void fillRect(int x, int y, int width, int height);
 
 	void drawString(String text, int x, int y);
+
+	void setFont(Font font);
 
 }
