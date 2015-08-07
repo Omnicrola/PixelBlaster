@@ -28,7 +28,7 @@ public class MapCreator {
 
 	private void generate() {
 		this.mapData.title = "Test Level 1:";
-		this.mapData.title = "Purple Destiny";
+		this.mapData.subtitle = "Purple Destiny";
 		this.mapData.mapHeight = 11;
 		this.mapData.mapWidth = 128;
 		this.mapData.mapBounds = new MapBounds(0, 0, 100, 128);

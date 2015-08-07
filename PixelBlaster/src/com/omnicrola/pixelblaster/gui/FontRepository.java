@@ -21,11 +21,12 @@ public class FontRepository {
 		}
 	}
 
-	private static java.awt.Font javaFont(FontResource fontResource, int size) {
+	public static java.awt.Font javaFont(FontResource fontResource, int size) {
 		try {
 			final InputStream fontStream = ResourceLoader
 					.getResourceAsStream("assets/fonts/" + fontResource.getFilename());
-			return java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, fontStream).deriveFont(size);
+			return java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, fontStream).deriveFont(java.awt.Font.PLAIN,
+					size);
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}

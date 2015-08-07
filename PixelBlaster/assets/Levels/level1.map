@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Map>
-    <MapTitle>Purple Destiny</MapTitle>
-    <MapTitle>the beginning</MapTitle>
+    <Title>Test Level 1:</Title>
+    <SubTitle>Purple Destiny</SubTitle>
     <TilesetName>Planet</TilesetName>
     <Background>blue_desert.png</Background>
     <mapTiles>
