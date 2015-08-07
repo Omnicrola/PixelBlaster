@@ -1,4 +1,4 @@
-package com.omnicrola.pixelblaster.map;
+package com.omnicrola.pixelblaster.map.io;
 
 import com.omnicrola.pixelblaster.util.PointSet;
 

@@ -4,6 +4,8 @@ import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
 import com.omnicrola.pixelblaster.main.GameSubsystemInterlink;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.main.IGameSubsystem;
+import com.omnicrola.pixelblaster.map.io.MapTemplateReader;
+import com.omnicrola.pixelblaster.map.io.MapTemplateReaderBuilder;
 
 public class MapManager implements IGameSubsystem, IMapManager {
 

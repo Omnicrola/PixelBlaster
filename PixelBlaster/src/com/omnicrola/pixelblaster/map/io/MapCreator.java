@@ -1,5 +1,7 @@
-package com.omnicrola.pixelblaster.map;
+package com.omnicrola.pixelblaster.map.io;
 
+import com.omnicrola.pixelblaster.map.EntityData;
+import com.omnicrola.pixelblaster.map.MapBounds;
 import com.omnicrola.pixelblaster.util.Coordinate;
 
 @SuppressWarnings("unused")
@@ -37,7 +39,18 @@ public class MapCreator {
 		fillArea(0, 5, 127, 5, FULL_MID);
 		tileSequence(10, 5, new int[] { 14, 0, 0, 0, 15, 1, 1, 14, 0, 15, 1, 1, 0, 0, 11, 12, 13, 0, 0, 15 });
 		addPowerups();
+		createEntities();
 
+	}
+
+	private void createEntities() {
+		final EntityData entityData = new EntityData();
+		entityData.hp = 10;
+		entityData.width = 1f;
+		entityData.height = 1f;
+		entityData.imageSet = "bee";
+		entityData.position = new Coordinate(10, 3);
+		this.mapData.entities.add(entityData);
 	}
 
 	private void addPowerups() {

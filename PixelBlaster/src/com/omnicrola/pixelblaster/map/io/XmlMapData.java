@@ -1,4 +1,4 @@
-package com.omnicrola.pixelblaster.map;
+package com.omnicrola.pixelblaster.map.io;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.omnicrola.pixelblaster.map.EntityData;
+import com.omnicrola.pixelblaster.map.MapBounds;
 import com.omnicrola.pixelblaster.util.Coordinate;
 
 @XmlRootElement(name = "Map")
@@ -16,26 +18,26 @@ import com.omnicrola.pixelblaster.util.Coordinate;
 public class XmlMapData {
 
 	@XmlElement(name = "Title")
-	String title = "Level1";
+	public String title = "Level1";
 
 	@XmlElement(name = "SubTitle")
-	String subtitle = "the beginning";
+	public String subtitle = "the beginning";
 
 	@XmlElement(name = "TilesetName")
-	String tilesetName = "Planet";
+	public String tilesetName = "Planet";
 
 	@XmlElement(name = "Background")
-	String background = "blue_desert.png";
+	public String background = "blue_desert.png";
 
 	@XmlElementWrapper
 	@XmlElement(name = "MapTile")
-	List<XmlMapTileData> mapTiles = new ArrayList<>();
+	public List<XmlMapTileData> mapTiles = new ArrayList<>();
 
-	int mapWidth = 1;
-	int mapHeight = 1;
+	public int mapWidth = 1;
+	public int mapHeight = 1;
 
 	@XmlElement(name = "MapBounds")
-	MapBounds mapBounds = new MapBounds(0, 0, 1, 1);
+	public MapBounds mapBounds = new MapBounds(0, 0, 1, 1);
 
 	@XmlElement(name = "playerSpawn")
 	public Coordinate playerSpawn;
@@ -43,5 +45,9 @@ public class XmlMapData {
 	@XmlElementWrapper
 	@XmlElement(name = "powerups")
 	public List<PowerupData> powerups = new ArrayList<>();
+
+	@XmlElementWrapper
+	@XmlElement(name = "entities")
+	public List<EntityData> entities = new ArrayList<>();
 
 }

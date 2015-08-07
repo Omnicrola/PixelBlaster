@@ -1,4 +1,4 @@
-package com.omnicrola.pixelblaster.map;
+package com.omnicrola.pixelblaster.map.io;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

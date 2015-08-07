@@ -13,7 +13,7 @@ import com.omnicrola.pixelblaster.audio.NullSound;
 import com.omnicrola.pixelblaster.audio.SoundWrapper;
 import com.omnicrola.pixelblaster.io.XmlMapLoader;
 import com.omnicrola.pixelblaster.main.GameSettings;
-import com.omnicrola.pixelblaster.map.XmlMapData;
+import com.omnicrola.pixelblaster.map.io.XmlMapData;
 
 public class AssetManager {
 	private final XmlMapLoader xmlMapLoader;

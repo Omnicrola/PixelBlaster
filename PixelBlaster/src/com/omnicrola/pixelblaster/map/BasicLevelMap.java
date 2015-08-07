@@ -4,6 +4,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.graphics.GameBackground;
 import com.omnicrola.pixelblaster.graphics.IGraphicsWrapper;
+import com.omnicrola.pixelblaster.map.io.XmlMapData;
 import com.omnicrola.pixelblaster.util.Coordinate;
 
 public class BasicLevelMap implements ILevelMap {

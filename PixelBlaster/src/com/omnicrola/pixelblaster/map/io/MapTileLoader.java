@@ -1,9 +1,13 @@
-package com.omnicrola.pixelblaster.map;
+package com.omnicrola.pixelblaster.map.io;
 
 import java.io.File;
 
 import org.newdawn.slick.Image;
 
+import com.omnicrola.pixelblaster.map.IMapTile;
+import com.omnicrola.pixelblaster.map.MapTile;
+import com.omnicrola.pixelblaster.map.MapTileDataSet;
+import com.omnicrola.pixelblaster.map.MapTileSet;
 import com.omnicrola.pixelblaster.util.AssetManager;
 import com.omnicrola.pixelblaster.util.PointSet;
 

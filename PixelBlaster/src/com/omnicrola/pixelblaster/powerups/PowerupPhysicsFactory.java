@@ -1,6 +1,6 @@
 package com.omnicrola.pixelblaster.powerups;
 
-import com.omnicrola.pixelblaster.map.PowerupData;
+import com.omnicrola.pixelblaster.map.io.PowerupData;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 

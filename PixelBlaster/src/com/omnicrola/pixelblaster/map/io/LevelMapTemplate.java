@@ -1,4 +1,4 @@
-package com.omnicrola.pixelblaster.map;
+package com.omnicrola.pixelblaster.map.io;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,6 +7,11 @@ import java.util.List;
 import org.newdawn.slick.Image;
 
 import com.omnicrola.pixelblaster.graphics.GameBackground;
+import com.omnicrola.pixelblaster.map.BasicLevelMap;
+import com.omnicrola.pixelblaster.map.EntityFactory;
+import com.omnicrola.pixelblaster.map.ILevelMap;
+import com.omnicrola.pixelblaster.map.IMapTile;
+import com.omnicrola.pixelblaster.map.MapTileDataSet;
 import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
@@ -22,13 +27,16 @@ public class LevelMapTemplate {
 	private final PowerupFactory powerupFactory;
 	private final MapTileLoader mapTileLoader;
 	private final AssetManager assetManager;
+	private final EntityFactory entityFactory;
 
 	public LevelMapTemplate(float tileSize, MapTileLoader mapTileLoader, XmlMapData mapData,
-			PowerupFactory powerupFactory, IPhysicsManager physicsManager, AssetManager assetManager) {
+			PowerupFactory powerupFactory, EntityFactory entityFactory, IPhysicsManager physicsManager,
+			AssetManager assetManager) {
 		this.tileSize = tileSize;
 		this.mapTileLoader = mapTileLoader;
 		this.mapData = mapData;
 		this.powerupFactory = powerupFactory;
+		this.entityFactory = entityFactory;
 		this.physicsManager = physicsManager;
 		this.assetManager = assetManager;
 
@@ -38,6 +46,7 @@ public class LevelMapTemplate {
 	public ILevelMap load() {
 		final MapTileDataSet tileData = loadTiles();
 		this.powerupFactory.buildAll(this.tileSize, this.mapData.powerups);
+		this.entityFactory.buildAll(this.tileSize, this.mapData.entities);
 		final GameBackground background = createBackground();
 		return new BasicLevelMap(this.tileSize, tileData, background, this.mapData);
 	}

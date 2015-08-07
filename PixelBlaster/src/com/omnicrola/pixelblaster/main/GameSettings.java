@@ -3,7 +3,7 @@ package com.omnicrola.pixelblaster.main;
 public class GameSettings {
 
 	public static boolean DEBUG = false;
-	public static boolean DEBUG_PHYSICS = false;
+	public static boolean DEBUG_PHYSICS = true;
 
 	public static final String MAP_FILE_PATH = "assets/Levels/";
 	public static final int GAME_FPS = 60;

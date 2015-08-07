@@ -13,7 +13,7 @@ import com.omnicrola.pixelblaster.gui.UiManager;
 import com.omnicrola.pixelblaster.gui.UserInterfaceBuilder;
 import com.omnicrola.pixelblaster.input.InputManager;
 import com.omnicrola.pixelblaster.map.MapManager;
-import com.omnicrola.pixelblaster.map.MapTemplateReaderBuilder;
+import com.omnicrola.pixelblaster.map.io.MapTemplateReaderBuilder;
 import com.omnicrola.pixelblaster.particles.ParticleManager;
 import com.omnicrola.pixelblaster.physics.PhysicsManager;
 import com.omnicrola.pixelblaster.player.PlayerManager;

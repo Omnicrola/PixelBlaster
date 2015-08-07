@@ -1068,4 +1068,12 @@
             <y>3.75</y>
         </powerups>
     </powerups>
+    <entities>
+        <entities HP="10">
+            <ImageSet>bee</ImageSet>
+            <Position x="10" y="3"/>
+            <width>1.0</width>
+            <height>1.0</height>
+        </entities>
+    </entities>
 </Map>

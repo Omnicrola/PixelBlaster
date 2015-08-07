@@ -1,7 +1,7 @@
 package com.omnicrola.pixelblaster.io;
 
-import com.omnicrola.pixelblaster.map.XmlMapData;
-import com.omnicrola.pixelblaster.map.XmlMapSerializer;
+import com.omnicrola.pixelblaster.map.io.XmlMapData;
+import com.omnicrola.pixelblaster.map.io.XmlMapSerializer;
 import com.omnicrola.xml.XmlSerializationService;
 
 public class XmlMapLoader {

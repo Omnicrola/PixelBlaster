@@ -1,9 +1,10 @@
-package com.omnicrola.pixelblaster.map;
+package com.omnicrola.pixelblaster.map.io;
 
 import com.omnicrola.pixelblaster.audio.IAudioManager;
 import com.omnicrola.pixelblaster.entity.IEntityManager;
 import com.omnicrola.pixelblaster.graphics.SpriteBuilder;
 import com.omnicrola.pixelblaster.main.IGameContext;
+import com.omnicrola.pixelblaster.map.EntityFactory;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.player.IPlayerManager;
 import com.omnicrola.pixelblaster.powerups.ContactSensorBuilder;
@@ -24,8 +25,10 @@ public class MapTemplateReaderBuilder {
 		final SpriteBuilder spriteBuilder = new SpriteBuilder(assetManager);
 		final PowerupFactory powerupFactory = new PowerupFactory(entityManager, spriteBuilder, powerupPhysicsBuilder,
 				sensorBuilder);
+		final EntityFactory entityFactory = new EntityFactory(spriteBuilder, entityManager, physicsManager);
 
-		final MapTemplateReader mapTemplateReader = new MapTemplateReader(assetManager, physicsManager, powerupFactory);
+		final MapTemplateReader mapTemplateReader = new MapTemplateReader(assetManager, physicsManager, powerupFactory,
+				entityFactory);
 		return mapTemplateReader;
 	}
 

@@ -2,7 +2,7 @@ package com.omnicrola.pixelblaster.powerups;
 
 import com.omnicrola.pixelblaster.audio.IAudioManager;
 import com.omnicrola.pixelblaster.entity.GameEntity;
-import com.omnicrola.pixelblaster.map.PowerupData;
+import com.omnicrola.pixelblaster.map.io.PowerupData;
 import com.omnicrola.pixelblaster.physics.CircleSensor;
 import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.CollisionPair;
