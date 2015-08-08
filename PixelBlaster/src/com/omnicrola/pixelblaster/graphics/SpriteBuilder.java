@@ -3,7 +3,6 @@ package com.omnicrola.pixelblaster.graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
-import com.omnicrola.pixelblaster.map.EntityData;
 import com.omnicrola.pixelblaster.map.io.PowerupData;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
@@ -26,16 +25,14 @@ public class SpriteBuilder {
 		return new EntitySprite(image, bounds);
 	}
 
-	public IEntitySprite build(EntityData entityData) {
-		final String imageSet = entityData.imageSet;
+	public IEntitySprite build(SpriteData entityData) {
+		final String imageSet = entityData.getImageSet();
 		final String basePath = ENTITY + imageSet + "/" + imageSet;
 		final Image[] images = new Image[2];
 		images[0] = this.assetManager.getImage(basePath + ".png");
 		images[1] = this.assetManager.getImage(basePath + "_move.png");
 
-		final float width = entityData.width;
-		final float height = entityData.height;
-		final Rectangle bounds = new Rectangle(0, 0, width, height);
+		final Rectangle bounds = entityData.getBounds();
 		return new AnimatedSprite(images, bounds, 5);
 	}
 

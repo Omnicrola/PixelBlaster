@@ -26,10 +26,6 @@ public interface IGameEntity {
 
 	void removeUpdateBehavior(IUpdateBehavior behavior);
 
-	void disablePhysics();
-
-	void enablePhysics();
-
 	IPhysicsModifier modifyPhysics(IPhysicsManager physicsManager);
 
 	Vector2f getVelocity();

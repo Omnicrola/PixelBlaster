@@ -19,7 +19,6 @@ public class GameEntity implements IGameEntity {
 	private boolean isAlive;
 	private float rotation;
 	private final List<IUpdateBehavior> updateBehaviors;
-	private boolean usePhysics;
 	private final List<IDeathBehavior> deathBehaviors;
 
 	public GameEntity(IEntitySprite sprite, IPhysicsEntity physics) {
@@ -30,7 +29,6 @@ public class GameEntity implements IGameEntity {
 		this.position = new Vector2f();
 		this.rotation = 0f;
 		this.isAlive = true;
-		this.usePhysics = true;
 	}
 
 	@Override
@@ -68,9 +66,7 @@ public class GameEntity implements IGameEntity {
 
 	@Override
 	public void update(float delta) {
-		if (this.usePhysics) {
-			this.physics.updateEntity(this, delta);
-		}
+		this.physics.updateEntity(this, delta);
 		this.sprite.update(delta);
 		updateBehavior(delta);
 	}
@@ -86,18 +82,6 @@ public class GameEntity implements IGameEntity {
 		this.sprite.setPosition(this.position);
 		this.sprite.setRotation(this.rotation);
 		return this.sprite;
-	}
-
-	@Override
-	public void disablePhysics() {
-		this.usePhysics = false;
-		this.physics.disable();
-	}
-
-	@Override
-	public void enablePhysics() {
-		this.usePhysics = true;
-		this.physics.enable();
 	}
 
 	@Override
@@ -145,16 +129,12 @@ public class GameEntity implements IGameEntity {
 
 	@Override
 	public void applyForceAtCenter(Vector2f forceVector) {
-		if (this.usePhysics) {
-			this.physics.applyForceAtCenter(forceVector);
-		}
+		this.physics.applyForceAtCenter(forceVector);
 	}
 
 	@Override
 	public void applyImpulseAtCenter(Vector2f forceVector) {
-		if (this.usePhysics) {
-			this.physics.applyImpulseAtCenter(forceVector);
-		}
+		this.physics.applyImpulseAtCenter(forceVector);
 	}
 
 	@Override

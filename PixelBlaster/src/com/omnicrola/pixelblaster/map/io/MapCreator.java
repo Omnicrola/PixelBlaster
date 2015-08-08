@@ -1,5 +1,6 @@
 package com.omnicrola.pixelblaster.map.io;
 
+import com.omnicrola.pixelblaster.entity.build.EntityType;
 import com.omnicrola.pixelblaster.map.EntityData;
 import com.omnicrola.pixelblaster.map.MapBounds;
 import com.omnicrola.pixelblaster.util.Coordinate;
@@ -45,10 +46,7 @@ public class MapCreator {
 
 	private void createEntities() {
 		final EntityData entityData = new EntityData();
-		entityData.hp = 10;
-		entityData.width = 1f;
-		entityData.height = 1f;
-		entityData.imageSet = "bee";
+		entityData.entityType = EntityType.BEE;
 		entityData.position = new Coordinate(10, 3);
 		this.mapData.entities.add(entityData);
 	}

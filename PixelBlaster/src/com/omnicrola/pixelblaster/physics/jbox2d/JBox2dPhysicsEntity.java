@@ -11,14 +11,12 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.entity.IGameEntity;
-import com.omnicrola.pixelblaster.physics.CollisionGroup;
 import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsSensor;
 import com.omnicrola.pixelblaster.physics.ISensorInspector;
 
 public class JBox2dPhysicsEntity implements IPhysicsEntity {
-	private static final int NO_COLLISION_MASK = 0x0000;
 
 	private final Body body;
 	private final Vec2 vectorCache;
@@ -129,26 +127,8 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 	}
 
 	@Override
-	public void disable() {
-		this.disabled = true;
-		for (final Fixture fixture : this.fixtures) {
-			fixture.m_filter.maskBits = NO_COLLISION_MASK;
-			fixture.m_filter.groupIndex = CollisionGroup.NONE;
-		}
-	}
-
-	@Override
 	public void dispose() {
 		this.body.m_world.destroyBody(this.body);
-	}
-
-	@Override
-	public void enable() {
-		this.disabled = false;
-		for (final Fixture fixture : this.fixtures) {
-			fixture.m_filter.maskBits = this.filterMap.get(fixture).maskBits;
-			fixture.m_filter.groupIndex = CollisionGroup.WORLD;
-		}
 	}
 
 	@Override

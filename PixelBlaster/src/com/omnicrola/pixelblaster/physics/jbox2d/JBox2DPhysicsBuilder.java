@@ -122,7 +122,7 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 
 	@Override
 	public IPhysicsBuilder addPolygon(PointSet pointSet) {
-		assert (pointSet.size() <= Settings.maxPolygonVertices);
+		assert(pointSet.size() <= Settings.maxPolygonVertices);
 		if (pointSet.size() == 0) {
 			return this;
 		}
@@ -149,6 +149,12 @@ public class JBox2DPhysicsBuilder implements IPhysicsBuilder {
 	@Override
 	public IPhysicsBuilder disableSleep() {
 		this.bodyDef.allowSleep = false;
+		return this;
+	}
+
+	@Override
+	public IPhysicsBuilder affectedByGravity(boolean isAffectedByGravity) {
+		this.bodyDef.gravityScale = isAffectedByGravity ? 1.0f : 0.0f;
 		return this;
 	}
 

@@ -24,6 +24,8 @@ public interface IPhysicsBuilder {
 
 	IPhysicsBuilder disableSleep();
 
+	IPhysicsBuilder affectedByGravity(boolean isAffectedByGravity);
+
 	IPhysicsBuilder limitVelocity(float maxVelocity);
 
 	IPhysicsBuilder setStatic();

@@ -1,7 +1,14 @@
 package com.omnicrola.pixelblaster.map.io;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.omnicrola.pixelblaster.audio.IAudioManager;
 import com.omnicrola.pixelblaster.entity.IEntityManager;
+import com.omnicrola.pixelblaster.entity.build.BeeFactoryStrategy;
+import com.omnicrola.pixelblaster.entity.build.EntityStrategies;
+import com.omnicrola.pixelblaster.entity.build.EntityType;
+import com.omnicrola.pixelblaster.entity.build.IEntityFactoryStrategy;
 import com.omnicrola.pixelblaster.graphics.SpriteBuilder;
 import com.omnicrola.pixelblaster.main.IGameContext;
 import com.omnicrola.pixelblaster.map.EntityFactory;
@@ -25,11 +32,20 @@ public class MapTemplateReaderBuilder {
 		final SpriteBuilder spriteBuilder = new SpriteBuilder(assetManager);
 		final PowerupFactory powerupFactory = new PowerupFactory(entityManager, spriteBuilder, powerupPhysicsBuilder,
 				sensorBuilder);
-		final EntityFactory entityFactory = new EntityFactory(spriteBuilder, entityManager, physicsManager);
+		final EntityStrategies entityStrategies = buildEntityStrategies();
+		final EntityFactory entityFactory = new EntityFactory(spriteBuilder, entityManager, physicsManager,
+				entityStrategies);
 
 		final MapTemplateReader mapTemplateReader = new MapTemplateReader(assetManager, physicsManager, powerupFactory,
 				entityFactory);
 		return mapTemplateReader;
+	}
+
+	private EntityStrategies buildEntityStrategies() {
+		final Map<EntityType, IEntityFactoryStrategy> factoryStrategies = new HashMap<>();
+		factoryStrategies.put(EntityType.BEE, new BeeFactoryStrategy());
+		final EntityStrategies entityStrategies = new EntityStrategies(factoryStrategies);
+		return entityStrategies;
 	}
 
 }
