@@ -47,7 +47,7 @@ public class MapCreator {
 	private void createEntities() {
 		final EntityData entityData = new EntityData();
 		entityData.entityType = EntityType.BEE;
-		entityData.position = new Coordinate(10, 3);
+		entityData.position = new Coordinate(5, 3);
 		this.mapData.entities.add(entityData);
 	}
 

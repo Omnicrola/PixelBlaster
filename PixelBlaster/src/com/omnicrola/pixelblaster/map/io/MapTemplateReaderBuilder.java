@@ -32,7 +32,7 @@ public class MapTemplateReaderBuilder {
 		final SpriteBuilder spriteBuilder = new SpriteBuilder(assetManager);
 		final PowerupFactory powerupFactory = new PowerupFactory(entityManager, spriteBuilder, powerupPhysicsBuilder,
 				sensorBuilder);
-		final EntityStrategies entityStrategies = buildEntityStrategies();
+		final EntityStrategies entityStrategies = buildEntityStrategies(context);
 		final EntityFactory entityFactory = new EntityFactory(spriteBuilder, entityManager, physicsManager,
 				entityStrategies);
 
@@ -41,9 +41,11 @@ public class MapTemplateReaderBuilder {
 		return mapTemplateReader;
 	}
 
-	private EntityStrategies buildEntityStrategies() {
+	private EntityStrategies buildEntityStrategies(IGameContext context) {
+		final IPlayerManager playerManager = context.getSubsystem(IPlayerManager.class);
+
 		final Map<EntityType, IEntityFactoryStrategy> factoryStrategies = new HashMap<>();
-		factoryStrategies.put(EntityType.BEE, new BeeFactoryStrategy());
+		factoryStrategies.put(EntityType.BEE, new BeeFactoryStrategy(playerManager));
 		final EntityStrategies entityStrategies = new EntityStrategies(factoryStrategies);
 		return entityStrategies;
 	}

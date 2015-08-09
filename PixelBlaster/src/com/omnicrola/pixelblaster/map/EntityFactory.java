@@ -39,6 +39,7 @@ public class EntityFactory {
 		final IEntitySprite sprite = factoryStrategy.buildSprite(this.spriteBuilder);
 		final IPhysicsEntity physics = factoryStrategy.buildPhysics(this.physicsManager);
 		final GameEntity gameEntity = new GameEntity(sprite, physics);
+		factoryStrategy.addBehaviors(gameEntity);
 		setPosition(entityData.position, gameEntity, tileSize);
 		this.entityManager.addEntity(gameEntity);
 

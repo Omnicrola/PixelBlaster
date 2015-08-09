@@ -1071,7 +1071,7 @@
     <entities>
         <entities>
             <EntityType>BEE</EntityType>
-            <Position x="10" y="3"/>
+            <Position x="5" y="3"/>
         </entities>
     </entities>
 </Map>

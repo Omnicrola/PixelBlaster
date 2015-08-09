@@ -174,4 +174,8 @@ public class PlayerController {
 		return this.playerModel.getScore();
 	}
 
+	public Vector2f getPlayerPosition() {
+		return player().getPosition();
+	}
+
 }
