@@ -2,6 +2,7 @@ package com.omnicrola.pixelblaster.physics;
 
 import org.newdawn.slick.geom.Rectangle;
 
+import com.omnicrola.pixelblaster.physics.contact.CollisionIdentifier;
 import com.omnicrola.pixelblaster.util.PointSet;
 
 public interface IPhysicsBuilder {

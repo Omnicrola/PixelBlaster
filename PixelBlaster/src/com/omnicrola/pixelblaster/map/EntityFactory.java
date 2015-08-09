@@ -4,13 +4,11 @@ import java.util.List;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import com.omnicrola.pixelblaster.entity.GameEntity;
 import com.omnicrola.pixelblaster.entity.IEntityManager;
+import com.omnicrola.pixelblaster.entity.IGameEntity;
 import com.omnicrola.pixelblaster.entity.build.EntityStrategies;
 import com.omnicrola.pixelblaster.entity.build.IEntityFactoryStrategy;
-import com.omnicrola.pixelblaster.graphics.IEntitySprite;
 import com.omnicrola.pixelblaster.graphics.SpriteBuilder;
-import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.util.Coordinate;
 
@@ -36,16 +34,13 @@ public class EntityFactory {
 
 	private void buildEntity(float tileSize, EntityData entityData) {
 		final IEntityFactoryStrategy factoryStrategy = this.entityStrategies.getStrategy(entityData.entityType);
-		final IEntitySprite sprite = factoryStrategy.buildSprite(this.spriteBuilder);
-		final IPhysicsEntity physics = factoryStrategy.buildPhysics(this.physicsManager);
-		final GameEntity gameEntity = new GameEntity(sprite, physics);
-		factoryStrategy.addBehaviors(gameEntity);
+		final IGameEntity gameEntity = factoryStrategy.buildEntity(entityData, this.spriteBuilder, this.physicsManager);
 		setPosition(entityData.position, gameEntity, tileSize);
 		this.entityManager.addEntity(gameEntity);
 
 	}
 
-	private void setPosition(Coordinate position, GameEntity gameEntity, float tileSize) {
+	private void setPosition(Coordinate position, IGameEntity gameEntity, float tileSize) {
 		final float x = position.getX() * tileSize;
 		final float y = position.getY() * tileSize;
 		gameEntity.setPosition(new Vector2f(x, y));

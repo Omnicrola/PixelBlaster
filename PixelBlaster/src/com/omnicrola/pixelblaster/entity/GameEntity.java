@@ -1,16 +1,15 @@
 package com.omnicrola.pixelblaster.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.entity.behavior.IDeathBehavior;
 import com.omnicrola.pixelblaster.graphics.IEntitySprite;
-import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.physics.IPhysicsModifier;
+import com.omnicrola.pixelblaster.util.ModifiableList;
 
 public class GameEntity implements IGameEntity {
 	protected final IEntitySprite sprite;
@@ -24,8 +23,8 @@ public class GameEntity implements IGameEntity {
 	public GameEntity(IEntitySprite sprite, IPhysicsEntity physics) {
 		this.sprite = sprite;
 		this.physics = physics;
-		this.updateBehaviors = new ArrayList<>();
-		this.deathBehaviors = new ArrayList<>();
+		this.updateBehaviors = new ModifiableList<>();
+		this.deathBehaviors = new ModifiableList<>();
 		this.position = new Vector2f();
 		this.rotation = 0f;
 		this.isAlive = true;
@@ -135,11 +134,6 @@ public class GameEntity implements IGameEntity {
 	@Override
 	public void applyImpulseAtCenter(Vector2f forceVector) {
 		this.physics.applyImpulseAtCenter(forceVector);
-	}
-
-	@Override
-	public void addCollisionDetector(ICollisionDetector collisionDetector) {
-		this.physics.addCollisionDetector(collisionDetector);
 	}
 
 }

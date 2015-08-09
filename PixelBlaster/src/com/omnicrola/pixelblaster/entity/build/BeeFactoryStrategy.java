@@ -2,14 +2,20 @@ package com.omnicrola.pixelblaster.entity.build;
 
 import org.newdawn.slick.geom.Rectangle;
 
+import com.omnicrola.pixelblaster.entity.GameEntity;
 import com.omnicrola.pixelblaster.entity.IGameEntity;
 import com.omnicrola.pixelblaster.entity.behavior.DampenVelocityBehavior;
 import com.omnicrola.pixelblaster.entity.behavior.SeekPlayerBehavior;
 import com.omnicrola.pixelblaster.graphics.IEntitySprite;
 import com.omnicrola.pixelblaster.graphics.SpriteBuilder;
 import com.omnicrola.pixelblaster.graphics.SpriteData;
+import com.omnicrola.pixelblaster.map.EntityData;
+import com.omnicrola.pixelblaster.physics.CircleSensor;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
+import com.omnicrola.pixelblaster.physics.contact.CollisionIdentifier;
+import com.omnicrola.pixelblaster.physics.contact.CollisionPair;
+import com.omnicrola.pixelblaster.physics.contact.KnockbackAndStunContactHandler;
 import com.omnicrola.pixelblaster.player.IPlayerManager;
 import com.omnicrola.pixelblaster.player.PlayerController;
 
@@ -27,27 +33,33 @@ public class BeeFactoryStrategy implements IEntityFactoryStrategy {
 	}
 
 	@Override
-	public IEntitySprite buildSprite(SpriteBuilder spriteBuilder) {
-		return spriteBuilder.build(this.spriteData);
-	}
+	public IGameEntity buildEntity(EntityData entityData, SpriteBuilder spriteBuilder, IPhysicsManager physicsManager) {
+		final IEntitySprite sprite = spriteBuilder.build(this.spriteData);
+		final float radius = 0.25f;
 
-	@Override
-	//@formatter:off
-	public IPhysicsEntity buildPhysics(IPhysicsManager physicsManager) {
-		return physicsManager.getBuilder()
+		//@formatter:off
+		final IPhysicsEntity physicsEntity = physicsManager
+				.getBuilder()
 				.setDynamic()
 				.disableRotation()
 				.affectedByGravity(false)
-				.addCircle(0.25f, 0, -0.5f)
+				.addCircle(radius, 0, -0.5f)
 				.build();
-	}
-	//@formatter:on
+		//@formatter:on
 
-	@Override
-	public void addBehaviors(IGameEntity gameEntity) {
+		final CollisionPair collisionPair = new CollisionPair(CollisionIdentifier.PLAYER_BODY,
+				new CollisionIdentifier());
+		final CircleSensor physicsSensor = new CircleSensor(radius, 0, 0, collisionPair);
+		physicsEntity.addSensor(physicsSensor);
+		final IPhysicsEntity physics = physicsEntity;
+		final GameEntity gameEntity = new GameEntity(sprite, physics);
+
 		final PlayerController playerController = this.playerManager.getPlayerController();
 		gameEntity.addUpdateBehavior(new SeekPlayerBehavior(playerController, SEEK_RADIUS, MAX_VELOCITY));
 		gameEntity.addUpdateBehavior(new DampenVelocityBehavior(VELOCITY_DAMPEN));
+		physicsSensor.addContactHandler(new KnockbackAndStunContactHandler(gameEntity));
+
+		return gameEntity;
 	}
 
 }

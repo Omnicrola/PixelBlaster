@@ -19,8 +19,6 @@ public interface IPhysicsEntity {
 
 	public void setPosition(Vector2f vector);
 
-	public void addCollisionDetector(ICollisionDetector collisionDetector);
-
 	public void updateEntity(IGameEntity gameEntity, float delta);
 
 	public void setMaximumVelocity(float playerMaximumVelocity);

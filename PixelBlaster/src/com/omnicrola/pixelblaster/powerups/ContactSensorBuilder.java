@@ -4,9 +4,9 @@ import com.omnicrola.pixelblaster.audio.IAudioManager;
 import com.omnicrola.pixelblaster.entity.GameEntity;
 import com.omnicrola.pixelblaster.map.io.PowerupData;
 import com.omnicrola.pixelblaster.physics.CircleSensor;
-import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
-import com.omnicrola.pixelblaster.physics.CollisionPair;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
+import com.omnicrola.pixelblaster.physics.contact.CollisionIdentifier;
+import com.omnicrola.pixelblaster.physics.contact.CollisionPair;
 import com.omnicrola.pixelblaster.player.IPlayerManager;
 
 public class ContactSensorBuilder {

@@ -1,9 +1,9 @@
 package com.omnicrola.pixelblaster.entity;
 
-import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.IModifierToken;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.physics.IPhysicsModifier;
+import com.omnicrola.pixelblaster.physics.contact.CollisionIdentifier;
 import com.omnicrola.pixelblaster.player.MultiStateEntity;
 
 public class BubbleBuilder {

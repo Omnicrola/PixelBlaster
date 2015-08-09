@@ -11,7 +11,6 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.entity.IGameEntity;
-import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsSensor;
 import com.omnicrola.pixelblaster.physics.ISensorInspector;
@@ -85,11 +84,6 @@ public class JBox2dPhysicsEntity implements IPhysicsEntity {
 	@Override
 	public float getAngle() {
 		return this.body.getAngle();
-	}
-
-	@Override
-	public void addCollisionDetector(ICollisionDetector collisionDetector) {
-		this.contactListener.addHandler(collisionDetector);
 	}
 
 	@Override

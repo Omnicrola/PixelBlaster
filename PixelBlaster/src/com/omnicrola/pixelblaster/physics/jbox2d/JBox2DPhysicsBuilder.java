@@ -17,9 +17,9 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.physics.CollisionGroup;
-import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.IPhysicsBuilder;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
+import com.omnicrola.pixelblaster.physics.contact.CollisionIdentifier;
 import com.omnicrola.pixelblaster.util.PointSet;
 
 public class JBox2DPhysicsBuilder implements IPhysicsBuilder {

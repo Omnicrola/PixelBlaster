@@ -12,11 +12,11 @@ import com.omnicrola.pixelblaster.graphics.IEntitySprite;
 import com.omnicrola.pixelblaster.graphics.ISpriteState;
 import com.omnicrola.pixelblaster.graphics.MultiStateSprite;
 import com.omnicrola.pixelblaster.main.GameSettings;
-import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
-import com.omnicrola.pixelblaster.physics.CollisionPair;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.physics.RectangleSensor;
+import com.omnicrola.pixelblaster.physics.contact.CollisionIdentifier;
+import com.omnicrola.pixelblaster.physics.contact.CollisionPair;
 import com.omnicrola.pixelblaster.util.AssetManager;
 
 public class PlayerBuilder {

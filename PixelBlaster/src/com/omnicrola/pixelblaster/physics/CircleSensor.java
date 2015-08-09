@@ -1,5 +1,7 @@
 package com.omnicrola.pixelblaster.physics;
 
+import com.omnicrola.pixelblaster.physics.contact.CollisionPair;
+
 public class CircleSensor extends PhysicsSensor {
 
 	private final float radius;

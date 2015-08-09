@@ -12,9 +12,9 @@ import com.omnicrola.pixelblaster.map.EntityFactory;
 import com.omnicrola.pixelblaster.map.ILevelMap;
 import com.omnicrola.pixelblaster.map.IMapTile;
 import com.omnicrola.pixelblaster.map.MapTileDataSet;
-import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
+import com.omnicrola.pixelblaster.physics.contact.CollisionIdentifier;
 import com.omnicrola.pixelblaster.util.AssetManager;
 import com.omnicrola.pixelblaster.util.PointSet;
 

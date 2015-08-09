@@ -4,10 +4,10 @@ import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 
-import com.omnicrola.pixelblaster.physics.CollisionIdentifier;
 import com.omnicrola.pixelblaster.physics.IModifierToken;
 import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
 import com.omnicrola.pixelblaster.physics.IPhysicsModifier;
+import com.omnicrola.pixelblaster.physics.contact.CollisionIdentifier;
 
 public class JBox2DPhysicsModifier implements IPhysicsModifier {
 	public static class ModifierToken implements IModifierToken {

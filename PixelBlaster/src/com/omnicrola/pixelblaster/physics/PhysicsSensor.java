@@ -3,6 +3,9 @@ package com.omnicrola.pixelblaster.physics;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.omnicrola.pixelblaster.physics.contact.CollisionPair;
+import com.omnicrola.pixelblaster.physics.contact.IPhysicsContactHandler;
+
 public abstract class PhysicsSensor implements IPhysicsSensor {
 
 	private final List<IPhysicsContactHandler> contacthandlers;
@@ -18,9 +21,9 @@ public abstract class PhysicsSensor implements IPhysicsSensor {
 	}
 
 	@Override
-	public void collisionOccured() {
+	public void collisionOccured(IPhysicsCollision physicsCollision) {
 		for (final IPhysicsContactHandler contactHandler : this.contacthandlers) {
-			contactHandler.contactOccured();
+			contactHandler.contactOccured(physicsCollision);
 		}
 	}
 

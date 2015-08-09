@@ -1,17 +1,12 @@
 package com.omnicrola.pixelblaster.entity.build;
 
 import com.omnicrola.pixelblaster.entity.IGameEntity;
-import com.omnicrola.pixelblaster.graphics.IEntitySprite;
 import com.omnicrola.pixelblaster.graphics.SpriteBuilder;
-import com.omnicrola.pixelblaster.physics.IPhysicsEntity;
+import com.omnicrola.pixelblaster.map.EntityData;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 
 public interface IEntityFactoryStrategy {
 
-	IEntitySprite buildSprite(SpriteBuilder spriteBuilder);
-
-	IPhysicsEntity buildPhysics(IPhysicsManager physicsManager);
-
-	void addBehaviors(IGameEntity gameEntity);
+	IGameEntity buildEntity(EntityData entityData, SpriteBuilder spriteBuilder, IPhysicsManager physicsManager);
 
 }

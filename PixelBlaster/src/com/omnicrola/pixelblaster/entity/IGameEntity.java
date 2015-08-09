@@ -4,7 +4,6 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.omnicrola.pixelblaster.entity.behavior.IDeathBehavior;
 import com.omnicrola.pixelblaster.graphics.IEntitySprite;
-import com.omnicrola.pixelblaster.physics.ICollisionDetector;
 import com.omnicrola.pixelblaster.physics.IPhysicsManager;
 import com.omnicrola.pixelblaster.physics.IPhysicsModifier;
 
@@ -39,8 +38,6 @@ public interface IGameEntity {
 	void applyImpulseAtCenter(Vector2f forceVector);
 
 	void applyForceAtCenter(Vector2f forceVector);
-
-	void addCollisionDetector(ICollisionDetector collisionDetector);
 
 	void addDeathBehavior(IDeathBehavior deathBehavior);
 

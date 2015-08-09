@@ -1,4 +1,4 @@
-package com.omnicrola.pixelblaster.physics;
+package com.omnicrola.pixelblaster.physics.contact;
 
 public class CollisionIdentifier {
 	// NONE, PLAYER_BODY, BUBBLE, MAP_TILE, SENSOR, POWERUP, PLAYER_FOOT;
@@ -21,8 +21,13 @@ public class CollisionIdentifier {
 	}
 
 	@Override
+	public String toString() {
+		return "ID=" + this.id;
+	}
+
+	@Override
 	public int hashCode() {
-		final int prime = 31;
+		final int prime = 97;
 		int result = 1;
 		result = prime * result + this.id;
 		return result;

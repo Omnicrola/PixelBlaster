@@ -1,5 +1,7 @@
 package com.omnicrola.pixelblaster.physics;
 
+import com.omnicrola.pixelblaster.physics.contact.CollisionIdentifier;
+
 public interface IPhysicsModifier {
 
 	IPhysicsModifier addCircleShape(float radius, float x, float y);
