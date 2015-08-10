@@ -4,6 +4,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 import com.omnicrola.pixelblaster.entity.GameEntity;
 import com.omnicrola.pixelblaster.entity.IGameEntity;
+import com.omnicrola.pixelblaster.entity.behavior.BinaryBehaviorController;
 import com.omnicrola.pixelblaster.entity.behavior.DampenVelocityBehavior;
 import com.omnicrola.pixelblaster.entity.behavior.SeekPlayerBehavior;
 import com.omnicrola.pixelblaster.graphics.IEntitySprite;
@@ -51,15 +52,27 @@ public class BeeFactoryStrategy implements IEntityFactoryStrategy {
 				CollisionIdentifier.PLAYER_BODY);
 		final CircleSensor physicsSensor = new CircleSensor(radius + 0.01f, 0, -0.5f, collisionPair);
 		physicsEntity.addSensor(physicsSensor);
-		final IPhysicsEntity physics = physicsEntity;
-		final GameEntity gameEntity = new GameEntity(sprite, physics);
+		final GameEntity gameEntity = new GameEntity(sprite, physicsEntity);
 
-		final PlayerController playerController = this.playerManager.getPlayerController();
-		gameEntity.addUpdateBehavior(new SeekPlayerBehavior(playerController, SEEK_RADIUS, MAX_VELOCITY));
-		gameEntity.addUpdateBehavior(new DampenVelocityBehavior(VELOCITY_DAMPEN));
-		physicsSensor.addContactHandler(new KnockbackAndStunContactHandler(gameEntity));
+		final BinaryBehaviorController binaryBehaviorController = new BinaryBehaviorController();
+		gameEntity.addUpdateBehavior(binaryBehaviorController);
+
+		addBehaviors(binaryBehaviorController);
+
+		physicsSensor.addContactHandler(new KnockbackAndStunContactHandler(gameEntity, binaryBehaviorController));
 
 		return gameEntity;
+	}
+
+	private void addBehaviors(final BinaryBehaviorController binaryBehaviorController) {
+		final PlayerController playerController = this.playerManager.getPlayerController();
+		final SeekPlayerBehavior seekPlayerBehavior = new SeekPlayerBehavior(playerController, SEEK_RADIUS,
+				MAX_VELOCITY);
+		final DampenVelocityBehavior dapenVelocityBehavior = new DampenVelocityBehavior(VELOCITY_DAMPEN);
+		binaryBehaviorController.addPrimaryBehavior(seekPlayerBehavior);
+		binaryBehaviorController.addPrimaryBehavior(dapenVelocityBehavior);
+
+		binaryBehaviorController.addAlternateBehavior(new DampenVelocityBehavior(0.5f));
 	}
 
 }
