@@ -34,7 +34,6 @@ public class JBox2dContactListener implements ContactListener {
 		for (final ICollisionDetector contactHandler : this.handlers) {
 			final CollisionPair targetPair = contactHandler.getCollisionPair();
 			if (collisionPair.equals(targetPair)) {
-				System.out.println("Collision: " + collisionPair + " -> " + targetPair);
 				if (id1.equals(targetPair.getPrimary())) {
 					this.physicsCollision.set(bodyA, bodyB);
 				} else {
@@ -45,23 +44,26 @@ public class JBox2dContactListener implements ContactListener {
 		}
 	}
 
-	public static void main(String[] args) {
-		final CollisionIdentifier id1 = new CollisionIdentifier();
-		final CollisionIdentifier id2 = new CollisionIdentifier();
-		final CollisionIdentifier id3 = new CollisionIdentifier();
-		System.out.println(id1);
-		System.out.println(id2);
-		System.out.println(id3);
-
-		final CollisionPair pair1 = new CollisionPair(id1, id2);
-		final CollisionPair pair2 = new CollisionPair(id1, id1);
-		final CollisionPair pair3 = new CollisionPair(id1, id3);
-
-		System.out.println("false " + pair1.hashCode() + "==" + pair2.hashCode() + " " + pair1.equals(pair2));
-		System.out.println("false " + pair2.hashCode() + "==" + pair1.hashCode() + " " + pair2.equals(pair1));
-		System.out.println("false " + pair1.hashCode() + "==" + pair3.hashCode() + " " + pair1.equals(pair3));
-
-	}
+	// public static void main(String[] args) {
+	// final CollisionIdentifier id1 = new CollisionIdentifier();
+	// final CollisionIdentifier id2 = new CollisionIdentifier();
+	// final CollisionIdentifier id3 = new CollisionIdentifier();
+	// System.out.println(id1);
+	// System.out.println(id2);
+	// System.out.println(id3);
+	//
+	// final CollisionPair pair1 = new CollisionPair(id1, id2);
+	// final CollisionPair pair2 = new CollisionPair(id1, id1);
+	// final CollisionPair pair3 = new CollisionPair(id1, id3);
+	//
+	// System.out.println("false " + pair1.hashCode() + "==" + pair2.hashCode()
+	// + " " + pair1.equals(pair2));
+	// System.out.println("false " + pair2.hashCode() + "==" + pair1.hashCode()
+	// + " " + pair2.equals(pair1));
+	// System.out.println("false " + pair1.hashCode() + "==" + pair3.hashCode()
+	// + " " + pair1.equals(pair3));
+	//
+	// }
 
 	@Override
 	public void endContact(Contact contact) {

@@ -47,9 +47,9 @@ public class BeeFactoryStrategy implements IEntityFactoryStrategy {
 				.build();
 		//@formatter:on
 
-		final CollisionPair collisionPair = new CollisionPair(CollisionIdentifier.PLAYER_BODY,
-				new CollisionIdentifier());
-		final CircleSensor physicsSensor = new CircleSensor(radius, 0, 0, collisionPair);
+		final CollisionPair collisionPair = new CollisionPair(new CollisionIdentifier(),
+				CollisionIdentifier.PLAYER_BODY);
+		final CircleSensor physicsSensor = new CircleSensor(radius + 0.01f, 0, -0.5f, collisionPair);
 		physicsEntity.addSensor(physicsSensor);
 		final IPhysicsEntity physics = physicsEntity;
 		final GameEntity gameEntity = new GameEntity(sprite, physics);
